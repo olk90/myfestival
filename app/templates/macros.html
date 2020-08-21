@@ -1,0 +1,58 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% macro post_form(form, current_user, is_parent) %}
+{% if form %}
+    <form action="" method="post" class="form" role="form">
+    {{ form.hidden_tag() }}
+    {{ wtf.form_errors(form, hiddens='only') }}
+    <p>
+    {{ wtf.form_field(form.post, style='font-family:courier;') }}
+    {% if current_user.is_admin() and is_parent %}
+    {{ wtf.form_field(form.is_pinned) }}
+    {%endif%}
+    {{ wtf.form_field(form.submit, type='submit') }}
+    </p>
+    </form>
+{% endif %}
+{%- endmacro %}
+
+{% macro reply_form(form) %}
+    <form action="" method="post" class="form" role="form">
+    {{ form.hidden_tag() }}
+    {{ wtf.form_errors(form, hiddens='only') }}
+    <p>
+    {{ wtf.form_field(form.post, style='font-family:courier;') }}
+    {{ wtf.form_field(form.submit, type='submit') }}
+    </p>
+    </form>
+{%- endmacro %}
+
+{% macro festival_form(form) %}
+{% if form %}
+    <form action="" method="post" class="form" role="form">
+    {{ form.hidden_tag() }}
+    {{ wtf.form_errors(form, hiddens='only') }}
+    <p>
+    {{ wtf.form_field(form.title) }}
+    {{ wtf.form_field(form.info, style='font-family:courier;') }}
+    {{ wtf.form_field(form.startdate) }}
+    {{ wtf.form_field(form.enddate) }}
+    {{ wtf.form_field(form.submit, type='submit') }}
+    </p>
+    </form>
+{% endif %}
+{%- endmacro %}
+
+{% macro chronicle_form(form) %}
+{% if form %}
+    <form action="" method="post" class="form" role="form">
+    {{ form.hidden_tag() }}
+    {{ wtf.form_errors(form, hiddens='only') }}
+    <p>
+    {{ wtf.form_field(form.festival) }}
+    {{ wtf.form_field(form.body, rows=20, style='font-family:courier;') }}
+    {{ wtf.form_field(form.submit, type='submit') }}
+    </p>
+    </form>
+{% endif %}
+{%- endmacro %}

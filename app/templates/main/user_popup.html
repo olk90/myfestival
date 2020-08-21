@@ -1,0 +1,32 @@
+<table class="table">
+    <tr>
+        <td width="64" style="border: 0px;"><img src="{{ user.avatar(64) }}" width="64px" height="64px"></td>
+        <td style="border: 0px;">
+            <p>
+                {% if user.username %}
+                <a href="{{ url_for('main.user', username=user.username) }}">
+                    {{ user.get_username() }}
+                </a>
+                {% else %}
+                {{ user.get_username() }}
+                {% endif %}
+            </p>
+            <small>
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                {% if user.last_seen %}
+                <p>{{ _('Last seen on') }}: 
+                   {{ moment(user.last_seen).format('lll') }}</p>
+                {% endif %}
+                {% if user != current_user %}
+                    {% if current_user.is_owner() and not user.is_suspended %}
+                        {% if user.is_admin() %}
+                        <p><a href="{{ url_for('administration.remove_admin', username=user.username) }}">{{ _('Strip of rank and titles') }}</a></p>
+                        {% else %}
+                        <p><a href="{{ url_for('administration.add_admin', username=user.username) }}">{{ _('Promote to Lord Admin') }}</a></p>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </small>
+        </td>
+    </tr>
+</table>

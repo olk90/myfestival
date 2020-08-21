@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <table class="table table-hover">
+        <tr>
+            <td>
+                <p>
+                {% set user_link %}
+                <span class="user_popup">
+                    {% if entry.chronicler.username %}
+                    <a href="{{ url_for('main.user', username=entry.chronicler.username) }}">
+                        {{ entry.chronicler.get_username() }}
+                    </a>
+                    {% else %}
+                    {{ entry.chronicler.get_username() }}
+                    {% endif %}
+                </span>
+                {% endset %}
+                <span>{{ _('Written by %(username)s %(when)s',
+                    username=user_link, when=moment(entry.timestamp).fromNow()) }}</span>
+                {% if current_user.id == entry.chronicler.id %}
+                {% endif %}
+                {% if current_user.id == entry.chronicler.id or current_user.is_admin() %}
+                </p>
+                <span class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                        {{ _('Options') }} <span class="caret"></span>                    
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ url_for('chronicle.edit_entry', entry_id=entry.id) }}"><span style='font-size:40px;'>&#9998;</span></a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('chronicle.delete_entry', entry_id=entry.id) }}"><span style='font-size:40px;'>&#10060;</span></a>
+                        </li>
+                    </ul>
+                </span>
+            {% endif %}
+            </td>
+        </tr>
+    </table>
+    <p>
+    {{ entry.body|markdown }}
+    </p>
+{% endblock %}

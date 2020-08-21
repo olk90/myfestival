@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block app_content %}
+    <h1>{{ _('Stock Overview') }}</h1>
+    {% if shopping_list_empty %}
+        {% if current_user.is_admin() %}
+        <p>
+            {{ wtf.quick_form(form) }}
+        </p>
+        {% endif %}
+    {% else %}
+    <p><a href="{{ url_for('purchase.shopping_list') }}">{{ _('Shopping list') }}</a></p>
+    {% endif %}
+    <p><a href="{{ url_for('purchase.add_stock') }}">{{ _('Add item') }}</a></p>
+    <p><input type="text" id="stockFilter" onkeyup="stockTableFilter()" placeholder="{{ _('Search for items') }}"></p>
+    <table id="stockTable" class="table table-hover">
+    {% for item in items %}
+        {% include 'purchase/_stock.html' %}
+    {% endfor %}
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static',filename='scripts/tableFilters.js') }}"></script>
+{% endblock %}

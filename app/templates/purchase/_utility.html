@@ -1,0 +1,43 @@
+<tr>
+    <td width="40px">
+        {% if item.owner.username %}
+        <a href="{{ url_for('main.user', username=item.owner.username) }}">
+            <img src="{{ item.owner.avatar(40) }}" width="40px" height="40px"/>
+        </a>
+        {% else %}
+        <img src="{{ item.owner.avatar(40) }}" width="40px" height="40px"/>
+        {% endif %}
+    </td>
+    <td>
+        {% set user_link %}
+            <span class="user_popup">
+                {% if item.owner.username %}
+                <a href="{{ url_for('main.user', username=item.owner.username) }}">
+                    {{ item.owner.get_username() }}
+                </a>
+                {% else %}
+                {{ item.owner.get_username() }}
+                {% endif %}
+            </span>
+        {% endset %}
+        <span style='font-size:20px;'>{{ item.name }}</span>
+        <br>
+        <span>{{ item.description }}</span>
+    </td>
+    {% if current_user == item.owner or current_user.is_admin() %}
+    <td style="text-align: right;" width="40px;">
+        <a href="{{ url_for('purchase.edit_util', item_id=item.id) }}">
+            <span style='font-size:40px;'>&#9998;</span>
+        </a>
+    </td>
+    <td style="text-align: right;" width="40px;">
+        <a href="{{ url_for('purchase.delete_utility', item_id=item.id) }}">
+            <span style='font-size:40px;'>&#10060;</span>
+        </a>
+    </td>
+    {% else %}
+    <td style="text-align: right;">
+        <span style='font-size:40px;'></span>
+    </td>
+    {% endif %}
+</tr>

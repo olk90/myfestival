@@ -1,0 +1,68 @@
+{% import 'macros.html' as m %}
+
+<table class="table table-hover">
+    <tr>
+        <td width="40px">
+            {% if post.author.username %}
+            <a href="{{ url_for('main.user', username=post.author.username) }}">
+                <img src="{{ post.author.avatar(40) }}" width="40px" height="40px"/>
+            </a>
+            {% else %}
+            <img src="{{ post.author.avatar(40) }}" width="40px" height="40px"/>
+            {% endif %}
+        </td>
+        <td>
+            {% set user_link %}
+                <span class="user_popup">
+                    {% if post.author.username %}
+                    <a href="{{ url_for('main.user', username=post.author.username) }}">
+                        {{ post.author.get_username() }}
+                    </a>
+                    {% else %}
+                    {{ post.author.get_username() }}
+                    {% endif %}
+                </span>
+            {% endset %}
+            {% if post.is_pinned %}
+            <b>{{ _('[Pinned]') }}</b>
+            {% endif %}
+            {{ _('%(username)s said %(when)s',
+                    username=user_link, when=moment(post.timestamp).fromNow()) }}
+            <p style="text-align: justify;">{{ post.body|markdown }}</p>
+            {% if on_index_page %}
+            {% if current_user.id == post.author.id or current_user.is_admin() %}
+            <span class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    {{ _('Options') }} <span class="caret"></span>                    
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                    <a href="{{ url_for('main.reply_post', post_id=post.id) }}"><span style='font-size:40px;'>&#9993;</span></a>
+                    </li>
+                    {% if current_user.id == post.author.id %}
+                    <li>
+                        <a href="{{ url_for('main.edit_post', post_id=post.id) }}"><span style='font-size:40px;'>&#9998;</span></a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.is_admin() %}
+                    <li>
+                        <a href="{{ url_for('main.delete_post', post_id=post.id) }}"><span style='font-size:40px;'>&#10060;</span></a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </span>
+            {% endif %}
+            <input type="checkbox" checked id="showReplies{{ post.id }}" onclick="replyTableFilter({{ post.id }});" style="margin-left:20px; margin-right:10px;" >{{ _('Show replies') }}
+            {% endif %}
+        </td>
+        {% if on_index_page %}
+        {% endif %}
+    </tr>
+    <table id="replyTable{{ post.id }}" class="table table-hover">
+    {% if on_index_page %}
+        {% for reply in post.get_replies() %}
+            {% include "main/_reply.html" %}
+        {% endfor %}
+    {% endif %}
+    <table>
+</table>

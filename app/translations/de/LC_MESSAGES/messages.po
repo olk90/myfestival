@@ -1,0 +1,893 @@
+# German translations for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-06-20 15:34+0200\n"
+"PO-Revision-Date: 2019-11-22 21:26+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.7.0\n"
+
+#: app/__init__.py:24
+msgid "Please log into access this page."
+msgstr "Bitte einloggen, um diese Seite anzuzeigen."
+
+#: app/containers.py:12
+msgid "Festival created"
+msgstr "Festival erstellt"
+
+#: app/containers.py:13
+msgid "Festival masterdata updated"
+msgstr "Festivalstammdaten aktualisiert"
+
+#: app/containers.py:14
+msgid "New invoice added"
+msgstr "Neue Rechnung hinzugefügt"
+
+#: app/containers.py:15
+msgid "Invoice updated"
+msgstr "Rechnung aktualisiert"
+
+#: app/containers.py:16
+msgid "Invoice deleted"
+msgstr "Rechnung gelöscht"
+
+#: app/containers.py:17
+msgid "New user has joined"
+msgstr "Neuer Nutzer ist beigetreten"
+
+#: app/containers.py:18
+msgid "User has left"
+msgstr "Nutzer hat das Festival verlassen"
+
+#: app/containers.py:19
+msgid "Festival closed"
+msgstr "Festival abgeschlossen"
+
+#: app/containers.py:20
+msgid "Festival reopened"
+msgstr "Festivalabschluss zurückgesetzt"
+
+#: app/models.py:156
+msgid "Deleted User"
+msgstr "Gelöschter Nutzer"
+
+#: app/models.py:162
+msgid "User"
+msgstr "Nutzer"
+
+#: app/models.py:163
+msgid "Admin"
+msgstr "Admin"
+
+#: app/models.py:164
+msgid "Owner"
+msgstr "Eigentümer"
+
+#: app/administration/backup_import.py:76
+msgid "Invalid version number"
+msgstr "Ungültige Versionsnummer"
+
+#: app/administration/forms.py:9
+msgid "Number of codes"
+msgstr "Anzahl der Codes"
+
+#: app/administration/forms.py:11
+msgid "Generate at least one new code!"
+msgstr "Generiere mindestens einen neuen Code"
+
+#: app/administration/forms.py:12
+msgid "Generate"
+msgstr "Generieren"
+
+#: app/administration/forms.py:16
+msgid "Backup file"
+msgstr "Sicherungsdatei"
+
+#: app/administration/forms.py:17 app/auth/forms.py:13 app/auth/forms.py:22
+msgid "Password"
+msgstr "Passwort"
+
+#: app/administration/messages.py:5
+msgid "Suspension failed. The owner was informed of this traitorous act."
+msgstr "Suspendierung fehlgeschlagen. Dieser Hochverrat bleibt nicht ungesühnt."
+
+#: app/administration/messages.py:9
+msgid "Cannot promote suspended user to admin."
+msgstr "Gesperrter Nutzer kann nicht zum Admin befördert werden."
+
+#: app/administration/messages.py:13
+#, python-format
+msgid "%(username)s must be suspended first."
+msgstr "%(username)s muss erst suspendiert werden."
+
+#: app/administration/routes.py:58 app/chronicle/routes.py:71
+#: app/festival/routes.py:134 app/main/routes.py:113 app/main/routes.py:199
+#: app/purchase/routes.py:189 app/purchase/routes.py:277
+#: app/purchase/routes.py:343 app/purchase/routes.py:363
+msgid "Your changes have been saved."
+msgstr "Deine Änderungen wurden gespeichert."
+
+#: app/administration/routes.py:61
+msgid "Generate Registration Codes"
+msgstr "Registriercodes erstellen"
+
+#: app/administration/routes.py:79
+msgid "Code deleted"
+msgstr "Registriercode gelöscht"
+
+#: app/administration/routes.py:93 app/administration/routes.py:116
+#: app/administration/routes.py:136 app/administration/routes.py:159
+#: app/administration/routes.py:179 app/administration/routes.py:201
+#, python-format
+msgid "%(username)s not found."
+msgstr "%(username)s nicht gefunden."
+
+#: app/administration/routes.py:102
+#, python-format
+msgid "%(username)s has now admin rights!"
+msgstr "%(username)s hat nun Adminrechte!"
+
+#: app/administration/routes.py:122
+#, python-format
+msgid "%(username)s is no longer admin!"
+msgstr "%(username)s ist kein Admin mehr"
+
+#: app/administration/routes.py:145
+#, python-format
+msgid "%(username)s has been suspended!"
+msgstr "%(username)s wurde suspendiert!"
+
+#: app/administration/routes.py:165
+#, python-format
+msgid "%(username)s has been reactivated!"
+msgstr "%(username)s  wurde reaktiviert!"
+
+#: app/administration/routes.py:186
+msgid "Password has been reset!"
+msgstr "Passwort wurde zurückgesetzt!"
+
+#: app/administration/routes.py:210
+#, python-format
+msgid "%(username)s has been deleted!"
+msgstr "%(username)s wurde gelöscht!"
+
+#: app/administration/routes.py:238
+msgid "Invalid password"
+msgstr "Ungältiges Passwort"
+
+#: app/administration/routes.py:241
+msgid "Import finished"
+msgstr "Import abgeschlossen"
+
+#: app/administration/routes.py:243
+#: app/templates/administration/admin_page.html:11
+msgid "Import backup"
+msgstr "Sicherung importieren"
+
+#: app/auth/forms.py:12 app/auth/forms.py:19 app/main/forms.py:15
+msgid "Username"
+msgstr "Nutzername"
+
+#: app/auth/forms.py:14
+msgid "Remember Me"
+msgstr "Erinner dich an mich"
+
+#: app/auth/forms.py:15 app/auth/routes.py:30 app/templates/auth/login.html:5
+msgid "Sign In"
+msgstr "Anmelden"
+
+#: app/auth/forms.py:20
+msgid "Registration Code"
+msgstr "Registriercode"
+
+#: app/auth/forms.py:23
+msgid "Repeat Password"
+msgstr "Passwort wiederholen"
+
+#: app/auth/forms.py:25
+msgid "Passwords are not equal"
+msgstr "Passwörter stimmen nicht überein"
+
+#: app/auth/forms.py:26 app/auth/routes.py:74
+msgid "Register"
+msgstr "Registrieren"
+
+#: app/auth/forms.py:32 app/main/forms.py:46
+msgid "Please use a different username."
+msgstr "Bitte anderen Nutzernamen wählen."
+
+#: app/auth/forms.py:41 app/auth/forms.py:48 app/auth/forms.py:50
+msgid "Invalid registration code."
+msgstr "Unzulässiger Registriercode."
+
+#: app/auth/forms.py:54
+msgid "Old Password"
+msgstr "Altes Passwort"
+
+#: app/auth/forms.py:56
+msgid "New Password"
+msgstr "Neues Passwort"
+
+#: app/auth/forms.py:58
+msgid "Repeat new Password"
+msgstr "Neues Passwort wiederholen"
+
+#: app/auth/forms.py:60
+msgid "New passwords are not equal"
+msgstr "Neue Passwörter sind nicht gleich"
+
+#: app/auth/forms.py:61 app/chronicle/forms.py:17 app/festival/forms.py:20
+#: app/festival/forms.py:51 app/festival/forms.py:60 app/main/forms.py:35
+#: app/main/forms.py:58 app/main/forms.py:65 app/main/forms.py:71
+#: app/purchase/forms.py:23 app/purchase/forms.py:87 app/purchase/forms.py:127
+msgid "Submit"
+msgstr "Absenden"
+
+#: app/auth/forms.py:67
+msgid "Old password is not correct."
+msgstr "Das alte Passwort ist nicht korrekt."
+
+#: app/auth/routes.py:22
+msgid "Invalid username or password"
+msgstr "Nutzername oder Passwort falsch"
+
+#: app/auth/routes.py:58
+msgid "Password successfully reset."
+msgstr "Password erfolgreich zurückgesetzt."
+
+#: app/auth/routes.py:63
+msgid "Invalid registration code or name."
+msgstr "Ungültiger Code oder Nutzername."
+
+#: app/auth/routes.py:70
+msgid "Congratulations, you are now a registered user!"
+msgstr "Herzlichen Glühstrumpf, du hast dich registriert!"
+
+#: app/auth/routes.py:85
+msgid "Password changed."
+msgstr "Passwort geändert."
+
+#: app/auth/routes.py:88 app/templates/main/edit_profile.html:6
+msgid "Change password"
+msgstr "Passwort ändern"
+
+#: app/chronicle/forms.py:11 app/purchase/forms.py:69
+msgid "Festival"
+msgstr "Festival"
+
+#: app/chronicle/forms.py:13
+msgid "Tell the story:"
+msgstr "Erzähl die Geschichte:"
+
+#: app/chronicle/forms.py:30 app/festival/forms.py:33
+msgid "Please use a different title."
+msgstr "Bitte anderen Titel wählen."
+
+#: app/chronicle/forms.py:34 app/purchase/forms.py:75
+msgid "Festival must be selected."
+msgstr "Festival muss ausgewählt werden."
+
+#: app/chronicle/routes.py:48
+msgid "Chronicle entry has been added."
+msgstr "Chronikeintrag hinzugefügt."
+
+#: app/chronicle/routes.py:113
+msgid "Chronicle entry has been deleted."
+msgstr "Chronikeintrag gelöscht."
+
+#: app/festival/forms.py:15 app/festival/forms.py:46 app/festival/forms.py:55
+msgid "Title"
+msgstr "Titel"
+
+#: app/festival/forms.py:16
+msgid "Info"
+msgstr "Info"
+
+#: app/festival/forms.py:18
+msgid "From"
+msgstr "Von"
+
+#: app/festival/forms.py:19
+msgid "To"
+msgstr "Bis"
+
+#: app/festival/forms.py:47 app/festival/forms.py:56
+msgid "Invoice"
+msgstr "Rechnung"
+
+#: app/festival/forms.py:49 app/festival/forms.py:58
+msgid "Invalid invoice amount!"
+msgstr "Unzulässiger Rechnungsbetrag!"
+
+#: app/festival/messages.py:3
+msgid "End date must not be earlier than start date."
+msgstr "Startdatum muss vor dem Enddatum liegen."
+
+#: app/festival/routes.py:22 app/festival/routes.py:40
+#, python-format
+msgid "%(title)s not found."
+msgstr "%(title)s nicht gefunden."
+
+#: app/festival/routes.py:31
+#, python-format
+msgid "Welcome at %(title)s!"
+msgstr "Wilkommen auf dem %(title)s!"
+
+#: app/festival/routes.py:49
+#, python-format
+msgid "You have left %(title)s."
+msgstr "Du hast %(title)s verlassen."
+
+#: app/festival/routes.py:108
+msgid "Festival has been created."
+msgstr "Festival wurde erstellt."
+
+#: app/festival/routes.py:114
+msgid "Create Festival"
+msgstr "Festival erstellen"
+
+#: app/festival/routes.py:146
+msgid "Edit Festival"
+msgstr "Festival editieren"
+
+#: app/festival/routes.py:159
+msgid "Festival has been closed."
+msgstr "Festival wurde abgeschlossen."
+
+#: app/festival/routes.py:171
+msgid "Festival has been reopened."
+msgstr "Festivalabschluss wurde zurückgesetzt."
+
+#: app/festival/routes.py:214
+msgid "Your invoice has been registered."
+msgstr "Deine Rechnung wurde registriert."
+
+#: app/festival/routes.py:218 app/festival/routes.py:219
+msgid "Add Invoice"
+msgstr "Rechnung hinzufügen"
+
+#: app/festival/routes.py:238
+msgid "Invoice has been updated."
+msgstr "Rechnung wurde aktualisiert."
+
+#: app/festival/routes.py:253 app/festival/routes.py:254
+msgid "Edit Invoice"
+msgstr "Rechnung editieren"
+
+#: app/festival/routes.py:268 app/purchase/routes.py:216
+#: app/purchase/routes.py:254 app/purchase/routes.py:386
+#, python-format
+msgid "%(title)s deleted"
+msgstr "%(title)s gelöscht"
+
+#: app/main/forms.py:16
+msgid "About me"
+msgstr "Über mich"
+
+#: app/main/forms.py:18
+msgid "Partner"
+msgstr "Partner"
+
+#: app/main/forms.py:20
+msgid "Water per day [l]"
+msgstr "Wasser pro Tag [l]"
+
+#: app/main/forms.py:22 app/main/forms.py:27 app/main/forms.py:31
+#: app/purchase/forms.py:20
+msgid "Invalid amount!"
+msgstr "Unzulässige Menge"
+
+#: app/main/forms.py:25
+msgid "Beer per day [Cans]"
+msgstr "Bier pro Tag [Dosen]"
+
+#: app/main/forms.py:29
+msgid "Mixed beer per day [Cans]"
+msgstr "Radler pro Tag [Dosen]"
+
+#: app/main/forms.py:33
+msgid "Profile photo"
+msgstr "Profilbild"
+
+#: app/main/forms.py:34
+msgid "File must be an image!"
+msgstr "Datei muss ein Bild sein!"
+
+#: app/main/forms.py:52
+msgid "Partner already taken :'("
+msgstr "Partner schon vergeben :'("
+
+#: app/main/forms.py:56 app/main/forms.py:62
+msgid "Say something:"
+msgstr "Sag was:"
+
+#: app/main/forms.py:64
+msgid "Pin post"
+msgstr "Post anpinnen"
+
+#: app/main/forms.py:69
+msgid "Reply:"
+msgstr "Antworte:"
+
+#: app/main/routes.py:24
+msgid "Your account has been suspended."
+msgstr "Dein Konto wurde gesperrt."
+
+#: app/main/routes.py:46
+msgid "Your post is now live!"
+msgstr "Beitrag ist live!"
+
+#: app/main/routes.py:58 app/templates/base.html:22
+msgid "Home"
+msgstr "Start"
+
+#: app/main/routes.py:77
+msgid "Your reply is now live!"
+msgstr "Deine Antwort ist jetzt live!"
+
+#: app/main/routes.py:79
+msgid "Reply to Post"
+msgstr "Antworte auf den Post"
+
+#: app/main/routes.py:119 app/templates/main/edit_post.html:6
+msgid "Edit Post"
+msgstr "Post editieren"
+
+#: app/main/routes.py:215 app/templates/main/edit_profile.html:5
+msgid "Edit Profile"
+msgstr "Profil editieren"
+
+#: app/main/routes.py:255
+msgid "Post has been deleted."
+msgstr "Post wurde gelöscht."
+
+#: app/purchase/forms.py:17 app/purchase/forms.py:82 app/purchase/forms.py:123
+msgid "Name"
+msgstr "Name"
+
+#: app/purchase/forms.py:18
+msgid "Amount"
+msgstr "Menge"
+
+#: app/purchase/forms.py:21
+msgid "Unit"
+msgstr "Einheit"
+
+#: app/purchase/forms.py:40
+msgid "Item already on list."
+msgstr "Eintrag ist bereits auf der Liste."
+
+#: app/purchase/forms.py:44
+msgid "Unit must be selected."
+msgstr "Einheit muss ausgewählt werden."
+
+#: app/purchase/forms.py:57
+#, python-format
+msgid "Expected unit: %(u)s"
+msgstr "Erwartete Einheit: %(u)s"
+
+#: app/purchase/forms.py:71
+msgid "Create shopping list"
+msgstr "Einkaufsliste erstellen"
+
+#: app/purchase/forms.py:84
+msgid "Abbreviation"
+msgstr "Abkürzung"
+
+#: app/purchase/forms.py:100 app/purchase/forms.py:140
+msgid "Please use a different name."
+msgstr "Bitte anderen Namen wählen."
+
+#: app/purchase/forms.py:114
+msgid "Please use a different abbreviation."
+msgstr "Bitte andere Abkürzung wählen."
+
+#: app/purchase/forms.py:125
+msgid "Description"
+msgstr "Beschreibung"
+
+#: app/purchase/logic.py:114
+msgid "List generated."
+msgstr "Liste erstellt."
+
+#: app/purchase/messages.py:4
+msgid "Festival has no participants. Call the banners!"
+msgstr "Das Festival hat noch keine Teilnehmer. Ruft zur Heerschau!"
+
+#: app/purchase/messages.py:6
+msgid "Cannot finish purchase, there are still items on the shopping list"
+msgstr ""
+"Einkauf kann nicht abgeschlossen werden, es sind noch immer Einträge auf "
+"der Einkaufsliste"
+
+#: app/purchase/routes.py:122
+#, python-format
+msgid "%(title)s added to cart"
+msgstr "%(title)s liegt jetzt im Einkaufswagen"
+
+#: app/purchase/routes.py:142 app/purchase/routes.py:161
+msgid "Item has been added."
+msgstr "Eintrag wurde hinzugefügt"
+
+#: app/purchase/routes.py:146 app/purchase/routes.py:168
+msgid "Add Item"
+msgstr "Eintrag hinzufügen"
+
+#: app/purchase/routes.py:198
+msgid "Edit Item"
+msgstr "Eintrag editieren"
+
+#: app/purchase/routes.py:203
+msgid "Cannot edit items while purchase is not closed."
+msgstr ""
+"Eintrag kann nicht verändert werden, solange der Einkauf nicht "
+"abgeschlossen wurde."
+
+#: app/purchase/routes.py:256
+#, python-format
+msgid "%(title)s cannot be deleted!"
+msgstr "%(title)s kann nicht gelöscht werden!"
+
+#: app/purchase/routes.py:284 app/purchase/routes.py:311
+#: app/purchase/routes.py:370
+msgid "Edit packaging unit"
+msgstr "Bestandseinheit editieren"
+
+#: app/purchase/routes.py:307
+msgid "Packaging unit has been added."
+msgstr "Bestandseinheit wurde hinzugefügt"
+
+#: app/purchase/routes.py:347
+msgid "Add utility item"
+msgstr "Eintrag hinzufügen"
+
+#: app/templates/add_form.html:5 app/templates/purchase/add_item_form.html:5
+#, python-format
+msgid "%(heading)s"
+msgstr "%(heading)s"
+
+#: app/templates/base.html:4
+msgid "Welcome to MyFestival"
+msgstr "Willkommen zu MyFestival"
+
+#: app/templates/base.html:23 app/templates/main/user_overview.html:5
+msgid "Members"
+msgstr "Mitglieder"
+
+#: app/templates/base.html:27
+msgid "Stock Management"
+msgstr "Bestandsverwaltung"
+
+#: app/templates/base.html:30
+msgid "Stock"
+msgstr "Bestand"
+
+#: app/templates/base.html:31 app/templates/purchase/wishlist.html:5
+msgid "Wishlist"
+msgstr "Wunschliste"
+
+#: app/templates/base.html:32
+msgid "Utilities"
+msgstr "Ausstattung"
+
+#: app/templates/base.html:35 app/templates/purchase/pku_overview.html:5
+msgid "Packaging Units"
+msgstr "Bestandseinheiten"
+
+#: app/templates/base.html:43
+msgid "Festivals"
+msgstr "Festivals"
+
+#: app/templates/base.html:53 app/templates/festival/festival_overview.html:5
+msgid "Festival Overview"
+msgstr "Festivalübersicht"
+
+#: app/templates/base.html:56
+msgid "Chronicles"
+msgstr "Chroniken"
+
+#: app/templates/base.html:65
+msgid "Login"
+msgstr "Login"
+
+#: app/templates/administration/admin_page.html:7 app/templates/base.html:70
+msgid "Administration"
+msgstr "Administration"
+
+#: app/templates/base.html:84
+msgid "Profile"
+msgstr "Profil"
+
+#: app/templates/base.html:93
+msgid "Logout"
+msgstr "Ausloggen"
+
+#: app/templates/administration/admin_page.html:9
+msgid "Generate new registration codes"
+msgstr "Neue Registriercodes erstellen"
+
+#: app/templates/administration/admin_page.html:10
+msgid "Create backup"
+msgstr "Sicherung erstellen"
+
+#: app/templates/auth/login.html:12
+msgid "New User?"
+msgstr "Neuer Nutzer?"
+
+#: app/templates/auth/login.html:12
+msgid "Click to Register!"
+msgstr "Zur Registrierung"
+
+#: app/templates/chronicle/_entry.html:29
+msgid "an entry"
+msgstr "einen Eintrag"
+
+#: app/templates/chronicle/_entry.html:33
+#, python-format
+msgid "%(username)s wrote %(e)s"
+msgstr "%(username)s hat %(e)s geschrieben"
+
+#: app/templates/chronicle/chronicle_entry.html:19
+#, python-format
+msgid "Written by %(username)s %(when)s"
+msgstr "Verfasst von %(username)s %(when)s"
+
+#: app/templates/chronicle/chronicle_entry.html:27
+#: app/templates/main/_post.html:36 app/templates/main/_reply.html:31
+msgid "Options"
+msgstr "Optionen"
+
+#: app/templates/chronicle/chronicle_overview.html:5
+msgid "Tales of glorious Deeds"
+msgstr "Erzählungen glorreicher Taten"
+
+#: app/templates/chronicle/chronicle_overview.html:6
+msgid "Add entry"
+msgstr "Eintrag hinzufügen"
+
+#: app/templates/chronicle/setup_entry.html:6
+msgid "Edit entry"
+msgstr "Eintrag editieren"
+
+#: app/templates/chronicle/setup_entry.html:8
+msgid "Add new entry"
+msgstr "Neuen Eintrag schreiben"
+
+#: app/templates/errors/401.html:4 app/templates/errors/403.html:4
+msgid "You shall not pass!"
+msgstr "Du kannst nicht vorbei!"
+
+#: app/templates/errors/401.html:5 app/templates/errors/403.html:5
+msgid "Seriously, dude ... get lost!"
+msgstr "Echt jetzt ... verpiss dich!"
+
+#: app/templates/errors/401.html:6 app/templates/errors/403.html:6
+#: app/templates/errors/404.html:5 app/templates/errors/500.html:6
+msgid "Back"
+msgstr "Zurück"
+
+#: app/templates/errors/404.html:4
+msgid "File Not Found"
+msgstr "Seite nicht gefunden"
+
+#: app/templates/errors/500.html:4
+msgid "An unexpected error has occurred"
+msgstr "Du hast einen Fehler gefunden"
+
+#: app/templates/errors/500.html:5
+msgid "The administrator has been notified, but doesn't give a shit!"
+msgstr ""
+"Die Administration wurde \"informiert\", interessiert sich aber einen "
+"Scheiß!"
+
+#: app/templates/festival/_festival.html:29
+#, python-format
+msgid "%(username)s created %(f)s"
+msgstr "%(username)s hat %(f)s erstellt"
+
+#: app/templates/festival/_festival.html:39
+msgid "Last update: "
+msgstr "Letztes Update: "
+
+#: app/templates/festival/_invoice.html:24
+#, python-format
+msgid "%(username)s paid %(amount)s"
+msgstr "%(username)s hat %(amount)s gezahlt"
+
+#: app/templates/festival/_invoice.html:30
+msgid "Sharers"
+msgstr "Teilhaber"
+
+#: app/templates/festival/_invoice.html:35
+#: app/templates/festival/_transfer.html:25
+#: app/templates/festival/_transfer.html:52
+#, python-format
+msgid "%(username)s"
+msgstr "%(username)s"
+
+#: app/templates/festival/_transfer.html:24
+msgid "Payer"
+msgstr "Kostenträger"
+
+#: app/templates/festival/_transfer.html:51
+msgid "Recipient"
+msgstr "Empfänger"
+
+#: app/templates/festival/festival.html:16
+#, python-format
+msgid "%(count)s participants"
+msgstr "%(count)s Teilnehmer"
+
+#: app/templates/festival/festival.html:18
+msgid "One participant"
+msgstr "Ein Teilnehmer"
+
+#: app/templates/festival/festival.html:36
+#, python-format
+msgid " %(username)s "
+msgstr " %(username)s "
+
+#: app/templates/festival/festival.html:41
+msgid "No participants yet"
+msgstr "Noch keine Teilnehmer"
+
+#: app/templates/festival/festival.html:44
+msgid "Join the Crew"
+msgstr "Der Meute beitreten"
+
+#: app/templates/festival/festival.html:46
+msgid "Leave Festival"
+msgstr "Festival verlassen"
+
+#: app/templates/festival/festival.html:49
+msgid "Add invoice"
+msgstr "Rechnung hinzufügen"
+
+#: app/templates/festival/festival.html:51
+msgid "Close festival"
+msgstr "Festival abschließen"
+
+#: app/templates/festival/festival.html:54
+msgid "Show transfers"
+msgstr "Überweisungen"
+
+#: app/templates/festival/festival.html:56
+msgid "Reopen festival"
+msgstr "Festivalabschluss zurücksetzen"
+
+#: app/templates/festival/festival_overview.html:7
+msgid "Create festival"
+msgstr "Festival erstellen"
+
+#: app/templates/festival/transfer_overview.html:11
+msgid "Back to festival page"
+msgstr "Zurück zur Festivalseite"
+
+#: app/templates/main/_post.html:27
+msgid "[Pinned]"
+msgstr "[Angepinnt]"
+
+#: app/templates/main/_post.html:29
+#, python-format
+msgid "%(username)s said %(when)s"
+msgstr "%(username)s sagte %(when)s"
+
+#: app/templates/main/_post.html:55
+msgid "Show replies"
+msgstr "Zeige Antworten"
+
+#: app/templates/main/_reply.html:26
+#, python-format
+msgid "%(username)s replied %(when)s"
+msgstr "%(username)s hat %(when)s geantwortet"
+
+#: app/templates/main/_user.html:24
+#, python-format
+msgid "%(username)s was last seen %(when)s"
+msgstr "%(username)s wurde zuletzt %(when)s gesehen"
+
+#: app/templates/main/_user.html:26 app/templates/main/user.html:9
+msgid "Access Level"
+msgstr "Zugangslevel"
+
+#: app/templates/main/index.html:6
+#, python-format
+msgid "Hi, %(username)s!"
+msgstr "Tach, %(username)s!"
+
+#: app/templates/main/search.html:4
+msgid "Search Results"
+msgstr "Suchergebnisse"
+
+#: app/templates/main/user.html:12
+msgid "Reset Code"
+msgstr "Reset-Code"
+
+#: app/templates/main/user.html:14
+msgid "Reset Password"
+msgstr "Passwort zurücksetzen"
+
+#: app/templates/main/user.html:19 app/templates/main/user_popup.html:17
+msgid "Last seen on"
+msgstr "Zuletzt gesehen"
+
+#: app/templates/main/user.html:22
+msgid "Edit your profile"
+msgstr "Profil ändern"
+
+#: app/templates/main/user.html:25 app/templates/main/user_popup.html:23
+msgid "Strip of rank and titles"
+msgstr "Aus dem Amt jagen"
+
+#: app/templates/main/user.html:28 app/templates/main/user_popup.html:25
+msgid "Promote to Lord Admin"
+msgstr "Zum Hohen Administrator befördern"
+
+#: app/templates/main/user.html:34
+msgid "Reactivate User"
+msgstr "Nutzer reaktivieren"
+
+#: app/templates/main/user.html:36
+msgid "Suspend User"
+msgstr "Nutzer suspendieren"
+
+#: app/templates/main/user.html:40
+msgid "Delete User"
+msgstr "Nutzer löschen"
+
+#: app/templates/purchase/add_item_form.html:7
+msgid "Back to overview"
+msgstr "Zurück zur Übersicht"
+
+#: app/templates/purchase/pku_overview.html:8
+msgid "Add packaging unit"
+msgstr "Bestandseinheit hinzufügen"
+
+#: app/templates/purchase/shopping_list.html:5
+msgid "Shopping List"
+msgstr "Einkaufsliste"
+
+#: app/templates/purchase/shopping_list.html:6
+msgid "Finish purchase"
+msgstr "Einkauf abschließen"
+
+#: app/templates/purchase/shopping_list.html:7
+#: app/templates/purchase/stock_overview.html:17
+#: app/templates/purchase/utility_overview.html:7
+#: app/templates/purchase/wishlist.html:16
+msgid "Search for items"
+msgstr "Nach Einträgen suchen"
+
+#: app/templates/purchase/stock_overview.html:6
+msgid "Stock Overview"
+msgstr "Bestandsübersicht"
+
+#: app/templates/purchase/stock_overview.html:14
+#: app/templates/purchase/wishlist.html:13
+msgid "Shopping list"
+msgstr "Einkaufsliste"
+
+#: app/templates/purchase/stock_overview.html:16
+#: app/templates/purchase/utility_overview.html:6
+#: app/templates/purchase/wishlist.html:15
+msgid "Add item"
+msgstr "Eintrag hinzufügen"
+
+#: app/templates/purchase/utility_overview.html:5
+msgid "Utility Items"
+msgstr "Gebrauchsgegenstände"
+
+#~ msgid "%(username)s wrote a chronicle entry for %(f)s"
+#~ msgstr "%(username)s hat einen Chronikeintrag über das %(f)s verfasst"
+

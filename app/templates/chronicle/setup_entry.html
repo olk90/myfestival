@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% import 'macros.html' as m %}
+
+{% block app_content %}
+    {% if form.is_edit %}
+    <h1>{{ _('Edit entry') }}</h1>
+    {% else %}
+    <h1>{{ _('Add new entry') }}</h1>
+    {% endif %}
+    {{ m.chronicle_form(form) }}
+{% endblock %}

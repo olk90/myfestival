@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% import 'macros.html' as m %}
+
+{% block app_content %}
+    <h1>{{ _(title) }}</h1>
+    {% include 'main/_post.html' %}
+    {{ m.reply_form(form) }}
+    <table class="table table-hover">
+    {% for reply in post.get_replies() %}
+        {% include 'main/_reply.html' %}
+    {% endfor %}
+    </table>
+{% endblock %}

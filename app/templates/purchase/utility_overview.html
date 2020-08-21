@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1>{{ _('Utility Items') }}</h1>
+    <p><a href="{{ url_for('purchase.add_util') }}">{{ _('Add item') }}</a></p>
+    <p><input type="text" id="utilityFilter" onkeyup="utilityTableFilter()" placeholder="{{ _('Search for items') }}"></p>
+    <table id="utilityTable" class="table table-hover">
+    {% for item in items %}
+        {% include 'purchase/_utility.html' %}
+    {% endfor %}
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static',filename='scripts/tableFilters.js') }}"></script>
+{% endblock %}

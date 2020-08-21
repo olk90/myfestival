@@ -1,0 +1,32 @@
+<table class="table table-hover">
+    <tr>
+        <td width="40px">
+            {% if user.username %}
+            <a href="{{ url_for('main.user', username=user.username) }}">
+                <img src="{{ user.avatar(40) }}" width="40px" height="40px"/>
+            </a>
+            {% else %}
+            <img src="{{ user.avatar(40) }}" width="40px" height="40px"/>
+            {% endif %}
+        </td>
+        <td>
+            {% set user_link %}
+                <span class="user_popup">
+                    {% if user.username %}
+                    <a href="{{ url_for('main.user', username=user.username) }}">
+                        {{ user.get_username() }}
+                    </a>
+                    {% else %}
+                    {{ user.get_username() }}
+                    {% endif %}
+                </span>
+            {% endset %}
+            {{ _('%(username)s was last seen %(when)s', username=user_link, when=moment(user.last_seen).fromNow()) }}
+            <br>
+            <p>{{ _('Access Level') }}: {{ user.translate_access_level() }}</p>
+            {% if user.about_me %}
+            {{ user.about_me }}
+            {% endif %}
+        </td>
+    </tr>
+</table>

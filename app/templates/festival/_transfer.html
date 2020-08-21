@@ -1,0 +1,55 @@
+<table class="table table-hover">
+    <tr>
+        <td width="40px">
+            {% if transfer.payer.username %}
+            <a href="{{ url_for('main.user', username=transfer.payer.username) }}">
+                <img src="{{ transfer.payer.avatar(40) }}" width="40px" height="40px"/>
+            </a>
+            {% else %}
+            <img src="{{ transfer.payer.avatar(40) }}" width="40px" height="40px"/>
+            {% endif %}
+        </td>
+        <td>
+            {% set user_link %}
+                <span class="user_popup">
+                    {% if transfer.payer.username %}
+                    <a href="{{ url_for('main.user', username=transfer.payer.username) }}">
+                        {{ transfer.payer.get_username() }}
+                    </a>
+                    {% else %}
+                    {{ transfer.payer.get_username() }}
+                    {% endif %}
+                </span>
+            {% endset %}
+            <span>{{ _('Payer') }}</span>
+            <p>{{ _('%(username)s', username=user_link) }}</p>
+        </td>
+        <td style='width: 80%;text-align:center'>
+            <span style='font-size:30px;'>{{ "%.2f"|format(transfer.amount) }}</span>
+        </td>
+        <td width="40px">
+            {% if transfer.recipient.username %}
+            <a href="{{ url_for('main.user', username=transfer.recipient.username) }}">
+                <img src="{{ transfer.recipient.avatar(40) }}" width="40px" height="40px"/>
+            </a>
+            {% else %}
+            <img src="{{ transfer.recipient.avatar(40) }}" width="40px" height="40px"/>
+            {% endif %}
+        </td>
+        <td>
+            {% set user_link %}
+                <span class="user_popup">
+                    {% if transfer.recipient.username %}
+                    <a href="{{ url_for('main.user', username=transfer.recipient.username) }}">
+                        {{ transfer.recipient.get_username() }}
+                    </a>
+                    {% else %}
+                    {{ transfer.recipient.get_username() }}
+                    {% endif %}
+                </span>
+            {% endset %}
+            <span>{{ _('Recipient') }}</span>
+            <p>{{ _('%(username)s', username=user_link) }}</p>
+        </td>
+    </tr>
+</table>

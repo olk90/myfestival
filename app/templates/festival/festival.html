@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <table class="table table-hover">
+        <tr>
+            <td>
+                <h1>{{ festival.title }}</h1>
+                <span style='font-size:20px;'>{{ festival.startdate }} &ndash; {{ festival.enddate }}</span>
+                {% if festival.info %}
+                <p>{{ festival.info|markdown }}</p>
+                {% endif %}
+                {% if participants %}
+                <p><div class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                        {% if participants|length > 1 %}
+                           {{ _('%(count)s participants', count=participants|length) }} <span class="caret"></span>                    
+                        {% else %}
+                           {{ _('One participant') }} <span class="caret"></span>                    
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu">
+                    {% for participant in participants %}
+                        {% set user_link %}
+                            <span class="user_popup">
+                                <li>
+                                {% if participant.username %}
+                                <a href="{{ url_for('main.user', username=participant.username) }}">
+                                    {{ participant.get_username() }}
+                                </a>
+                                {% else %}
+                                {{ participant.get_username() }}
+                                {% endif %}
+                                </li>
+                            </span>
+                        {% endset %}
+                        {{ _(' %(username)s ', username=user_link) }}
+                    {% endfor %}
+                    </ul>
+                </div></p>
+                {% else %}
+                <p>{{ _('No participants yet') }}</p>
+                {% endif %}
+                {% if not festival.contains_user(current_user) %}
+                <p><a href="{{ url_for('festival.join_festival', title=festival.title) }}">{{ _('Join the Crew') }}</a></p>
+                {% else %}
+                <p><a href="{{ url_for('festival.leave_festival', title=festival.title) }}">{{ _('Leave Festival') }}</a></p>
+                {% endif %}
+                {% if not festival.is_closed %}
+                <p><a href="{{ url_for('festival.add_invoice', title=festival.title) }}">{{ _('Add invoice') }}</a></p>
+                {% if current_user.is_admin() %}
+                <p><a href="{{ url_for('festival.close_festival', title=festival.title) }}">{{ _('Close festival') }}</a></p>
+                {% endif %}
+                {% else %}
+                <p><a href="{{ url_for('festival.transfers', title=festival.title) }}">{{ _('Show transfers') }}</a></p>
+                {% if current_user.is_admin() %}
+                <p><a href="{{ url_for('festival.reopen_festival', title=festival.title) }}">{{ _('Reopen festival') }}</a></p>
+                {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    {% for invoice in invoices %}
+        {% include 'festival/_invoice.html' %}
+    {% endfor %}
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a href="{{ next_url or '#' }}">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}

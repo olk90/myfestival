@@ -1,0 +1,17 @@
+<table class="table table-hover">
+    <tr>
+        <td width="70px">
+            <img src="{{ current_user.avatar(70, registration.code, True) }}" width="70px" height="70px"/>
+        </td>
+        <td>
+            <span style='font-size:30px;'>{{ registration.code }}</span>
+        </td>
+        {% if current_user.is_owner() %}
+        <td style="text-align: right;" width="70px;">
+            <a href="{{ url_for('administration.delete_registration_code', rc_id=registration.id) }}">
+                <span style='font-size:70px;'>&#10060;</span>
+            </a>
+        </td>
+        {% endif %}
+    </tr>
+</table>
