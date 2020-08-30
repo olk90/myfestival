@@ -8,6 +8,7 @@ from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_moment import Moment
+from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import UploadSet, configure_uploads, IMAGES, \
     patch_request_class
@@ -78,9 +79,11 @@ def create_app(config_class=Config):
         app.logger.info('MyFestival startup')
 
     configure_uploads(app, photos)
+    # configure_uploads(app, photos)
     patch_request_class(app, size=3 * 1024 * 1024)
 
     Markdown(app)
+    PageDown(app)
 
     return app
 

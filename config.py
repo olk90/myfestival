@@ -24,4 +24,4 @@ class Config(object):
     UPLOADED_PHOTOS_DEST = os.path.join(basedir,
                                         'app',
                                         'static',
-                                        'profile_photos')
+                                        'photos')

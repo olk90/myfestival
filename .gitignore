@@ -42,3 +42,5 @@ app.db
 .env
 ws.code-workspace
 profile_photos
+photos
+chronicles

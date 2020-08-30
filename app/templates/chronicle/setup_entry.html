@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% import 'macros.html' as m %}
+{% block head %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock head %}
 
 {% block app_content %}
     {% if form.is_edit %}

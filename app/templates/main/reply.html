@@ -2,6 +2,11 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 {% import 'macros.html' as m %}
 
+{% block head %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock head %}
+
 {% block app_content %}
     <h1>{{ _(title) }}</h1>
     {% include 'main/_post.html' %}

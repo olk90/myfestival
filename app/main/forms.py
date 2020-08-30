@@ -1,4 +1,5 @@
 from flask_babel import _, lazy_gettext as _l
+from flask_pagedown.fields import PageDownField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 
@@ -53,19 +54,19 @@ class EditProfileForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    post = TextAreaField(_l('Say something:'),
+    post = PageDownField(_l('Say something:'),
                          validators=[DataRequired(), Length(min=1)])
     submit = SubmitField(_l('Submit'))
 
 
 class AdminPostForm(FlaskForm):
-    post = TextAreaField(_l('Say something:'),
+    post = PageDownField(_l('Say something:'),
                          validators=[DataRequired(), Length(min=1)])
     is_pinned = BooleanField(_l('Pin post'))
     submit = SubmitField(_l('Submit'))
 
 
 class ReplyForm(FlaskForm):
-    post = TextAreaField(_l('Reply:'),
+    post = PageDownField(_l('Reply:'),
                          validators=[DataRequired(), Length(min=1)])
     submit = SubmitField(_l('Submit'))

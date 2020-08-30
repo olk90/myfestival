@@ -137,9 +137,15 @@ def register(app):
         db.engine.execute('DROP TABLE IF EXISTS alembic_version')
         db.drop_all()
         print('Delete old profile photos')
-        dir_path = Config.UPLOADED_PHOTOS_DEST
+        avatars = Config.UPLOADED_PHOTOS_DEST
         try:
-            shutil.rmtree(dir_path)
+            shutil.rmtree(avatars)
         except OSError as e:
-            print("Error: %s : %s" % (dir_path, e.strerror))
+            print("Error: %s : %s" % (avatars, e.strerror))
+        print('Delete chronicle photos')
+        photos = Config.CHRONICLES
+        try:
+            shutil.rmtree(photos)
+        except OSError as e:
+            print("Error: %s : %s" % (photos, e.strerror))
         os.system('flask db upgrade')
