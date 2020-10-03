@@ -30,10 +30,11 @@ def chronicle_overview():
                            next_url=next_url, prev_url=prev_url)
 
 
-@bp.route('/add_entry', methods=['GET', 'POST'])
+@bp.route('/add_entry', defaults={'f_id': None}, methods=['GET', 'POST'])
+@bp.route('/add_entry/<f_id>', methods=['GET', 'POST'])
 @login_required
-def add_entry():
-    form = ChronicleEntryForm()
+def add_entry(f_id):
+    form = ChronicleEntryForm(f_id)
     form.festival.choices = get_festival_selection()
     if form.validate_on_submit():
         f_id = form.festival.data
@@ -50,6 +51,9 @@ def add_entry():
                        .format(current_user.username, entry.id))
         return redirect(url_for('chronicle.chronicle_entry',
                                 entry_id=entry.id))
+    elif f_id and request.method == 'GET':
+        ca.logger.info('pre select festival >{}<'.format(f_id))
+        form.festival.process_data(f_id)
     return render_template('chronicle/setup_entry.html',
                            form=form)
 

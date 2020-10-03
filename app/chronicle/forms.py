@@ -39,7 +39,9 @@ class ChronicleEntryForm(FlaskForm):
         if festival.data == -1:
             raise ValidationError(_('Festival must be selected.'))
 
-    def __init__(self, entry_id=None, is_edit=False, *args, **kwargs):
+    def __init__(self, entry_id=None, f_id=None, is_edit=False,
+                 *args, **kwargs):
         super(ChronicleEntryForm, self).__init__(*args, **kwargs)
         self.entry_id = entry_id
+        self.f_id = f_id
         self.is_edit = is_edit
