@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-03 18:26+0200\n"
+"POT-Creation-Date: 2020-11-21 18:14+0100\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -854,6 +854,14 @@ msgstr "Zurück zur Übersicht"
 #: app/templates/purchase/pku_overview.html:8
 msgid "Add packaging unit"
 msgstr "Bestandseinheit hinzufügen"
+
+#: app/templates/purchase/pku_overview.html:12
+msgid "Non-erasable"
+msgstr "Nicht löschbar"
+
+#: app/templates/purchase/pku_overview.html:17
+msgid "Others"
+msgstr "Sonstige"
 
 #: app/templates/purchase/shopping_list.html:5
 msgid "Shopping List"

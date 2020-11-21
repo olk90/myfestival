@@ -8,21 +8,14 @@
             {{ _('Add packaging unit') }}
         </a>
     </p>
+    
+    <h3>{{ _('Non-erasable') }}</h3>
+    {% for pku in nonerasables %}
+        {% include 'purchase/_pku.html' %}
+    {% endfor %}
+    
+    <h3>{{ _('Others') }}</h3>
     {% for pku in units %}
         {% include 'purchase/_pku.html' %}
     {% endfor %}
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                <a href="{{ prev_url or '#' }}">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a href="{{ next_url or '#' }}">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
 {% endblock %}

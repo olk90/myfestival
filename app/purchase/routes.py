@@ -223,17 +223,17 @@ def pku_overview():
     if current_user.is_admin():
         ca.logger.info('>{}< has loaded PKU overview'
                        .format(current_user.username))
-        page = request.args.get('page', 1, type=int)
-        pkus = PackagingUnitType.query.order_by(
-            PackagingUnitType.name) \
-            .paginate(page, ca.config['POSTS_PER_PAGE'], False)
-        next_url = url_for('purchase.pku_overview',
-                           page=pkus.next_num) if pkus.has_next else None
-        prev_url = url_for('purchase.pku_overview',
-                           page=pkus.prev_num) if pkus.has_prev else None
+
+        # display all non-erasable PKUs in a separate list
+        nonersable_pkus = PackagingUnitType.query \
+            .filter(PackagingUnitType.delete == False) \
+                .order_by(PackagingUnitType.name).all()  # noqa  E225
+
+        pkus = PackagingUnitType.query.filter(PackagingUnitType.delete) \
+            .order_by(PackagingUnitType.name).all()
         return render_template('purchase/pku_overview.html',
-                               units=pkus.items,
-                               next_url=next_url, prev_url=prev_url)
+                               nonerasables=nonersable_pkus,
+                               units=pkus)
     else:
         ca.logger.warn('Blocked PKU overview access for >{}<'
                        .format(current_user.username))
