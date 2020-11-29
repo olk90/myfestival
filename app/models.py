@@ -15,9 +15,16 @@ from app.containers import (ConsumptionItemState, FestivalUpdateInfo,
                             NotificationType, UserAccessLevel)
 
 
+# PyCharm can't resolve expressions such as User.query because
+# these methods are added dynamically during initialization, as
+# mentioned here: https://stackoverflow.com/a/39103583
+# So, as a workaround use the session's query methods.
+session = db.session
+
+
 @login.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return session.query(User).get(int(user_id))
 
 
 # auxiliary table, so there is no class needed
@@ -121,11 +128,11 @@ class User(UserMixin, db.Model):
 
     def new_activities(self):
         last_visit_time = self.last_seen or datetime(1900, 1, 1)
-        return Festival.query.filter(
+        return session.query(Festival).filter(
             Festival.modified > last_visit_time).count()
 
     def access_level_changed(self):
-        n = Notification.query.filter(
+        n = session.query(Notification).filter(
             Notification.user_id == self.id,
             Notification.name == NotificationType.admin).first()
         if n is None:
@@ -135,13 +142,13 @@ class User(UserMixin, db.Model):
 
     def available_codes(self):
         if self.is_owner:
-            return Registration.query.count()
+            return session.query(Registration).count()
         else:
             return None
 
     def add_notification(self, name, data):
         self.notifications.filter_by(name=name).delete()
-        n = Notification(name=name, payload_json=json.dumps(data), user=self)
+        n = Notification(name=name, payload_json=json.dumps(data), user_id=self.id)
         db.session.add(n)
         return n
 
@@ -180,7 +187,7 @@ class Post(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
     def get_replies(self):
-        return Post.query.filter(Post.parent_id == self.id).order_by(
+        return session.query(Post).filter(Post.parent_id == self.id).order_by(
             Post.timestamp.desc()).all()
 
     def __repr__(self):
@@ -254,7 +261,7 @@ class Invoice(db.Model):
             self.sharers.remove(user)
 
     def set_sharers(self, sharer_ids):
-        users = User.query.filter(User.id.in_(sharer_ids)).all()
+        users = session.query(User).filter(User.id.in_(sharer_ids)).all()
         for u in users:
             if not self.contains_user(u):
                 self.sharers.append(u)
@@ -356,4 +363,4 @@ class ChronicleEntry(db.Model):
         return first_line.startswith('# ')
 
     def __repr__(self):
-        return '<ChronicleEntry {}>'.format(self.title)
+        return '<ChronicleEntry {}>'.format(self.get_title())
