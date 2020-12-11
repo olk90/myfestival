@@ -22,7 +22,7 @@
                 </span>
             {% endset %}
             {% set festival_link %}
-                <a href="{{ url_for('festival.festival', title=festival.title) }}">
+                <a href="{{ url_for('festival.festival_page', title=festival.title) }}">
                     {{ festival.title }}
                 </a>
             {% endset %}

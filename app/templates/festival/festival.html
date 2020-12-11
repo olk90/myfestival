@@ -52,7 +52,7 @@
                 <p><a href="{{ url_for('festival.close_festival', title=festival.title) }}">{{ _('Close festival') }}</a></p>
                 {% endif %}
                 {% else %}
-                <p><a href="{{ url_for('festival.transfers', title=festival.title) }}">{{ _('Show transfers') }}</a></p>
+                <p><a href="{{ url_for('festival.transfers_page', title=festival.title) }}">{{ _('Show transfers') }}</a></p>
                 {% if current_user.is_admin() %}
                 <p><a href="{{ url_for('festival.reopen_festival', title=festival.title) }}">{{ _('Reopen festival') }}</a></p>
                 {% endif %}

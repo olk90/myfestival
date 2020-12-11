@@ -49,7 +49,7 @@ def get_pallets(amount, size, days):
 
 def calculate_drinks(festival_id, is_testing):
     festival = Festival.query.get(festival_id)
-    duration = festival.enddate - festival.startdate
+    duration = festival.end_date - festival.start_date
     days = duration.days
     beer_amount = mixed_amount = water_amount = 0
     for p in load_participants_from_db(festival_id):

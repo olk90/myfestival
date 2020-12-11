@@ -1,13 +1,13 @@
 from flask_login import current_user
 
-from app import db
+from app import db, session
 from app.containers import FestivalUpdateInfo
 from app.models import Transfer, User, participants as prts, sharers as shrs
 
 
 def get_partner_selection():
     result = [(-1, '')]
-    partners = User.query.filter(User.id != current_user.id)
+    partners = session.query(User).filter(User.id != current_user.id)
     for p in partners:
         result.append((p.id, p.username))
     return result
@@ -15,7 +15,7 @@ def get_partner_selection():
 
 def remove_partner(user):
     user.partner_id = None
-    partner = User.query.filter_by(partner_id=current_user.id).first()
+    partner = session.query(User).filter_by(partner_id=current_user.id).first()
     if partner:
         partner.partner_id = None
     db.session.commit()
@@ -24,7 +24,7 @@ def remove_partner(user):
 def get_participants(festival_id):
     """Returns a list of tuples, do not use to get the corresponding users!"""
     result = []
-    participants = User.query.join(prts) \
+    participants = session.query(User).join(prts) \
         .filter(prts.c.festival_id == festival_id).all()
     for p in participants:
         result.append((p.id, p.username))
@@ -34,7 +34,7 @@ def get_participants(festival_id):
 def get_sharers(invoice_id):
     """Returns a list of tuples, do not use to get the corresponding users!"""
     result = []
-    sharers = User.query.join(shrs) \
+    sharers = session.query(User).join(shrs) \
         .filter(shrs.c.invoice_id == invoice_id).all()
     for s in sharers:
         result.append((s.id, s.username))
@@ -42,13 +42,13 @@ def get_sharers(invoice_id):
 
 
 def load_participants_from_db(festival_id):
-    return User.query \
+    return session.query(User) \
         .join(prts) \
         .filter(prts.c.festival_id == festival_id).all()
 
 
 def get_next_payer(receiver, payers):
-    partner = User.query.filter_by(partner_id=receiver.id).first()
+    partner = session.query(User).filter_by(partner_id=receiver.id).first()
     if partner in payers:
         return partner
     else:
@@ -63,7 +63,7 @@ def get_next_payer(receiver, payers):
 def calculate_shares(festival):
     participants = get_participants(festival.id)
     for p in participants:
-        user = User.query.get(p[0])
+        user = session.query(User).get(p[0])
         user.dept = 0.0
 
     for p in festival.invoices:
@@ -107,7 +107,7 @@ def close_festival(festival):
 
 
 def reopen_festival(festival):
-    transfers = Transfer.query.filter_by(festival_id=festival.id).all()
+    transfers = session.query(Transfer).filter_by(festival_id=festival.id).all()
     for t in transfers:
         db.session.delete(t)
     festival.is_closed = False

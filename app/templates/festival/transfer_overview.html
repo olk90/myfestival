@@ -8,7 +8,7 @@
                 {% if festival.info %}
                 <p>{{ festival.info|markdown }}</p>
                 {% endif %}
-                <p><a href="{{ url_for('festival.festival', title=festival.title) }}">{{ _('Back to festival page') }}</a></p>
+                <p><a href="{{ url_for('festival.festival_page', title=festival.title) }}">{{ _('Back to festival page') }}</a></p>
             </td>
         </tr>
     </table>

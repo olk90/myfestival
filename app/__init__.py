@@ -18,6 +18,7 @@ from flaskext.markdown import Markdown
 from config import Config
 
 db = SQLAlchemy()
+session = db.session
 migrate = Migrate()
 
 login = LoginManager()

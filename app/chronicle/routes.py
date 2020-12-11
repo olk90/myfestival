@@ -4,7 +4,7 @@ from flask import flash, redirect, render_template, request, url_for
 from flask_babel import _
 from flask_login import current_user, login_required
 
-from app import db
+from app import db, session
 from app.chronicle import bp
 from app.chronicle.forms import ChronicleEntryForm
 from app.chronicle.logic import get_festival_selection
@@ -15,7 +15,7 @@ from app.models import ChronicleEntry, Festival
 @login_required
 def chronicle_overview():
     page = request.args.get('page', 1, type=int)
-    entries = ChronicleEntry.query.order_by(ChronicleEntry.timestamp.desc()) \
+    entries = session.query(ChronicleEntry).order_by(ChronicleEntry.timestamp.desc()) \
         .paginate(page, ca.config['POSTS_PER_PAGE'], False)
     ca.logger.info('>{}< has loaded chronicle overview'
                    .format(current_user.username))
@@ -38,7 +38,7 @@ def add_entry(f_id):
     form.festival.choices = get_festival_selection()
     if form.validate_on_submit():
         f_id = form.festival.data
-        festival = Festival.query.get(f_id)
+        festival = session.query(Festival).get(f_id)
         y = festival.get_year()
         entry = ChronicleEntry(body=form.body.data,
                                festival_id=f_id,
@@ -61,7 +61,7 @@ def add_entry(f_id):
 @bp.route('/edit_entry/<entry_id>', methods=['GET', 'POST'])
 @login_required
 def edit_entry(entry_id):
-    entry = ChronicleEntry.query.get(entry_id)
+    entry = session.query(ChronicleEntry).get(entry_id)
     if current_user == entry.chronicler:
         form = ChronicleEntryForm(entry_id=entry_id, is_edit=True)
         form.festival.choices = get_festival_selection()
@@ -69,7 +69,7 @@ def edit_entry(entry_id):
             f_id = form.festival.data
             entry.festival_id = f_id
             entry.body = form.body.data
-            festival = Festival.query.get(f_id)
+            festival = session.query(Festival).get(f_id)
             entry.year = festival.get_year()
             db.session.commit()
             flash(_('Your changes have been saved.'))
@@ -83,7 +83,7 @@ def edit_entry(entry_id):
                 form.festival.data = festival_id
             form.body.data = entry.body
 
-        festival = Festival.query.get(entry.festival_id)
+        festival = session.query(Festival).get(entry.festival_id)
         return render_template('chronicle/setup_entry.html',
                                f_title=festival.title,
                                form=form)
@@ -97,7 +97,7 @@ def edit_entry(entry_id):
 @bp.route('/chronicle_entry/<entry_id>')
 @login_required
 def chronicle_entry(entry_id):
-    entry = ChronicleEntry.query.filter_by(id=entry_id).first_or_404()
+    entry = session.query(ChronicleEntry).filter_by(id=entry_id).first_or_404()
     ca.logger.info('>{}< has entered chronicle page >{}<'
                    .format(current_user.username, entry.id))
     return render_template('chronicle/chronicle_entry.html', entry=entry)
@@ -106,7 +106,7 @@ def chronicle_entry(entry_id):
 @bp.route('/delete_entry/<entry_id>', methods=['GET', 'POST'])
 @login_required
 def delete_entry(entry_id):
-    entry = ChronicleEntry.query.get(entry_id)
+    entry = session.query(ChronicleEntry).get(entry_id)
     if current_user.is_admin() or current_user == entry.chronicler:
         name = entry.chronicler.username
 

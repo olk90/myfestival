@@ -8,7 +8,7 @@ from wtforms import StringField, SubmitField, TextAreaField, DecimalField, \
 from wtforms.validators import DataRequired, ValidationError, Length, \
     NumberRange
 
-from app import photos
+from app import photos, session
 from app.models import User
 
 
@@ -42,13 +42,13 @@ class EditProfileForm(FlaskForm):
 
     def validate_username(self, username):
         if username.data != self.original_username:
-            user = User.query.filter_by(username=self.username.data).first()
+            user = session.query(User).filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError(_('Please use a different username.'))
 
     def validate_partner(self, partner):
         if partner.data != self.partner_id:
-            p = User.query.filter_by(partner_id=self.partner.data).first()
+            p = session.query(User).filter_by(partner_id=self.partner.data).first()
             if p is not None:
                 raise ValidationError(_('Partner already taken :\'('))
 
