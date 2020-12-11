@@ -4,7 +4,7 @@ from flask_babel import _
 from flask_login import login_user, logout_user, current_user
 from werkzeug.urls import url_parse
 
-from app import db
+from app import db, session
 from app.logic import notify_owner
 from app.auth import bp
 from app.auth.forms import LoginForm, RegistrationForm, ChangePasswordForm
@@ -17,7 +17,7 @@ def login():
         return redirect(url_for('main.index'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = session.query(User).filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash(_('Invalid username or password'))
             return redirect(url_for('auth.login'))
@@ -48,7 +48,7 @@ def register():
         password = form.password.data
         # special case password reset
         if len(code) == 10:
-            user = User.query.filter(
+            user = session.query(User).filter(
                 User.username == username,
                 User.reset_code == code
             ).first()
@@ -65,7 +65,7 @@ def register():
             user = User(username=username, registration_code=code)
             user.set_password(password)
             db.session.add(user)
-            registration = Registration.query.filter_by(code=code).first()
+            registration = session.query(Registration).filter_by(code=code).first()
             db.session.delete(registration)
             flash(_('Congratulations, you are now a registered user!'))
             ca.logger.info('>{}< signed up for duty'.format(user.username))
@@ -79,7 +79,7 @@ def register():
 def change_password():
     form = ChangePasswordForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=current_user.username).first()
+        user = session.query(User).filter_by(username=current_user.username).first()
         user.set_password(form.new_password.data)
         db.session.commit()
         flash(_('Password changed.'))

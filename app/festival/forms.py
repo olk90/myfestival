@@ -7,6 +7,7 @@ from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, ValidationError, Length,\
     NumberRange
 
+from app import session
 from app.models import Festival
 from app.festival.messages import start_before_end
 
@@ -15,16 +16,15 @@ class FestivalForm(FlaskForm):
     title = StringField(_l('Title'), validators=[DataRequired()])
     info = TextAreaField(_l('Info'),
                          validators=[Length(min=0, max=666)])
-    startdate = DateField(_l('From'), validators=[DataRequired()])
-    enddate = DateField(_l('To'), validators=[DataRequired()])
+    start_date = DateField(_l('From'), validators=[DataRequired()])
+    end_date = DateField(_l('To'), validators=[DataRequired()])
     submit = SubmitField(_l('Submit'))
 
     def validate_title(self, title):
-        festival = None
         if not self.is_edit:
-            festival = Festival.query.filter_by(title=title.data).first()
+            festival = session.query(Festival).filter_by(title=title.data).first()
         else:
-            festival = Festival.query.filter(
+            festival = session.query(Festival).filter(
                 Festival.title == title.data,
                 Festival.id != self.festival_id
             ).first()
@@ -32,8 +32,8 @@ class FestivalForm(FlaskForm):
         if festival is not None:
             raise ValidationError(_('Please use a different title.'))
 
-    def validate_enddate(self, enddate):
-        if enddate.data < self.startdate.data:
+    def validate_end_date(self, end_date):
+        if end_date.data < self.start_date.data:
             raise ValidationError(start_before_end)
 
     def __init__(self, festival_id=None, is_edit=False, *args, **kwargs):

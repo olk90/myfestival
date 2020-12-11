@@ -4,7 +4,7 @@ from flask_babel import _
 from flask_login import login_required, current_user
 from sqlalchemy import or_
 
-from app import db
+from app import db, session
 from app.containers import ConsumptionItemState
 from app.models import ConsumptionItem, PackagingUnitType, UtilityItem
 from app.purchase import bp
@@ -84,12 +84,12 @@ def shopping_list():
 @bp.route('/finish_purchase')
 @login_required
 def finish_purchase():
-    list_items = ConsumptionItem.query.filter_by(
+    list_items = session.query(ConsumptionItem).filter_by(
         state=ConsumptionItemState.purchase).all()
     if not list_items:
-        new_items = ConsumptionItem.query.filter_by(
+        new_items = session.query(ConsumptionItem).filter_by(
             state=ConsumptionItemState.cart).all()
-        available_items = ConsumptionItem.query.filter_by(
+        available_items = session.query(ConsumptionItem).filter_by(
             state=ConsumptionItemState.stock).all()
         for i in new_items:
             other = list(filter(lambda a: (a.name == i.name), available_items))
@@ -113,7 +113,7 @@ def finish_purchase():
 @bp.route('/check_off/<item_id>', methods=['GET', 'POST'])
 @login_required
 def check_off(item_id):
-    item = ConsumptionItem.query.get(item_id)
+    item = session.query(ConsumptionItem).get(item_id)
     item.state = ConsumptionItemState.cart
     db.session.commit()
     ca.logger.info(
@@ -171,8 +171,8 @@ def add_request():
 @bp.route('/edit_item/<item_id>', methods=['GET', 'POST'])
 @login_required
 def edit_item(item_id):
-    item = ConsumptionItem.query.get(item_id)
-    pending_items = ConsumptionItem.query.filter(or_(
+    item = session.query(ConsumptionItem).get(item_id)
+    pending_items = session.query(ConsumptionItem).filter(or_(
         ConsumptionItem.state == ConsumptionItemState.purchase,
         ConsumptionItem.state == ConsumptionItemState.cart)).count()
     if pending_items == 0:
@@ -207,7 +207,7 @@ def edit_item(item_id):
 @bp.route('/delete_item/<item_id>', methods=['GET', 'POST'])
 @login_required
 def delete_item(item_id):
-    item = ConsumptionItem.query.get(item_id)
+    item = session.query(ConsumptionItem).get(item_id)
     db.session.delete(item)
     db.session.commit()
     ca.logger.info(
@@ -225,11 +225,11 @@ def pku_overview():
                        .format(current_user.username))
 
         # display all non-erasable PKUs in a separate list
-        nonersable_pkus = PackagingUnitType.query \
+        nonersable_pkus = session.query(PackagingUnitType) \
             .filter(PackagingUnitType.delete == False) \
                 .order_by(PackagingUnitType.name).all()  # noqa  E225
 
-        pkus = PackagingUnitType.query.filter(PackagingUnitType.delete) \
+        pkus = session.query(PackagingUnitType).filter(PackagingUnitType.delete) \
             .order_by(PackagingUnitType.name).all()
         return render_template('purchase/pku_overview.html',
                                nonerasables=nonersable_pkus,
@@ -244,7 +244,7 @@ def pku_overview():
 @login_required
 def delete_pku(pku_id):
     if current_user.is_admin():
-        pku = PackagingUnitType.query.get(pku_id)
+        pku = session.query(PackagingUnitType).get(pku_id)
         if pku.delete:
             db.session.delete(pku)
             db.session.commit()
@@ -265,7 +265,7 @@ def delete_pku(pku_id):
 @login_required
 def edit_pku(pku_id):
     if current_user.is_admin():
-        pku = PackagingUnitType.query.get(pku_id)
+        pku = session.query(PackagingUnitType).get(pku_id)
         form = PKUForm(pku.id, is_edit=True)
         if form.validate_on_submit():
             pku.name = form.name.data
@@ -350,7 +350,7 @@ def add_util():
 @bp.route('/edit_util/<item_id>', methods=['GET', 'POST'])
 @login_required
 def edit_util(item_id):
-    util = UtilityItem.query.get(item_id)
+    util = session.query(UtilityItem).get(item_id)
     if current_user.is_admin() or current_user == util.owner:
         form = UtilityForm(util_id=util.id, is_edit=True)
         if form.validate_on_submit():
@@ -377,7 +377,7 @@ def edit_util(item_id):
 @bp.route('/delete_utility/<item_id>', methods=['GET', 'POST'])
 @login_required
 def delete_utility(item_id):
-    item = UtilityItem.query.get(item_id)
+    item = session.query(UtilityItem).get(item_id)
     db.session.delete(item)
     db.session.commit()
     ca.logger.info(

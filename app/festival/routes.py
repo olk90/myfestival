@@ -100,8 +100,8 @@ def create_festival():
             festival = Festival(title=form.title.data,
                                 info=form.info.data,
                                 creator_id=current_user.id,
-                                startdate=form.startdate.data,
-                                enddate=form.enddate.data,
+                                startdate=form.start_date.data,
+                                enddate=form.end_date.data,
                                 is_closed=False)
             db.session.add(festival)
             notify_users()
@@ -127,8 +127,8 @@ def edit_festival(festival_id):
         if form.validate_on_submit():
             festival.title = form.title.data
             festival.info = form.info.data
-            festival.startdate = form.startdate.data
-            festival.enddate = form.enddate.data
+            festival.start_date = form.start_date.data
+            festival.end_date = form.end_date.data
             festival.update_info = FestivalUpdateInfo.festival_md_updated
             notify_users()
             flash(_('Your changes have been saved.'))
@@ -138,8 +138,8 @@ def edit_festival(festival_id):
         elif request.method == 'GET':
             form.title.data = festival.title
             form.info.data = festival.info
-            form.startdate.data = festival.startdate
-            form.enddate.data = festival.enddate
+            form.start_date.data = festival.start_date
+            form.end_date.data = festival.end_date
 
         return render_template('festival/setup_festival.html',
                                form=form,

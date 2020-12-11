@@ -5,7 +5,7 @@ import os
 from flask import abort
 from flask_login import current_user
 
-from app import db
+from app import db, session
 from app.containers import NotificationType, UserAccessLevel
 from app.models import User, Festival, PackagingUnitType
 
@@ -20,7 +20,7 @@ def notify_users(current_user_id=None,
                  notificationType=NotificationType.festival_updated):
     if current_user_id is None:
         current_user_id = current_user.id
-    users = User.query.filter(User.id != current_user_id).all()
+    users = session.query(User).filter(User.id != current_user_id).all()
     for u in users:
         u.add_notification(notificationType, u.new_activities())
     db.session.commit()
@@ -35,7 +35,7 @@ def notify_user(user, notificationType=NotificationType.admin):
 
 def notify_owner(notificationType=NotificationType.no_registration_codes):
     payload = 1
-    owner = User.query.filter_by(access_level=UserAccessLevel.OWNER).first()
+    owner = session.query(User).filter_by(access_level=UserAccessLevel.OWNER).first()
     if notificationType is NotificationType.no_registration_codes:
         payload = owner.available_codes()
     owner.add_notification(notificationType, payload)
@@ -63,7 +63,7 @@ def create_user(username,
 
 
 def create_festival(title, start, end):
-    users = User.query.all()
+    users = session.query(User).all()
     festival = Festival(title=title, creator_id=users[0].id,
                         startdate=start, enddate=end)
     db.session.add(festival)

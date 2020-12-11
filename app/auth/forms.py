@@ -5,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import EqualTo, DataRequired, ValidationError
 
+from app import session
 from app.models import User, Registration
 
 
@@ -25,24 +26,24 @@ class RegistrationForm(FlaskForm):
                                 message=_l('Passwords are not equal'))])
     submit = SubmitField(_l('Register'))
 
-    def validate_username(self, username):
-        user = User.query.filter(User.username == username.data,
-                                 User.reset_code == None).first()  # noqa E711
+    def validate_username(self, username):  # noqa
+        user = session.query(User).filter(User.username == username.data,
+                                          User.reset_code == None).first()  # noqa E711
         if user is not None:
             raise ValidationError(_('Please use a different username.'))
 
-    def validate_registration_code(self, registration_code):
+    def validate_registration_code(self, registration_code):  # noqa
         registration_code = registration_code.data
         # special case for password reset
         if len(registration_code) == 10:
-            user = User.query.filter_by(
+            user = session.query(User).filter_by(
                 reset_code=registration_code).first()
             if user is None:
                 raise ValidationError(_('Invalid registration code.'))
         else:
-            user = User.query.filter_by(
+            user = session.query(User).filter_by(
                 registration_code=registration_code).first()
-            registration = Registration.query.filter_by(
+            registration = session.query(Registration).filter_by(
                 code=registration_code).first()
             if user is not None:
                 raise ValidationError(_('Invalid registration code.'))
@@ -60,8 +61,8 @@ class ChangePasswordForm(FlaskForm):
                                 message=_l('New passwords are not equal'))])
     submit = SubmitField(_l('Submit'))
 
-    def validate_old_password(self, old_password):
-        user = User.query.filter_by(username=current_user.username).first()
+    def validate_old_password(self, old_password):  # noqa
+        user = session.query(User).filter_by(username=current_user.username).first()
         is_valid = user.check_password(old_password.data)
         if not is_valid:
             raise ValidationError(_('Old password is not correct.'))

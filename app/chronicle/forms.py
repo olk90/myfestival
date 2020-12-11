@@ -6,7 +6,7 @@ from flask_pagedown.fields import PageDownField
 from wtforms import SelectField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
 
-# from app import photos
+from app import session
 from app.models import ChronicleEntry
 
 
@@ -23,11 +23,10 @@ class ChronicleEntryForm(FlaskForm):
     submit = SubmitField(_l('Submit'))
 
     def validate_title(self, title):
-        entry = None
         if not self.is_edit:
-            entry = ChronicleEntry.query.filter_by(title=title.data).first()
+            entry = session.query(ChronicleEntry).filter_by(title=title.data).first()
         else:
-            entry = ChronicleEntry.query.filter(
+            entry = session.query(ChronicleEntry).filter(
                 ChronicleEntry.title == title.data,
                 ChronicleEntry.id != self.festival_id
             ).first()
@@ -35,7 +34,7 @@ class ChronicleEntryForm(FlaskForm):
         if entry is not None:
             raise ValidationError(_('Please use a different title.'))
 
-    def validate_festival(self, festival):
+    def validate_festival(self, festival):  # noqa
         if festival.data == -1:
             raise ValidationError(_('Festival must be selected.'))
 
