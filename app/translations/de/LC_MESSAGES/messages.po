@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-11-21 18:14+0100\n"
+"POT-Creation-Date: 2020-12-12 00:52+0100\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -58,19 +58,19 @@ msgstr "Festival abgeschlossen"
 msgid "Festival reopened"
 msgstr "Festivalabschluss zurückgesetzt"
 
-#: app/models.py:156
+#: app/models.py:163
 msgid "Deleted User"
 msgstr "Gelöschter Nutzer"
 
-#: app/models.py:162
+#: app/models.py:169
 msgid "User"
 msgstr "Nutzer"
 
-#: app/models.py:163
+#: app/models.py:170
 msgid "Admin"
 msgstr "Admin"
 
-#: app/models.py:164
+#: app/models.py:171
 msgid "Owner"
 msgstr "Eigentümer"
 
