@@ -206,8 +206,8 @@ class Festival(db.Model):
     modified = db.Column(db.DateTime, onupdate=datetime.utcnow, nullable=False,
                          default=datetime.utcnow)
 
-    startdate = db.Column(db.Date, nullable=False)
-    enddate = db.Column(db.Date, nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
 
     invoices = db.relationship('Invoice', backref='festival', lazy='dynamic')
     participants = db.relationship(
