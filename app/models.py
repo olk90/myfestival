@@ -234,7 +234,7 @@ class Festival(db.Model):
             participants.c.participant_id == user.id).count() > 0
 
     def get_year(self):
-        return extract('year', self.startdate)
+        return extract('year', self.start_date)
 
     def __repr__(self):
         return '<Festival {}>'.format(self.title)
