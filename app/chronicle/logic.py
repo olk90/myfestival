@@ -11,3 +11,7 @@ def get_festival_selection():
     for f in festivals:
         result.append((f.id, f.title))
     return result
+
+
+def sub_directory_name(f_id, u_id):
+    return '{}_{}'.format(f_id, u_id)

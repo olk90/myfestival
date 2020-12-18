@@ -1,13 +1,9 @@
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from flask_wtf import FlaskForm
-# from flask_wtf.file import FileField, FileAllowed
 from flask_pagedown.fields import PageDownField
 from wtforms import SelectField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
-
-from app import session
-from app.models import ChronicleEntry
 
 
 class ChronicleEntryForm(FlaskForm):
@@ -15,24 +11,7 @@ class ChronicleEntryForm(FlaskForm):
                            coerce=int)
     body = PageDownField(_l('Tell the story:'),
                          validators=[DataRequired(), Length(min=1)])
-    # TODO: implement upload set
-    # pics = FileField(_l('Upload photos'), validators=[
-    #     FileAllowed(photos, _l('File must be an image!'))])
-    # additional fields (later): file selection (pics), year is to be
-    # extracted from the selected festival
     submit = SubmitField(_l('Submit'))
-
-    def validate_title(self, title):
-        if not self.is_edit:
-            entry = session.query(ChronicleEntry).filter_by(title=title.data).first()
-        else:
-            entry = session.query(ChronicleEntry).filter(
-                ChronicleEntry.title == title.data,
-                ChronicleEntry.id != self.festival_id
-            ).first()
-
-        if entry is not None:
-            raise ValidationError(_('Please use a different title.'))
 
     def validate_festival(self, festival):  # noqa
         if festival.data == -1:

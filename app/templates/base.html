@@ -1,5 +1,10 @@
 {% extends 'bootstrap/base.html' %}
 
+{% block head %}
+    <meta charset="utf-8">
+    {{ super() }}
+{% endblock %}
+
 {% block title %}
     {% if title %}{{ title }} - MyFestival{% else %}{{ _('Welcome to MyFestival') }}{% endif %}
 {% endblock %}
@@ -8,7 +13,8 @@
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -18,79 +24,84 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                {% if current_user.is_authenticated %}
-                    <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
-                    <li><a href="{{ url_for('main.members') }}">{{ _('Members') }}</a></li>
-                    <li style="padding: 15px;">
-                        <div class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" style="text-decoration: none; color: #777;">
-                                {{ _('Stock Management') }} <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ url_for('purchase.stock_overview') }}">{{ _('Stock') }}</a></li>
-                                <li><a href="{{ url_for('purchase.wishlist') }}">{{ _('Wishlist') }}</a></li>
-                                <li><a href="{{ url_for('purchase.utility_overview') }}">{{ _('Utilities') }}</a></li>
-                                {% if current_user.is_admin() %}
-                                <li class="divider"></li> 
-                                <li><a href="{{ url_for('purchase.pku_overview') }}">{{ _('Packaging Units') }}</a></li>
-                                {% endif %}
-                            </ul>
-                        </div> 
-                    </li>
-                    <li style="padding: 15px;">
-                        <div class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" style="text-decoration: none; color: #777;">
-                                {{ _('Festivals') }} <span class="caret"></span>
-                                {% set new_activity = current_user.new_activities() %}
-                                <span id="festival_count" class="badge"
-                                    style="visibility: {% if new_activity %}visible
-                                                        {% else %}hidden {% endif %};">
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
+                        <li><a href="{{ url_for('main.members') }}">{{ _('Members') }}</a></li>
+                        <li style="padding: 15px;">
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   style="text-decoration: none; color: #777;">
+                                    {{ _('Stock Management') }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ url_for('purchase.stock_overview') }}">{{ _('Stock') }}</a></li>
+                                    <li><a href="{{ url_for('purchase.wishlist') }}">{{ _('Wishlist') }}</a></li>
+                                    <li><a href="{{ url_for('purchase.utility_overview') }}">{{ _('Utilities') }}</a>
+                                    </li>
+                                    {% if current_user.is_admin() %}
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a href="{{ url_for('purchase.pku_overview') }}">{{ _('Packaging Units') }}</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </li>
+                        <li style="padding: 15px;">
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   style="text-decoration: none; color: #777;">
+                                    {{ _('Festivals') }} <span class="caret"></span>
+                                    {% set new_activity = current_user.new_activities() %}
+                                    <span id="festival_count" class="badge"
+                                          style="visibility: {% if new_activity %}visible
+                                          {% else %}hidden {% endif %};">
                                     {{ new_activity }}
                                 </span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{ url_for('festival.festival_overview') }}">{{ _('Festival Overview') }}</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url_for('chronicle.chronicle_overview') }}">{{ _('Chronicles') }}</a>
-                                </li>
-                            </ul>
-                        </div> 
-                    </li>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ url_for('festival.festival_overview') }}">{{ _('Festival Overview') }}</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('chronicle.chronicle_overview') }}">{{ _('Chronicles') }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('auth.login') }}">{{ _('Login') }}</a></li>
+                        <li><a href="{{ url_for('auth.login') }}">{{ _('Login') }}</a></li>
                     {% else %}
-                    {% if current_user.is_admin() %}
-                    <li>
-                        <a href="{{ url_for('administration.admin_page') }}">
-                            {{ _('Administration') }}
-                            {% if current_user.is_owner() %}
-                            {% set available_codes = current_user.available_codes() %}
-                            <span id="available_codes" class="badge"
-                                  style="visibility: {% if available_codes %}visible
-                                                     {% else %}hidden {% endif %};">
+                        {% if current_user.is_admin() %}
+                            <li>
+                                <a href="{{ url_for('administration.admin_page') }}">
+                                    {{ _('Administration') }}
+                                    {% if current_user.is_owner() %}
+                                        {% set available_codes = current_user.available_codes() %}
+                                        <span id="available_codes" class="badge"
+                                              style="visibility: {% if available_codes %}visible
+                                              {% else %}hidden {% endif %};">
                                 {{ available_codes }}
                             </span>
-                            {% endif %}
-                        </a>
-                    </li>
-                    {% endif %}
-                    <li>
-                        <a href="{{ url_for('main.user', username=current_user.username) }}">
-                            {{ _('Profile') }}
-                            {% set access_level_changed = current_user.access_level_changed() %}
-                            <span id="admin_changed" class="badge"
-                                  style="visibility: {% if access_level_changed %}visible
-                                                     {% else %}hidden {% endif %};">
+                                    {% endif %}
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="{{ url_for('main.user', username=current_user.username) }}">
+                                {{ _('Profile') }}
+                                {% set access_level_changed = current_user.access_level_changed() %}
+                                <span id="admin_changed" class="badge"
+                                      style="visibility: {% if access_level_changed %}visible
+                                      {% else %}hidden {% endif %};">
                                 {{ access_level_changed }}
                             </span>
-                        </a>
-                    </li>
-                    <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a></li>
+                            </a>
+                        </li>
+                        <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -101,11 +112,11 @@
 {% block content %}
     <div class="container">
         {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
         {% endwith %}
 
         {# application content needs to be provided in the app_content block #}
@@ -118,6 +129,6 @@
     {{ moment.include_moment() }}
     {{ moment.lang(g.locale) }}
     {% if current_user.is_authenticated %}
-    <script type="text/javascript" src="{{ url_for('static',filename='scripts/notifications.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='scripts/notifications.js') }}"></script>
     {% endif %}
 {% endblock %}

@@ -3,6 +3,8 @@
 {% block head %}
 {{ super() }}
 {{ pagedown.include_pagedown() }}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
 {% endblock head %}
 
 {% block app_content %}
@@ -11,5 +13,5 @@
     {% else %}
     <h1>{{ _('Add new entry') }}</h1>
     {% endif %}
-    {{ m.chronicle_form(form) }}
+    {{ m.chronicle_form(form, f_id) }}
 {% endblock %}

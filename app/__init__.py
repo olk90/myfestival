@@ -80,7 +80,6 @@ def create_app(config_class=Config):
         app.logger.info('MyFestival startup')
 
     configure_uploads(app, photos)
-    # configure_uploads(app, photos)
     patch_request_class(app, size=3 * 1024 * 1024)
 
     Markdown(app)

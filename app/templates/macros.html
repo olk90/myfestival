@@ -1,58 +1,62 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% macro post_form(form, current_user, is_parent) %}
-{% if form %}
-    <form action="" method="post" class="form" role="form">
-    {{ form.hidden_tag() }}
-    {{ wtf.form_errors(form, hiddens='only') }}
-    <p>
-    {{ wtf.form_field(form.post, style='font-family:courier;') }}
-    {% if current_user.is_admin() and is_parent %}
-    {{ wtf.form_field(form.is_pinned) }}
-    {%endif%}
-    {{ wtf.form_field(form.submit, type='submit') }}
-    </p>
-    </form>
-{% endif %}
+    {% if form %}
+        <form action="" method="post" class="form" role="form">
+            {{ form.hidden_tag() }}
+            {{ wtf.form_errors(form, hiddens='only') }}
+            <p>
+                {{ wtf.form_field(form.post, style='font-family:courier;') }}
+                {% if current_user.is_admin() and is_parent %}
+                    {{ wtf.form_field(form.is_pinned) }}
+                {% endif %}
+                {{ wtf.form_field(form.submit, type='submit') }}
+            </p>
+        </form>
+    {% endif %}
 {%- endmacro %}
 
 {% macro reply_form(form) %}
     <form action="" method="post" class="form" role="form">
-    {{ form.hidden_tag() }}
-    {{ wtf.form_errors(form, hiddens='only') }}
-    <p>
-    {{ wtf.form_field(form.post, style='font-family:courier;') }}
-    {{ wtf.form_field(form.submit, type='submit') }}
-    </p>
+        {{ form.hidden_tag() }}
+        {{ wtf.form_errors(form, hiddens='only') }}
+        <p>
+            {{ wtf.form_field(form.post, style='font-family:courier;') }}
+            {{ wtf.form_field(form.submit, type='submit') }}
+        </p>
     </form>
 {%- endmacro %}
 
 {% macro festival_form(form) %}
-{% if form %}
-    <form action="" method="post" class="form" role="form">
-    {{ form.hidden_tag() }}
-    {{ wtf.form_errors(form, hiddens='only') }}
-    <p>
-    {{ wtf.form_field(form.title) }}
-    {{ wtf.form_field(form.info, style='font-family:courier;') }}
-    {{ wtf.form_field(form.start_date) }}
-    {{ wtf.form_field(form.end_date) }}
-    {{ wtf.form_field(form.submit, type='submit') }}
-    </p>
-    </form>
-{% endif %}
+    {% if form %}
+        <form action="" method="post" class="form" role="form">
+            {{ form.hidden_tag() }}
+            {{ wtf.form_errors(form, hiddens='only') }}
+            <p>
+                {{ wtf.form_field(form.title) }}
+                {{ wtf.form_field(form.info, style='font-family:courier;') }}
+                {{ wtf.form_field(form.start_date) }}
+                {{ wtf.form_field(form.end_date) }}
+                {{ wtf.form_field(form.submit, type='submit') }}
+            </p>
+        </form>
+    {% endif %}
 {%- endmacro %}
 
-{% macro chronicle_form(form) %}
-{% if form %}
-    <form action="" method="post" class="form" role="form">
-    {{ form.hidden_tag() }}
-    {{ wtf.form_errors(form, hiddens='only') }}
-    <p>
-    {{ wtf.form_field(form.festival) }}
-    {{ wtf.form_field(form.body, rows=20, style='font-family:courier;') }}
-    {{ wtf.form_field(form.submit, type='submit') }}
-    </p>
-    </form>
-{% endif %}
+{% macro chronicle_form(form, f_id) %}
+    {% if form %}
+        <form id="chronicleUpload" action="{{ url_for('chronicle.upload_images', f_id=f_id) }}" class="dropzone"
+              method="post"></form>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
+        <script src="/static/scripts/chronicleDropzone.js"></script>
+        <form action="" method="post" class="form" role="form">
+            {{ form.hidden_tag() }}
+            {{ wtf.form_errors(form, hiddens='only') }}
+            <p>
+                {{ wtf.form_field(form.festival) }}
+                {{ wtf.form_field(form.body, rows=20, style='font-family:courier;') }}
+                {{ wtf.form_field(form.submit, type='submit') }}
+            </p>
+        </form>
+    {% endif %}
 {%- endmacro %}
