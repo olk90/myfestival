@@ -1,7 +1,7 @@
 from datetime import date
 from sqlalchemy import or_
 
-from app import db
+from app import db, session
 from app.logic import create_festival, create_user, create_pku
 from app.containers import UserAccessLevel, ConsumptionItemState
 from app.purchase.logic import check_shopping_empty, \
@@ -21,7 +21,7 @@ def setup_testdata(stock_amount=5, request_amount=5):
                     start=date(2019, 8, 13),
                     end=date(2019, 8, 18))
     create_pku()
-    pcs = PackagingUnitType.query.filter_by(internal_name='Pieces').first()
+    pcs = session.query(PackagingUnitType).filter_by(internal_name='Pieces').first()
     in_stock = ConsumptionItem(name="Sausage",
                                state=ConsumptionItemState.stock,
                                pku_id=pcs.id,
@@ -45,7 +45,7 @@ class ConsumptionItemModelTest(BaseTestCase):
         generate_shopping_list(festival_id=1, is_testing=True)
         self.assertFalse(check_shopping_empty())
 
-        shopping_list = ConsumptionItem.query.filter(
+        shopping_list = session.query(ConsumptionItem).filter(
             or_(ConsumptionItem.state == ConsumptionItemState.purchase,
                 ConsumptionItem.state == ConsumptionItemState.cart)).all()
 
@@ -60,7 +60,7 @@ class ConsumptionItemModelTest(BaseTestCase):
         generate_shopping_list(festival_id=1, is_testing=True)
         self.assertFalse(check_shopping_empty())
 
-        shopping_list = ConsumptionItem.query.filter(
+        shopping_list = session.query(ConsumptionItem).filter(
             or_(ConsumptionItem.state == ConsumptionItemState.purchase,
                 ConsumptionItem.state == ConsumptionItemState.cart)).all()
 
@@ -71,7 +71,7 @@ class ConsumptionItemModelTest(BaseTestCase):
 
     def test_complete_amount(self):
         setup_testdata()
-        pcs = PackagingUnitType.query.filter_by(internal_name='Pieces').first()
+        pcs = session.query(PackagingUnitType).filter_by(internal_name='Pieces').first()
         request = ConsumptionItem(name="Toast",
                                   pku_id=pcs.id,
                                   amount=4,
@@ -83,7 +83,7 @@ class ConsumptionItemModelTest(BaseTestCase):
         generate_shopping_list(festival_id=1, is_testing=True)
         self.assertFalse(check_shopping_empty())
 
-        shopping_list = ConsumptionItem.query.filter(
+        shopping_list = session.query(ConsumptionItem).filter(
             or_(ConsumptionItem.state == ConsumptionItemState.purchase,
                 ConsumptionItem.state == ConsumptionItemState.cart)).all()
 

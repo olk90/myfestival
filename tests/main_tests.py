@@ -1,13 +1,12 @@
 import os
 
-from datetime import datetime, timedelta
 from hashlib import md5
 import unittest
 
-from app import db
+from app import db, session
 from app.containers import UserAccessLevel
-from app.models import User, Post
-from test_config import TestConfig, BaseTestCase
+from app.models import User
+from test_config import BaseTestCase
 
 
 class UserModelCase(BaseTestCase):
@@ -16,7 +15,7 @@ class UserModelCase(BaseTestCase):
         runner = self.app.test_cli_runner()
         result = runner.invoke(args=['install', 'admin'])
 
-        user = User.query.filter_by(username='admin').first()
+        user = session.query(User).filter_by(username='admin').first()
         self.assertIsNotNone(user)
         self.assertEquals(UserAccessLevel.OWNER, user.access_level)
 
@@ -34,7 +33,7 @@ class UserModelCase(BaseTestCase):
                             registration_code='93c191CC'))
         db.session.commit()
 
-        user = User.query.filter_by(username='Palpatine').first()
+        user = session.query(User).filter_by(username='Palpatine').first()
         self.assertEquals(UserAccessLevel.USER, user.access_level)
 
     def test_avatar(self):
