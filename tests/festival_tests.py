@@ -30,7 +30,7 @@ def setup_base_costallocation():
     start = date(2019, 8, 13)
     end = date(2019, 8, 18)
     festival = Festival(title='Festival1', creator=u1,
-                        startdate=start, enddate=end)
+                        start_date=start, end_date=end)
     db.session.add(festival)
     invoices = [
         Invoice(title='Fuel', amount=60.0, creditor=u3, festival=festival),
@@ -83,7 +83,7 @@ def setup_complex_costallocation():
     start = date(2019, 8, 13)
     end = date(2019, 8, 18)
     festival = Festival(title='Festival1', creator=u1,
-                        startdate=start, enddate=end)
+                        start_date=start, end_date=end)
     db.session.add(festival)
     u5 = User.query.filter_by(username='EW').first()
     u6 = User.query.filter_by(username='PL').first()

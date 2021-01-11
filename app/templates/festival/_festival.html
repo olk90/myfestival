@@ -29,7 +29,7 @@
             {{ _('%(username)s created %(f)s',
                     username=user_link, f=festival_link) }}
             <br>
-            {{ festival.startdate }} &ndash; {{ festival.enddate }}
+            {{ festival.start_date }} &ndash; {{ festival.end_date }}
             <br>
             {% if festival.info %}
             {{ festival.info|markdown }}

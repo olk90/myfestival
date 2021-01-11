@@ -5,7 +5,7 @@
         <tr>
             <td>
                 <h1>{{ festival.title }}</h1>
-                <span style='font-size:20px;'>{{ festival.startdate }} &ndash; {{ festival.enddate }}</span>
+                <span style='font-size:20px;'>{{ festival.start_date }} &ndash; {{ festival.end_date }}</span>
                 {% if festival.info %}
                 <p>{{ festival.info|markdown }}</p>
                 {% endif %}

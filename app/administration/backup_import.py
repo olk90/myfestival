@@ -155,8 +155,8 @@ def __import_festivals(festivals):
         festival.is_closed = f['is_closed']
         festival.update_info = f['update_info']
         festival.modified = f['modified']
-        festival.enddate = f['enddate']
-        festival.startdate = f['startdate']
+        festival.end_date = f['end_date']
+        festival.start_date = f['start_date']
         db.session.add(festival)
         participants = f['participants']
         for p in participants:

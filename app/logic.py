@@ -65,7 +65,7 @@ def create_user(username,
 def create_festival(title, start, end):
     users = session.query(User).all()
     festival = Festival(title=title, creator_id=users[0].id,
-                        startdate=start, enddate=end)
+                        start_date=start, end_date=end)
     db.session.add(festival)
     for u in users:
         festival.join(u)

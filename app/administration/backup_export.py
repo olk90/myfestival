@@ -69,8 +69,8 @@ def __build_festival_dict(festivals):
             'is_closed': f.is_closed,
             'update_info': f.update_info,
             'modified': f.modified,
-            'enddate': f.end_date,
-            'startdate': f.start_date,
+            'end_date': f.end_date,
+            'start_date': f.start_date,
             'participants': p_ids
         }
         content.append(festival)

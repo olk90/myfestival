@@ -100,8 +100,8 @@ def create_festival():
             festival = Festival(title=form.title.data,
                                 info=form.info.data,
                                 creator_id=current_user.id,
-                                startdate=form.start_date.data,
-                                enddate=form.end_date.data,
+                                start_date=form.start_date.data,
+                                end_date=form.end_date.data,
                                 is_closed=False)
             db.session.add(festival)
             notify_users()
