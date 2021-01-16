@@ -43,8 +43,10 @@
     {% endif %}
 {%- endmacro %}
 
-{% macro chronicle_form(form, f_id) %}
+{% macro chronicle_form(form, f_id, u_id) %}
     {% if form %}
+        <input type="hidden" id="festival" value="{{ f_id }}">
+        <input type="hidden" id="user" value="{{ u_id }}">
         <form id="chronicleUpload" action="{{ url_for('chronicle.upload_images', f_id=f_id) }}" class="dropzone"
               method="post"></form>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>

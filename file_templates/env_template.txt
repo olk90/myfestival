@@ -1,6 +1,7 @@
 #######################################################################################
 ## Copy the file as ".env" into the root directory and setup values for local system ##
 #######################################################################################
-DATABASE_URL="postgresql://postgres:docker@localhost/postgres"
+DATABASE_URL="postgresql://postgres:docker@localhost/myfestival"
 # change in production to random string!
 SECRET_KEY=a-really-long-and-unique-key-that-nobody-knows
+INITIAL_ADMIN_PW=vspw4mf
