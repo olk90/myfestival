@@ -11,7 +11,7 @@ from werkzeug.utils import secure_filename
 from app import db, session
 from app.chronicle import bp
 from app.chronicle.forms import ChronicleEntryForm
-from app.chronicle.logic import get_festival_selection, sub_directory_name
+from app.chronicle.logic import get_festival_selection, get_images
 from app.models import ChronicleEntry, Festival
 
 
@@ -57,6 +57,7 @@ def add_entry(f_id):
         form.festival.process_data(f_id)
     return render_template('chronicle/setup_entry.html',
                            form=form,
+                           images=get_images(f_id),
                            f_id=f_id)
 
 
@@ -66,15 +67,15 @@ def upload_images(f_id):
     filename = secure_filename(uploaded_file.filename)
     if filename != '':
         file_ext = os.path.splitext(filename)[1]
-        if file_ext not in ca.config['UPLOAD_EXTENSIONS']:
+        if file_ext.lower() not in ca.config['UPLOAD_EXTENSIONS']:
             abort(400)
 
         # make sure the upload target exists
-        path = os.path.join(ca.config['UPLOAD_PATH'], sub_directory_name(f_id, cu.id))
+        path = os.path.join(ca.config['UPLOAD_PATH'], '{}/{}'.format(f_id, cu.id))
         if not os.path.exists(path):
             os.makedirs(path)
 
-        file_path = os.path.join(ca.config['UPLOAD_PATH'], sub_directory_name(f_id, cu.id), filename)
+        file_path = os.path.join(ca.config['UPLOAD_PATH'], '{}/{}/{}'.format(f_id, cu.id, filename))
         uploaded_file.save(file_path)
 
     return '', 204
@@ -106,8 +107,10 @@ def edit_entry(entry_id):
             form.body.data = entry.body
 
         festival = session.query(Festival).get(entry.festival_id)
+        f_id = festival.id
         return render_template('chronicle/setup_entry.html',
-                               f_title=festival.title,
+                               f_id=f_id,
+                               images=get_images(f_id),
                                form=form)
 
     else:
@@ -133,8 +136,9 @@ def delete_entry(entry_id):
         name = entry.chronicler.username
 
         # remove image directory, if exists
-        sub_dir = sub_directory_name(entry.festival_id, entry.chronicler.id)
-        path = os.path.join(ca.config['UPLOAD_PATH'], sub_dir)
+        f_id = entry.festival_id
+        u_id = entry.chronicler.id
+        path = os.path.join(ca.config['UPLOAD_PATH'], f_id, u_id)
         if os.path.exists(path):
             shutil.rmtree(path)
 
@@ -148,3 +152,11 @@ def delete_entry(entry_id):
         ca.logger.warn('Blocked chronicle entry deletion for >{}<'
                        .format(cu.username))
         abort(403)
+
+
+@bp.route('/delete_image/<f_id>/<u_id>/<filename>', methods=['POST'])
+@login_required
+def delete_image(f_id, u_id, filename):
+    # allow deletion only, if current user is admin or uploader of the image!
+    print("filename")
+    return '', 204

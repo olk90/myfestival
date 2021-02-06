@@ -1,0 +1,15 @@
+{#<div>#}
+{#    <a onclick="copyMarkdownPath('{{ filename }}')" href="#">#}
+{#        {{ _('Copy Markdown link') }}#}
+{#    </a>#}
+{#</div>#}
+{#<div>#}
+{#    <a href="{{ url_for('chronicle.delete_image', f_id=f_id, u_id=u_id, filename=filename) }}">#}
+{#        {{ _('Delete image') }}#}
+{#    </a>#}
+{#</div>#}
+<script type="text/javascript">
+    POPOVER.init([ '[id="{{ filename }}"]' ])
+    {#POPOVER.init([ '[data-toggle="popover"]' ])#}
+    POPOVER.getPopover()
+</script>

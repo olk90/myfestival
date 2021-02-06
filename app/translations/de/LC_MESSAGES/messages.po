@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-12-12 00:52+0100\n"
+"POT-Creation-Date: 2021-02-06 22:46+0100\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: app/__init__.py:25
+#: app/__init__.py:26
 msgid "Please log into access this page."
 msgstr "Bitte einloggen, um diese Seite anzuzeigen."
 
@@ -94,7 +94,7 @@ msgstr "Generieren"
 msgid "Backup file"
 msgstr "Sicherungsdatei"
 
-#: app/administration/forms.py:17 app/auth/forms.py:13 app/auth/forms.py:22
+#: app/administration/forms.py:17 app/auth/forms.py:14 app/auth/forms.py:23
 msgid "Password"
 msgstr "Passwort"
 
@@ -111,7 +111,7 @@ msgstr "Gesperrter Nutzer kann nicht zum Admin befördert werden."
 msgid "%(username)s must be suspended first."
 msgstr "%(username)s muss erst suspendiert werden."
 
-#: app/administration/routes.py:58 app/chronicle/routes.py:75
+#: app/administration/routes.py:58 app/chronicle/routes.py:98
 #: app/festival/routes.py:134 app/main/routes.py:113 app/main/routes.py:199
 #: app/purchase/routes.py:189 app/purchase/routes.py:277
 #: app/purchase/routes.py:343 app/purchase/routes.py:363
@@ -175,66 +175,66 @@ msgstr "Import abgeschlossen"
 msgid "Import backup"
 msgstr "Sicherung importieren"
 
-#: app/auth/forms.py:12 app/auth/forms.py:19 app/main/forms.py:16
+#: app/auth/forms.py:13 app/auth/forms.py:20 app/main/forms.py:16
 msgid "Username"
 msgstr "Nutzername"
 
-#: app/auth/forms.py:14
+#: app/auth/forms.py:15
 msgid "Remember Me"
 msgstr "Erinner dich an mich"
 
-#: app/auth/forms.py:15 app/auth/routes.py:30 app/templates/auth/login.html:5
+#: app/auth/forms.py:16 app/auth/routes.py:30 app/templates/auth/login.html:5
 msgid "Sign In"
 msgstr "Anmelden"
 
-#: app/auth/forms.py:20
+#: app/auth/forms.py:21
 msgid "Registration Code"
 msgstr "Registriercode"
 
-#: app/auth/forms.py:23
+#: app/auth/forms.py:24
 msgid "Repeat Password"
 msgstr "Passwort wiederholen"
 
-#: app/auth/forms.py:25
+#: app/auth/forms.py:26
 msgid "Passwords are not equal"
 msgstr "Passwörter stimmen nicht überein"
 
-#: app/auth/forms.py:26 app/auth/routes.py:74
+#: app/auth/forms.py:27 app/auth/routes.py:74
 msgid "Register"
 msgstr "Registrieren"
 
-#: app/auth/forms.py:32 app/main/forms.py:47
+#: app/auth/forms.py:33 app/main/forms.py:47
 msgid "Please use a different username."
 msgstr "Bitte anderen Nutzernamen wählen."
 
-#: app/auth/forms.py:41 app/auth/forms.py:48 app/auth/forms.py:50
+#: app/auth/forms.py:42 app/auth/forms.py:49 app/auth/forms.py:51
 msgid "Invalid registration code."
 msgstr "Unzulässiger Registriercode."
 
-#: app/auth/forms.py:54
+#: app/auth/forms.py:55
 msgid "Old Password"
 msgstr "Altes Passwort"
 
-#: app/auth/forms.py:56
+#: app/auth/forms.py:57
 msgid "New Password"
 msgstr "Neues Passwort"
 
-#: app/auth/forms.py:58
+#: app/auth/forms.py:59
 msgid "Repeat new Password"
 msgstr "Neues Passwort wiederholen"
 
-#: app/auth/forms.py:60
+#: app/auth/forms.py:61
 msgid "New passwords are not equal"
 msgstr "Neue Passwörter sind nicht gleich"
 
-#: app/auth/forms.py:61 app/chronicle/forms.py:23 app/festival/forms.py:20
+#: app/auth/forms.py:62 app/chronicle/forms.py:14 app/festival/forms.py:21
 #: app/festival/forms.py:51 app/festival/forms.py:60 app/main/forms.py:36
 #: app/main/forms.py:59 app/main/forms.py:66 app/main/forms.py:72
 #: app/purchase/forms.py:23 app/purchase/forms.py:87 app/purchase/forms.py:127
 msgid "Submit"
 msgstr "Absenden"
 
-#: app/auth/forms.py:67
+#: app/auth/forms.py:68
 msgid "Old password is not correct."
 msgstr "Das alte Passwort ist nicht korrekt."
 
@@ -262,45 +262,45 @@ msgstr "Passwort geändert."
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: app/chronicle/forms.py:14 app/purchase/forms.py:69
+#: app/chronicle/forms.py:10 app/purchase/forms.py:69
 msgid "Festival"
 msgstr "Festival"
 
-#: app/chronicle/forms.py:16
+#: app/chronicle/forms.py:12
 msgid "Tell the story:"
 msgstr "Erzähl die Geschichte:"
 
-#: app/chronicle/forms.py:36 app/festival/forms.py:33
-msgid "Please use a different title."
-msgstr "Bitte anderen Titel wählen."
-
-#: app/chronicle/forms.py:40 app/purchase/forms.py:75
+#: app/chronicle/forms.py:18 app/purchase/forms.py:75
 msgid "Festival must be selected."
 msgstr "Festival muss ausgewählt werden."
 
-#: app/chronicle/routes.py:49
+#: app/chronicle/routes.py:50
 msgid "Chronicle entry has been added."
 msgstr "Chronikeintrag hinzugefügt."
 
-#: app/chronicle/routes.py:117
+#: app/chronicle/routes.py:149
 msgid "Chronicle entry has been deleted."
 msgstr "Chronikeintrag gelöscht."
 
-#: app/festival/forms.py:15 app/festival/forms.py:46 app/festival/forms.py:55
+#: app/festival/forms.py:16 app/festival/forms.py:46 app/festival/forms.py:55
 msgid "Title"
 msgstr "Titel"
 
-#: app/festival/forms.py:16
+#: app/festival/forms.py:17
 msgid "Info"
 msgstr "Info"
 
-#: app/festival/forms.py:18
+#: app/festival/forms.py:19
 msgid "From"
 msgstr "Von"
 
-#: app/festival/forms.py:19
+#: app/festival/forms.py:20
 msgid "To"
 msgstr "Bis"
+
+#: app/festival/forms.py:33
+msgid "Please use a different title."
+msgstr "Bitte anderen Titel wählen."
 
 #: app/festival/forms.py:47 app/festival/forms.py:56
 msgid "Invoice"
@@ -349,24 +349,24 @@ msgstr "Festival wurde abgeschlossen."
 msgid "Festival has been reopened."
 msgstr "Festivalabschluss wurde zurückgesetzt."
 
-#: app/festival/routes.py:214
+#: app/festival/routes.py:213
 msgid "Your invoice has been registered."
 msgstr "Deine Rechnung wurde registriert."
 
-#: app/festival/routes.py:218 app/festival/routes.py:219
+#: app/festival/routes.py:217 app/festival/routes.py:218
 #: app/templates/festival/festival.html:50
 msgid "Add Invoice"
 msgstr "Rechnung hinzufügen"
 
-#: app/festival/routes.py:238
+#: app/festival/routes.py:237
 msgid "Invoice has been updated."
 msgstr "Rechnung wurde aktualisiert."
 
-#: app/festival/routes.py:253 app/festival/routes.py:254
+#: app/festival/routes.py:252 app/festival/routes.py:253
 msgid "Edit Invoice"
 msgstr "Rechnung editieren"
 
-#: app/festival/routes.py:268 app/purchase/routes.py:216
+#: app/festival/routes.py:267 app/purchase/routes.py:216
 #: app/purchase/routes.py:254 app/purchase/routes.py:386
 #, python-format
 msgid "%(title)s deleted"
@@ -429,7 +429,7 @@ msgstr "Dein Konto wurde gesperrt."
 msgid "Your post is now live!"
 msgstr "Beitrag ist live!"
 
-#: app/main/routes.py:58 app/templates/base.html:22
+#: app/main/routes.py:58 app/templates/base.html:28
 msgid "Home"
 msgstr "Start"
 
@@ -558,61 +558,73 @@ msgstr "Eintrag hinzufügen"
 msgid "%(heading)s"
 msgstr "%(heading)s"
 
-#: app/templates/base.html:4
+#: app/templates/base.html:9
 msgid "Welcome to MyFestival"
 msgstr "Willkommen zu MyFestival"
 
-#: app/templates/base.html:23 app/templates/main/user_overview.html:5
+#: app/templates/base.html:29 app/templates/main/user_overview.html:5
 msgid "Members"
 msgstr "Mitglieder"
 
-#: app/templates/base.html:27
+#: app/templates/base.html:34
 msgid "Stock Management"
 msgstr "Bestandsverwaltung"
 
-#: app/templates/base.html:30
+#: app/templates/base.html:37
 msgid "Stock"
 msgstr "Bestand"
 
-#: app/templates/base.html:31 app/templates/purchase/wishlist.html:5
+#: app/templates/base.html:38 app/templates/purchase/wishlist.html:5
 msgid "Wishlist"
 msgstr "Wunschliste"
 
-#: app/templates/base.html:32
+#: app/templates/base.html:39
 msgid "Utilities"
 msgstr "Ausstattung"
 
-#: app/templates/base.html:35 app/templates/purchase/pku_overview.html:5
+#: app/templates/base.html:44 app/templates/purchase/pku_overview.html:5
 msgid "Packaging Units"
 msgstr "Bestandseinheiten"
 
-#: app/templates/base.html:43
+#: app/templates/base.html:54
 msgid "Festivals"
 msgstr "Festivals"
 
-#: app/templates/base.html:53 app/templates/festival/festival_overview.html:5
+#: app/templates/base.html:64 app/templates/festival/festival_overview.html:5
 msgid "Festival Overview"
 msgstr "Festivalübersicht"
 
-#: app/templates/base.html:56
+#: app/templates/base.html:67
 msgid "Chronicles"
 msgstr "Chroniken"
 
-#: app/templates/base.html:65
+#: app/templates/base.html:76
 msgid "Login"
 msgstr "Login"
 
-#: app/templates/administration/admin_page.html:7 app/templates/base.html:70
+#: app/templates/administration/admin_page.html:7 app/templates/base.html:81
 msgid "Administration"
 msgstr "Administration"
 
-#: app/templates/base.html:84
+#: app/templates/base.html:95
 msgid "Profile"
 msgstr "Profil"
 
-#: app/templates/base.html:93
+#: app/templates/base.html:104
 msgid "Logout"
 msgstr "Ausloggen"
+
+#: app/templates/macros.html:48
+msgid "Copy Markdown link"
+msgstr "Markdown-Link kopieren"
+
+#: app/templates/macros.html:49
+msgid "Delete image"
+msgstr "Bild löschen"
+
+#: app/templates/macros.html:51
+msgid "Drop images here"
+msgstr "Bilder hier ablegen"
 
 #: app/templates/administration/admin_page.html:9
 msgid "Generate new registration codes"
@@ -653,15 +665,11 @@ msgstr "Optionen"
 msgid "Tales of glorious Deeds"
 msgstr "Erzählungen glorreicher Taten"
 
-#: app/templates/chronicle/chronicle_overview.html:6
-msgid "Add entry"
-msgstr "Eintrag hinzufügen"
-
-#: app/templates/chronicle/setup_entry.html:10
+#: app/templates/chronicle/setup_entry.html:12
 msgid "Edit entry"
 msgstr "Eintrag editieren"
 
-#: app/templates/chronicle/setup_entry.html:12
+#: app/templates/chronicle/setup_entry.html:14
 msgid "Add new entry"
 msgstr "Neuen Eintrag schreiben"
 
@@ -902,4 +910,7 @@ msgstr "Gebrauchsgegenstände"
 
 #~ msgid "Add invoice"
 #~ msgstr "Rechnung hinzufügen"
+
+#~ msgid "Add entry"
+#~ msgstr "Eintrag hinzufügen"
 

@@ -1,0 +1,9 @@
+<span style="margin: 5px">
+    <a href="#" role="button" data-toggle="popover" data-trigger="focus">
+        <img src="{{ img.filepath }}" alt="{{ img.filename }}" id="{{ img.filename }}" width="128" height="128">
+    </a>
+    {% with filename=img.filename %}
+        {% include 'chronicle/image_popover.html' %}
+    {% endwith %}
+</span>
+

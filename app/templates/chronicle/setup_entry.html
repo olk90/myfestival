@@ -1,17 +1,22 @@
 {% extends "base.html" %}
 {% import 'macros.html' as m %}
 {% block head %}
-{{ super() }}
-{{ pagedown.include_pagedown() }}
+    {{ super() }}
+    {{ pagedown.include_pagedown() }}
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
 {% endblock head %}
 
 {% block app_content %}
     {% if form.is_edit %}
-    <h1>{{ _('Edit entry') }}</h1>
+        <h1>{{ _('Edit entry') }}</h1>
     {% else %}
-    <h1>{{ _('Add new entry') }}</h1>
+        <h1>{{ _('Add new entry') }}</h1>
     {% endif %}
-    {{ m.chronicle_form(form, f_id, current_user.id) }}
+    {{ m.chronicle_form(form, images, f_id, current_user.id) }}
+{% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static',filename='scripts/popover.js') }}"></script>
 {% endblock %}

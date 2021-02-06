@@ -43,14 +43,27 @@
     {% endif %}
 {%- endmacro %}
 
-{% macro chronicle_form(form, f_id, u_id) %}
+{% macro chronicle_form(form, images, f_id, u_id) %}
     {% if form %}
+        <input type="hidden" id="copyLabel" value="{{ _('Copy Markdown link') }}">
+        <input type="hidden" id="deleteLabel" value="{{ _('Delete image') }}">
+
+        <input type="hidden" id="hint" value="{{ _('Drop images here') }}">
         <input type="hidden" id="festival" value="{{ f_id }}">
         <input type="hidden" id="user" value="{{ u_id }}">
         <form id="chronicleUpload" action="{{ url_for('chronicle.upload_images', f_id=f_id) }}" class="dropzone"
               method="post"></form>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
-        <script src="/static/scripts/chronicleDropzone.js"></script>
+        <script src="/static/scripts/chronicles.js"></script>
+        {% if images|length > 0 %}
+            <div id="imageSelection"
+                 style="height:150px;width:100%;overflow:scroll;overflow-y:hidden;display:block;white-space:nowrap;margin-top:5px">
+                {% for img in images %}
+                    {% include 'chronicle/_image_preview.html' %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <form action="" method="post" class="form" role="form">
             {{ form.hidden_tag() }}
             {{ wtf.form_errors(form, hiddens='only') }}

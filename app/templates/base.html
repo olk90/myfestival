@@ -110,6 +110,16 @@
 {% endblock %}
 
 {% block content %}
+    {% block javascript %}
+        <script src="{{ bootstrap_find_resource('jquery.js', cdn='jquery') }}"></script>
+        <script src="{{ bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap') }}"></script>
+        {{ moment.include_moment() }}
+        {{ moment.lang(g.locale) }}
+        {% if current_user.is_authenticated %}
+            <script type="text/javascript" src="{{ url_for('static',filename='scripts/notifications.js') }}"></script>
+        {% endif %}
+    {% endblock javascript %}
+
     <div class="container">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -122,13 +132,8 @@
         {# application content needs to be provided in the app_content block #}
         {% block app_content %}{% endblock %}
     </div>
-{% endblock %}
+{% endblock content %}
 
 {% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
-    {{ moment.lang(g.locale) }}
-    {% if current_user.is_authenticated %}
-        <script type="text/javascript" src="{{ url_for('static',filename='scripts/notifications.js') }}"></script>
-    {% endif %}
+    {# override to load jquery at the beginning of the document #}
 {% endblock %}
