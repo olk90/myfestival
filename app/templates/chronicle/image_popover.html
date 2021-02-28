@@ -1,15 +1,22 @@
-{#<div>#}
-{#    <a onclick="copyMarkdownPath('{{ filename }}')" href="#">#}
-{#        {{ _('Copy Markdown link') }}#}
-{#    </a>#}
-{#</div>#}
-{#<div>#}
-{#    <a href="{{ url_for('chronicle.delete_image', f_id=f_id, u_id=u_id, filename=filename) }}">#}
-{#        {{ _('Delete image') }}#}
-{#    </a>#}
-{#</div>#}
+<div id="{{ hash }}_popover" class="hide">
+    <input type="button" class="btn btn-default" onclick="copyMarkdownPath('{{ filename }}')" value="{{ _('Copy Markdown')}}">
+    <input type="button" class="btn btn-danger" onclick="alert('TODO')" value="{{ _('Delete image') }}">
+</div>
+
 <script type="text/javascript">
-    POPOVER.init([ '[id="{{ filename }}"]' ])
-    {#POPOVER.init([ '[data-toggle="popover"]' ])#}
-    POPOVER.getPopover()
+    $('#{{ hash }}').popover({
+        html: true,
+        title: '{{ _("Options") }}<a class="close" href="#");">&times;</a>',
+        content: $('#{{ hash }}_popover').html(),
+    });
+
+    $('#{{ hash }}').click(function (e) {
+        e.stopPropagation();
+    });
+
+    $(document).click(function (e) {
+        if (($('.popover').has(e.target).length === 0) || $(e.target).is('.close')) {
+            $('#{{ hash }}').popover('hide');
+        }
+    });
 </script>

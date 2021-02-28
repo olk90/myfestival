@@ -15,8 +15,3 @@
     {% endif %}
     {{ m.chronicle_form(form, images, f_id, current_user.id) }}
 {% endblock %}
-
-{% block javascript %}
-    {{ super() }}
-    <script type="text/javascript" src="{{ url_for('static',filename='scripts/popover.js') }}"></script>
-{% endblock %}
