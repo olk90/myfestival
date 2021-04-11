@@ -10,9 +10,11 @@ from app.containers import UserAccessLevel
 from app.models import User, PackagingUnitType
 from config import Config
 
+session = db.session
+
 
 def __setup_owner(username):
-    users = User.query.all()
+    users = session.query(User).all()
     if len(users) == 0:
         create_user(username=username, access_level=UserAccessLevel.OWNER)
         print('User {} created.'.format(username)
@@ -71,7 +73,8 @@ def register(app):
     def masterdata():
         """Creates mandatory default data such as PKU"""
         print('Prepare creation of packaging unit types')
-        pku = PackagingUnitType.query.all()
+
+        pku = session.query(PackagingUnitType).all()
         if len(pku) == 0:
             create_pku()
         else:
@@ -82,7 +85,7 @@ def register(app):
     def testdata():
         """Creates some data for manual tests"""
         print('Prepare test data creation')
-        users = User.query.all()
+        users = session.query(User).all()
         if len(users) == 0:
             print('Create users')
             __setup_owner(username='Batman')
@@ -143,7 +146,7 @@ def register(app):
         except OSError as e:
             print("Error: %s : %s" % (avatars, e.strerror))
         print('Delete chronicle photos')
-        photos = Config.CHRONICLES
+        photos = Config.UPLOAD_PATH
         try:
             shutil.rmtree(photos)
         except OSError as e:
