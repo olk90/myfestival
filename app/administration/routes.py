@@ -5,7 +5,7 @@ from flask_babel import _
 from flask_login import current_user, login_required
 
 import app.models as m
-from app import db
+from app import db, session
 from app.administration import bp
 from app.administration.forms import CreateRegistrationCodeForm, \
     ImportBackupForm
@@ -23,7 +23,7 @@ from app.logic import notify_owner, notify_user, random_string
 def admin_page():
     if current_user.is_admin():
         page = request.args.get('page', 1, type=int)
-        regs = m.Registration.query.paginate(
+        regs = session.query(m.Registration).paginate(
             page, ca.config['POSTS_PER_PAGE'], False)
         next_url = url_for('administration.admin_page',
                            page=regs.next_num) if regs.has_next else None
@@ -49,7 +49,7 @@ def generate_registration_codes():
                            .format(number_of_codes))
             while number_of_codes > 0:
                 code = random_string()
-                user = m.User.query.filter_by(registration_code=code).first()
+                user = session.query(m.User).filter_by(registration_code=code).first()
                 if user is None:
                     registration = m.Registration(code=code)
                     db.session.add(registration)
@@ -70,7 +70,7 @@ def generate_registration_codes():
 @login_required
 def delete_registration_code(rc_id):
     if current_user.is_owner():
-        rc = m.Registration.query.get(rc_id)
+        rc = session.query(m.Registration).get(rc_id)
         db.session.delete(rc)
         notify_owner()
         ca.logger.info(
@@ -88,7 +88,7 @@ def delete_registration_code(rc_id):
 @login_required
 def add_admin(username):
     if current_user.is_owner():
-        user = m.User.query.filter_by(username=username).first()
+        user = session.query(m.User).filter_by(username=username).first()
         if user is None:
             flash(_('%(username)s not found.', username=username))
             return redirect(url_for('main.index'))
@@ -111,7 +111,7 @@ def add_admin(username):
 @login_required
 def remove_admin(username):
     if current_user.is_owner():
-        user = m.User.query.filter_by(username=username).first()
+        user = session.query(m.User).filter_by(username=username).first()
         if user is None:
             flash(_('%(username)s not found.', username=username))
             return redirect(url_for('main.index'))
@@ -131,7 +131,7 @@ def remove_admin(username):
 @login_required
 def suspend(username):
     if current_user.is_admin():
-        user = m.User.query.filter_by(username=username).first()
+        user = session.query(m.User).filter_by(username=username).first()
         if user is None:
             flash(_('%(username)s not found.', username=username))
             return redirect(url_for('main.index'))
@@ -154,7 +154,7 @@ def suspend(username):
 @login_required
 def reactivate(username):
     if current_user.is_admin():
-        user = m.User.query.filter_by(username=username).first()
+        user = session.query(m.User).filter_by(username=username).first()
         if user is None:
             flash(_('%(username)s not found.', username=username))
             return redirect(url_for('main.index'))
@@ -174,7 +174,7 @@ def reactivate(username):
 @login_required
 def reset_pw(username):
     if current_user.is_admin():
-        user = m.User.query.filter_by(username=username).first()
+        user = session.query(m.User).filter_by(username=username).first()
         if user is None:
             flash(_('%(username)s not found.', username=username))
             return redirect(url_for('main.index'))
@@ -196,7 +196,7 @@ def reset_pw(username):
 @login_required
 def delete_user(username):
     if current_user.is_owner():
-        user = m.User.query.filter_by(username=username).first()
+        user = session.query(m.User).filter_by(username=username).first()
         if user is None:
             flash(_('%(username)s not found.', username=username))
             return redirect(url_for('main.index'))

@@ -5,7 +5,7 @@ from flask import flash, redirect, url_for
 from flask_babel import _
 
 import app.models as m
-from app import db
+from app import db, session
 from app.containers import UserAccessLevel
 from app.administration.backup_export import get_version_number
 
@@ -17,51 +17,50 @@ def __delete_from_database(items):
 
 
 def __handle_posts():
-    replies = m.Post.query.filter(m.Post.parent_id != None).all()  # noqa: E711
-    posts = m.Post.query.filter(m.Post.parent_id == None).all()  # noqa: E711
+    replies = session.query(m.Post).filter(m.Post.parent_id != None).all()  # noqa: E711
+    posts = session.query(m.Post).filter(m.Post.parent_id == None).all()  # noqa: E711
     __delete_from_database(replies)
     __delete_from_database(posts)
 
 
 def __handle_items():
-    c_items = m.ConsumptionItem.query.all()
-    u_items = m.UtilityItem.query.all()
+    c_items = session.query(m.ConsumptionItem).all()
+    u_items = session.query(m.UtilityItem).all()
     __delete_from_database(c_items)
     __delete_from_database(u_items)
 
 
+def __handle_table(table):
+    entries = session.query(table).all()
+    __delete_from_database(entries)
+
+
 def __handle_notifications():
-    notifications = m.Notification.query.all()
-    __delete_from_database(notifications)
+    __handle_table(m.Notification)
 
 
 def __handle_invoices():
-    invoices = m.Invoice.query.all()
-    __delete_from_database(invoices)
+    __handle_table(m.Invoice)
 
 
 def __handle_registrations():
-    registrations = m.Registration.query.all()
-    __delete_from_database(registrations)
+    __handle_table(m.Registration)
 
 
 def __handle_transfers():
-    transfers = m.Transfer.query.all()
-    __delete_from_database(transfers)
+    __handle_table(m.Transfer)
 
 
 def __handle_pkus():
-    pkus = m.PackagingUnitType.query.all()
-    __delete_from_database(pkus)
+    __handle_table(m.PackagingUnitType)
 
 
 def __handle_festivals():
-    festivals = m.Festival.query.all()
-    __delete_from_database(festivals)
+    __handle_table(m.Festival)
 
 
 def __handle_users():
-    other_users = m.User.query.filter(
+    other_users = session.query(m.User).filter(
         m.User.access_level < UserAccessLevel.OWNER).all()
     __delete_from_database(other_users)
 
@@ -103,7 +102,7 @@ def __reset_sequence(sequence, value):
 
 
 def __import_users(users):
-    owner = m.User.query.filter_by(access_level=UserAccessLevel.OWNER).first()
+    owner = session.query(m.User).filter_by(access_level=UserAccessLevel.OWNER).first()
     max_id = 1
     for u in users:
         next_id = u['id']
@@ -160,7 +159,7 @@ def __import_festivals(festivals):
         db.session.add(festival)
         participants = f['participants']
         for p in participants:
-            u = m.User.query.get(p)
+            u = session.query(m.User).get(p)
             festival.join(u)
     __reset_sequence('festival_id_seq', max_id + 1)
     db.session.commit()
@@ -265,7 +264,7 @@ def __import_invoices(invoices):
         db.session.add(invoice)
         sharers = i['sharers']
         for s in sharers:
-            u = m.User.query.get(s)
+            u = session.query(m.User).get(s)
             invoice.add_sharer(u)
     __reset_sequence('invoice_id_seq', max_id + 1)
     db.session.commit()
