@@ -1,19 +1,21 @@
 import json
+import shutil
 
 from flask import current_app as ca
 from flask import flash, redirect, url_for
 from flask_babel import _
 
 import app.models as m
-from app import db, session
+from app import session
 from app.containers import UserAccessLevel
 from app.administration.backup_export import get_version_number
+from config import Config
 
 
 def __delete_from_database(items):
     for i in items:
-        db.session.delete(i)
-    db.session.commit()
+        session.delete(i)
+    session.commit()
 
 
 def __handle_posts():
@@ -55,6 +57,11 @@ def __handle_pkus():
     __handle_table(m.PackagingUnitType)
 
 
+def __handle_chronicles():
+    __handle_table(m.ChronicleEntry)
+    __delete_chronicle_images()
+
+
 def __handle_festivals():
     __handle_table(m.Festival)
 
@@ -63,6 +70,14 @@ def __handle_users():
     other_users = session.query(m.User).filter(
         m.User.access_level < UserAccessLevel.OWNER).all()
     __delete_from_database(other_users)
+
+
+def __delete_chronicle_images():
+    photos = Config.UPLOAD_PATH
+    try:
+        shutil.rmtree(photos)
+    except OSError as e:
+        print("Error: %s : %s" % (photos, e.strerror))
 
 
 def load_backup(backup):
@@ -83,6 +98,7 @@ def load_backup(backup):
     __handle_invoices()
     __handle_registrations()
     __handle_transfers()
+    __handle_chronicles()
 
     # step 2: delete everything that is now deleteable without violation
     __handle_pkus()
@@ -97,7 +113,7 @@ def load_backup(backup):
 
 def __reset_sequence(sequence, value):
     ca.logger.info('Reset sequence >{}< to value >{}<'.format(sequence, value))
-    db.session.execute(
+    session.execute(
         'ALTER SEQUENCE {} RESTART WITH {}'.format(sequence, value))
 
 
@@ -135,9 +151,9 @@ def __import_users(users):
             user.mixed_demand = u['mixed_demand']
             user.water_demand = u['water_demand']
             user.reset_code = u['reset_code']
-            db.session.add(user)
+            session.add(user)
     __reset_sequence('user_id_seq', max_id + 1)
-    db.session.commit()
+    session.commit()
 
 
 def __import_festivals(festivals):
@@ -156,13 +172,13 @@ def __import_festivals(festivals):
         festival.modified = f['modified']
         festival.end_date = f['end_date']
         festival.start_date = f['start_date']
-        db.session.add(festival)
+        session.add(festival)
         participants = f['participants']
         for p in participants:
             u = session.query(m.User).get(p)
             festival.join(u)
     __reset_sequence('festival_id_seq', max_id + 1)
-    db.session.commit()
+    session.commit()
 
 
 def __import_pkus(pkus):
@@ -177,44 +193,36 @@ def __import_pkus(pkus):
         pku.abbreviation = p['abbreviation']
         pku.internal_name = p['internal_name']
         pku.delete = p['delete']
-        db.session.add(pku)
+        session.add(pku)
     __reset_sequence('packaging_unit_type_id_seq', max_id + 1)
-    db.session.commit()
+    session.commit()
 
 
 def __import_posts(posts):
     parents = filter(lambda x: x['parent'] is None, posts)
     children = filter(lambda x: x['parent'] is not None, posts)
-    max_id = 1
-    for p in parents:
-        next_id = p['id']
-        if next_id > max_id:
-            max_id = next_id
-        post = m.Post()
-        post.id = next_id
-        post.body = p['body']
-        post.timestamp = p['timestamp']
-        post.user_id = p['author']
-        post.is_pinned = p['is_pinned']
-        post.parent_id = p['parent']
-        post.internal_time = p['internal_time']
-        db.session.add(post)
-    db.session.commit()
-    for p in children:
-        next_id = p['id']
-        if next_id > max_id:
-            max_id = next_id
-        post = m.Post()
-        post.id = next_id
-        post.body = p['body']
-        post.timestamp = p['timestamp']
-        post.user_id = p['author']
-        post.is_pinned = p['is_pinned']
-        post.parent_id = p['parent']
-        post.internal_time = p['internal_time']
-        db.session.add(post)
+    max_id = __import_subset(parents, 1)
+    session.commit()
+    max_id = __import_subset(children, max_id)
     __reset_sequence('post_id_seq', max_id + 1)
-    db.session.commit()
+    session.commit()
+
+
+def __import_subset(posts, max_id):
+    for p in posts:
+        next_id = p['id']
+        if next_id > max_id:
+            max_id = next_id
+        post = m.Post()
+        post.id = next_id
+        post.body = p['body']
+        post.timestamp = p['timestamp']
+        post.user_id = p['author']
+        post.is_pinned = p['is_pinned']
+        post.parent_id = p['parent']
+        post.internal_time = p['internal_time']
+        session.add(post)
+    return max_id
 
 
 def __import_items(c_items, u_items):
@@ -231,9 +239,9 @@ def __import_items(c_items, u_items):
         c_item.requestor_id = c['requestor']
         c_item.pku_id = c['pku']
         c_item.info = c['info']
-        db.session.add(c_item)
+        session.add(c_item)
     __reset_sequence('consumption_item_id_seq', max_id + 1)
-    db.session.commit()
+    session.commit()
     max_id = 1
     for u in u_items:
         next_id = u['id']
@@ -244,9 +252,9 @@ def __import_items(c_items, u_items):
         u_item.name = u['name']
         u_item.owner_id = u['owner']
         u_item.description = u['description']
-        db.session.add(u_item)
+        session.add(u_item)
     __reset_sequence('utility_item_id_seq', max_id + 1)
-    db.session.commit()
+    session.commit()
 
 
 def __import_invoices(invoices):
@@ -261,13 +269,13 @@ def __import_invoices(invoices):
         invoice.amount = i['amount']
         invoice.creditor_id = i['creditor']
         invoice.festival_id = i['festival']
-        db.session.add(invoice)
+        session.add(invoice)
         sharers = i['sharers']
         for s in sharers:
             u = session.query(m.User).get(s)
             invoice.add_sharer(u)
     __reset_sequence('invoice_id_seq', max_id + 1)
-    db.session.commit()
+    session.commit()
 
 
 def __import_transfers(transfers):
@@ -282,9 +290,28 @@ def __import_transfers(transfers):
         transfer.recipient_id = t['recipient']
         transfer.payer_id = t['payer']
         transfer.amount = t['amount']
-        db.session.add(transfer)
+        session.add(transfer)
     __reset_sequence('transfer_id_seq', max_id + 1)
-    db.session.commit()
+    session.commit()
+    
+    
+def __import_chronicles(chronicles):
+    max_id = 1
+    for c in chronicles:
+        next_id = c['id']
+        if next_id > max_id:
+            max_id = next_id
+        entry = m.ChronicleEntry()
+        entry.id = next_id
+        entry.body = c['body']
+        entry.chronicler_id = c['chronicler']
+        entry.festival_id = c['festival']
+        entry.internal_time = c['internal_time']
+        entry.timestamp = c['timestamp']
+        entry.year = c['year']
+        session.add(entry)
+    __reset_sequence('chronicle_entry_id_seq', max_id + 1)
+    session.commit()
 
 
 def __do_import(data):
@@ -296,4 +323,5 @@ def __do_import(data):
     __import_items(data['consumptionItems'], data['utilityItems'])
     __import_invoices(data['invoices'])
     __import_transfers(data['transfers'])
+    __import_chronicles(data['chronicles'])
     ca.logger.info('import finished')

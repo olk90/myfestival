@@ -1,9 +1,9 @@
-
-from alembic.migration import MigrationContext
+from alembic.runtime.migration import MigrationContext
 from flask import current_app as ca
 from flask import jsonify
 from sqlalchemy import create_engine
 
+from app import session
 import app.models as m
 from app.festival.logic import get_participants, get_sharers
 
@@ -74,6 +74,22 @@ def __build_festival_dict(festivals):
             'participants': p_ids
         }
         content.append(festival)
+    return content
+
+
+def __build_chronicle_dict(chronicles):
+    content = []
+    for c in chronicles:
+        chronicle_entry = {
+            'id': c.id,
+            'body': c.body,
+            'chronicler': c.chronicler_id,
+            'timestamp': c.timestamp,
+            'internal_time': c.internal_time,
+            'year': c.year,
+            'festival': c.festival_id
+        }
+        content.append(chronicle_entry)
     return content
 
 
@@ -153,28 +169,31 @@ def __build_u_item_dict(u_items):
 
 def prepare_export():
     ca.logger.info('data export triggered')
-    users = m.User.query.all()
+    users = session.query(m.User).all()
     user_output = __build_user_dict(users)
 
-    posts = m.Post.query.all()
+    posts = session.query(m.Post).all()
     post_output = __build_post_dict(posts)
 
-    festivals = m.Festival.query.all()
+    festivals = session.query(m.Festival).all()
     festival_output = __build_festival_dict(festivals)
 
-    invoices = m.Invoice.query.all()
+    chronicles = session.query(m.ChronicleEntry).all()
+    chronicle_output = __build_chronicle_dict(chronicles)
+
+    invoices = session.query(m.Invoice).all()
     invoice_output = __build_invoice_dict(invoices)
 
-    transfers = m.Transfer.query.all()
+    transfers = session.query(m.Transfer).all()
     transfer_output = __build_transfer_dict(transfers)
 
-    c_items = m.ConsumptionItem.query.all()
+    c_items = session.query(m.ConsumptionItem).all()
     c_item_output = __build_c_item_dict(c_items)
 
-    pkus = m.PackagingUnitType.query.all()
+    pkus = session.query(m.PackagingUnitType).all()
     pku_output = __build_pku_dict(pkus)
 
-    u_items = m.UtilityItem.query.all()
+    u_items = session.query(m.UtilityItem).all()
     u_item_output = __build_u_item_dict(u_items)
 
     ca.logger.info('writing dump to file')
@@ -182,6 +201,7 @@ def prepare_export():
                     'users': user_output,
                     'posts': post_output,
                     'festivals': festival_output,
+                    'chronicles': chronicle_output,
                     'invoices': invoice_output,
                     'transfers': transfer_output,
                     'consumptionItems': c_item_output,
