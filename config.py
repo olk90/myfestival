@@ -34,6 +34,6 @@ class Config(object):
     UPLOAD_PATH = os.path.join(basedir,
                                'app',
                                'static',
-                               'chronicle')
+                               'chronicles')
 
     # << chronicle
