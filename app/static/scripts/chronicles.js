@@ -23,5 +23,11 @@ function getMarkdownLink(fileName) {
     let f_id = festival.getAttribute('value')
     let user = document.getElementById('user')
     let u_id = user.getAttribute('value')
-    return `![${fileName}](/static/chronicles/${f_id}/${u_id}/${fileName})`
+
+    // direct markdown link (no scaling possible, so go with img tag)
+    // return `![${fileName}](/static/chronicles/${f_id}/${u_id}/${fileName})`
+
+    let path = `${f_id}/${u_id}/${fileName}`
+    let style = `"max-width: 90%; display: block; margin-left: auto; margin-right: auto;"`
+    return `<img alt="${fileName}" src="/static/chronicles/${path}" style=${style}>`
 }

@@ -69,8 +69,10 @@
             {{ wtf.form_errors(form, hiddens='only') }}
             <p>
                 {{ wtf.form_field(form.festival) }}
-                {{ wtf.form_field(form.body, rows=20, style='font-family:courier;') }}
                 {{ wtf.form_field(form.submit, type='submit') }}
+            </p>
+            <p>
+                {{ wtf.form_field(form.body, rows=20, style='font-family:courier;') }}
             </p>
         </form>
     {% endif %}
