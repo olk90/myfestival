@@ -3,7 +3,7 @@ import os
 from alembic.runtime.migration import MigrationContext
 
 from flask import current_app as ca
-from flask import jsonify
+from flask import jsonify, Response
 
 from sqlalchemy import create_engine
 
@@ -219,12 +219,18 @@ def prepare_export():
 def zip_and_download_images():
     ca.logger.info('zip chronicle images')
     file_paths = __get_files(Config.UPLOAD_PATH)
-    zip_file = ZipFile('chronicle.zip', 'w')
+    filename = 'chronicles.zip'
+    os.chdir(Config.STATIC_DIR)
+    out_path = os.path.join('chronicles', filename)
+    zip_file = ZipFile(out_path, 'w')
     with zip_file:
         for file in file_paths:
-            zip_file.write(file)
+            split = file.split(sep='/')
+            relative_path = '/%s/%s/%s' % (split[-3], split[-2], split[-1])
+            zip_file.write(file, arcname=relative_path)
 
     zip_file.close()
+    return __send_file(Config.UPLOAD_PATH, filename)
 
 
 def __get_files(dirname):
@@ -235,3 +241,14 @@ def __get_files(dirname):
             file_path = os.path.join(root, filename)
             file_paths.append(file_path)
     return file_paths
+
+
+def __send_file(file_path, filename):
+    join = os.path.join(file_path, filename)
+    with open(join, 'rb') as f:
+        data = f.readlines()
+    os.remove(join)
+    return Response(data, headers={
+        'Content-Type': 'application/zip',
+        'Content-Disposition': 'attachment; filename=%s;' % filename
+    })
