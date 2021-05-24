@@ -26,7 +26,7 @@ class Config(object):
                                         'static',
                                         'photos')
 
-    # chronicles >>
+    # chronicle >>
     MAX_CONTENT_LENGTH = 1024 * 1024
 
     UPLOAD_EXTENSIONS = ['.jpg', '.png', '.gif']
@@ -34,6 +34,6 @@ class Config(object):
     UPLOAD_PATH = os.path.join(basedir,
                                'app',
                                'static',
-                               'chronicles')
+                               'chronicle')
 
-    # << chronicles
+    # << chronicle

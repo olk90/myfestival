@@ -323,5 +323,5 @@ def __do_import(data):
     __import_items(data['consumptionItems'], data['utilityItems'])
     __import_invoices(data['invoices'])
     __import_transfers(data['transfers'])
-    __import_chronicles(data['chronicles'])
+    __import_chronicles(data['chronicle'])
     ca.logger.info('import finished')

@@ -10,7 +10,7 @@ from app.administration import bp
 from app.administration.forms import CreateRegistrationCodeForm, \
     ImportBackupForm
 from app.administration.user_administration import disable_user
-from app.administration.backup_export import prepare_export
+from app.administration.backup_export import prepare_export, zip_and_download_images
 from app.administration.backup_import import load_backup
 from app.administration.messages import (suspend_first, suspended,
                                          suspension_failed)
@@ -222,6 +222,17 @@ def delete_user(username):
 def create_backup():
     if current_user.is_owner():
         return prepare_export()
+    else:
+        ca.logger.warn('>{}< was prevented entering backup page'
+                       .format(current_user.username))
+        abort(403)
+
+
+@bp.route('/backup_images')
+@login_required
+def backup_images():
+    if current_user.is_owner():
+        return zip_and_download_images()
     else:
         ca.logger.warn('>{}< was prevented entering backup page'
                        .format(current_user.username))

@@ -1,11 +1,18 @@
+import os
+
 from alembic.runtime.migration import MigrationContext
+
 from flask import current_app as ca
 from flask import jsonify
+
 from sqlalchemy import create_engine
+
+from zipfile import ZipFile
 
 from app import session
 import app.models as m
 from app.festival.logic import get_participants, get_sharers
+from config import Config
 
 
 def get_version_number():
@@ -201,9 +208,30 @@ def prepare_export():
                     'users': user_output,
                     'posts': post_output,
                     'festivals': festival_output,
-                    'chronicles': chronicle_output,
+                    'chronicle': chronicle_output,
                     'invoices': invoice_output,
                     'transfers': transfer_output,
                     'consumptionItems': c_item_output,
                     'packagingUnits': pku_output,
                     'utilityItems': u_item_output})
+
+
+def zip_and_download_images():
+    ca.logger.info('zip chronicle images')
+    file_paths = __get_files(Config.UPLOAD_PATH)
+    zip_file = ZipFile('chronicle.zip', 'w')
+    with zip_file:
+        for file in file_paths:
+            zip_file.write(file)
+
+    zip_file.close()
+
+
+def __get_files(dirname):
+    file_paths = []
+    directory = os.walk(dirname)
+    for root, directories, files in directory:
+        for filename in files:
+            file_path = os.path.join(root, filename)
+            file_paths.append(file_path)
+    return file_paths

@@ -8,6 +8,7 @@
                 {% if current_user.is_owner() %}
                 <p><a href="{{ url_for('administration.generate_registration_codes') }}">{{ _('Generate new registration codes') }}</a></p>
                 <p><a target="_blank" rel="noopener noreferrer" href="{{ url_for('administration.create_backup') }}">{{ _('Create backup') }}</a></p>
+                <p><a target="_blank" rel="noopener noreferrer" href="{{ url_for('administration.backup_images') }}">{{ _('Backup chronicle pictures') }}</a></p>
                 <p><a href="{{ url_for('administration.import_backup') }}">{{ _('Import backup') }}</a></p>
                 {% endif %}
             </td>
