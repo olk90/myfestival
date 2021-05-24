@@ -21,19 +21,17 @@ class Config(object):
 
     LANGUAGES = ['en', 'de']
 
-    UPLOADED_PHOTOS_DEST = os.path.join(basedir,
-                                        'app',
-                                        'static',
-                                        'photos')
+    STATIC_DIR = os.path.join(basedir,
+                              'app',
+                              'static')
+
+    UPLOADED_PHOTOS_DEST = os.path.join(STATIC_DIR, 'photos')
 
     # chronicle >>
     MAX_CONTENT_LENGTH = 1024 * 1024
 
     UPLOAD_EXTENSIONS = ['.jpg', '.png', '.gif']
 
-    UPLOAD_PATH = os.path.join(basedir,
-                               'app',
-                               'static',
-                               'chronicles')
+    UPLOAD_PATH = os.path.join(STATIC_DIR, 'chronicles')
 
     # << chronicle

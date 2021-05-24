@@ -116,7 +116,7 @@ class User(UserMixin, db.Model):
         current_photo = glob(photo_path + search_pattern)
         if len(current_photo) == 1:
             split = current_photo[0].split(sep='/')
-            img_src = '/' + split[-3] + '/' + split[-2] + '/' + split[-1]
+            img_src = '/%s/%s/%s' % (split[-3], split[-2], split[-1])
             return img_src
 
         if digest is None:
