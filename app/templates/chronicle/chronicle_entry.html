@@ -27,15 +27,17 @@
                         {{ _('Options') }} <span class="caret"></span>                    
                     </a>
                     <ul class="dropdown-menu">
+                        {% if current_user.id == entry.chronicler.id %}
                         <li>
                             <a href="{{ url_for('chronicle.edit_entry', entry_id=entry.id) }}"><span style='font-size:40px;'>&#9998;</span></a>
                         </li>
+                        {% endif %}
                         <li>
                             <a href="{{ url_for('chronicle.delete_entry', entry_id=entry.id) }}"><span style='font-size:40px;'>&#10060;</span></a>
                         </li>
                     </ul>
                 </span>
-            {% endif %}
+                {% endif %}
             </td>
         </tr>
     </table>
