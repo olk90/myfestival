@@ -138,7 +138,7 @@ def delete_entry(entry_id):
         # remove image directory, if exists
         f_id = entry.festival_id
         u_id = entry.chronicler.id
-        path = os.path.join(ca.config['UPLOAD_PATH'], f_id, u_id)
+        path = os.path.join(ca.config['UPLOAD_PATH'], '{}/{}'.format(f_id, u_id))
         if os.path.exists(path):
             shutil.rmtree(path)
 
