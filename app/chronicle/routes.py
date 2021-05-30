@@ -78,7 +78,7 @@ def upload_images(f_id):
         file_path = os.path.join(ca.config['UPLOAD_PATH'], '{}/{}/{}'.format(f_id, cu.id, filename))
         uploaded_file.save(file_path)
 
-    return '', 204
+    return '', 200
 
 
 @bp.route('/edit_entry/<entry_id>', methods=['GET', 'POST'])
@@ -111,7 +111,8 @@ def edit_entry(entry_id):
         return render_template('chronicle/setup_entry.html',
                                f_id=f_id,
                                images=get_images(f_id),
-                               form=form)
+                               form=form,
+                               entry_id=entry.id)
 
     else:
         ca.logger.warn('Blocked editing chronicle entry>{}< for >{}<'
@@ -154,9 +155,16 @@ def delete_entry(entry_id):
         abort(403)
 
 
-@bp.route('/delete_image/<f_id>/<u_id>/<filename>', methods=['POST'])
+@bp.route('/delete_image', methods=['GET', 'POST'])
 @login_required
-def delete_image(f_id, u_id, filename):
-    # allow deletion only, if current user is admin or uploader of the image!
-    print("filename")
-    return '', 204
+def delete_image():
+    # POST request
+    data = request.get_json()
+    filename = data['fileName']
+    f_id = data['festival']
+    u_id = data['user']
+    path = os.path.join(ca.config['UPLOAD_PATH'], '{}/{}/{}'.format(f_id, u_id, filename))
+    if os.path.exists(path):
+        ca.logger.info('Delete file >{}<'.format(path))
+        os.remove(path)
+    return '', 200

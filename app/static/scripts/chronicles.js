@@ -3,7 +3,7 @@ Dropzone.options.chronicleUpload = {
     dictDefaultMessage: getDefaultMessage(),
     init: function () {
         this.on('complete', function () {
-            location.reload();
+            location.reload()
         });
     }
 }
@@ -11,6 +11,38 @@ Dropzone.options.chronicleUpload = {
 function getDefaultMessage() {
     let hint = document.getElementById('hint')
     return hint.getAttribute('value')
+}
+
+function deleteImage(fileName) {
+    let festival = document.getElementById('festival')
+    let f_id = festival.getAttribute('value')
+    let user = document.getElementById('user')
+    let u_id = user.getAttribute('value')
+
+    // POST
+    fetch('/chronicle/delete_image', {
+        // Declare what type of data we're sending
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        // Specify the method
+        method: 'POST',
+
+        body: JSON.stringify({
+            "fileName": fileName,
+            "festival": f_id,
+            "user": u_id
+        })
+    })
+        .then(function (response) {
+            return response.text();
+        })
+        .then(function (text) {
+            location.reload()
+            console.log('POST response: ')
+            // Should be 'OK' if everything was successful
+            console.log(text)
+        });
 }
 
 function copyMarkdownPath(fileName) {
