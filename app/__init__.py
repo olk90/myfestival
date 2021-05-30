@@ -5,7 +5,7 @@ from logging.handlers import RotatingFileHandler
 from flask import Flask, request, current_app
 from flask_babel import Babel, lazy_gettext as _l
 from flask_bootstrap import Bootstrap
-from flask_login import LoginManager
+from flask_login import LoginManager, login_required
 from flask_migrate import Migrate
 from flask_moment import Moment
 from flask_pagedown import PageDown
@@ -34,6 +34,7 @@ photos = UploadSet('photos', IMAGES)
 
 def create_app(config_class=Config):
     app = Flask(__name__)
+    app.view_functions['static'] = login_required(app.send_static_file)
     app.config.from_object(config_class)
 
     db.init_app(app)
