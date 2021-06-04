@@ -7,7 +7,7 @@ from flask import render_template, flash, redirect, url_for, request, g, \
 from flask_babel import _, get_locale
 from flask_login import login_required, logout_user, current_user as cu
 
-from app import db, photos
+from app import session, photos
 from app.containers import NotificationType
 from app.main import bp
 from app.main.forms import EditProfileForm, PostForm, AdminPostForm, ReplyForm
@@ -19,7 +19,7 @@ from app.festival.logic import get_partner_selection, remove_partner
 def before_request():
     if cu.is_authenticated:
         cu.last_seen = datetime.utcnow()
-        db.session.commit()
+        session.commit()
     if not cu.is_anonymous and cu.is_suspended:
         flash(_('Your account has been suspended.'))
         ca.logger.info('Suspended user >{}< was kicked from server'
@@ -39,14 +39,14 @@ def index():
         post = Post(body=form.post.data, author=cu)
         if cu.is_admin():
             post.is_pinned = form.is_pinned.data
-        db.session.add(post)
-        db.session.commit()
+        session.add(post)
+        session.commit()
         ca.logger.info('>{}< added post >{}<'
                        .format(cu.username, post.id))
         flash(_('Your post is now live!'))
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.filter(Post.parent_id == None).order_by(  # noqa: E711
+    posts = session.query(Post).filter(Post.parent_id == None).order_by(  # noqa: E711
         Post.is_pinned.desc(),
         Post.internal_time.desc()
     ).paginate(page, ca.config['POSTS_PER_PAGE'], False)
@@ -65,13 +65,13 @@ def index():
 @login_required
 def reply_post(post_id):
     form = ReplyForm()
-    post = Post.query.get(post_id)
+    post = session.query(Post).get(post_id)
     if form.validate_on_submit():
         reply = Post(body=form.post.data, author=cu)
         reply.parent_id = post.id
         post.internal_time = datetime.utcnow()
-        db.session.add(post)
-        db.session.commit()
+        session.add(post)
+        session.commit()
         ca.logger.info('>{}< replied with post >{}<'
                        .format(cu.username, reply.id))
         flash(_('Your reply is now live!'))
@@ -83,7 +83,7 @@ def reply_post(post_id):
 @bp.route('/edit_post/<post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
-    post = Post.query.get(post_id)
+    post = session.query(Post).get(post_id)
     if post.author == cu:
         if cu.is_admin():
             form = AdminPostForm()
@@ -96,7 +96,7 @@ def edit_post(post_id):
                 post.timestamp = datetime.utcnow()
                 post.internal_time = datetime.utcnow()
                 if post.parent_id is not None:
-                    parent = Post.query.get(post.parent_id)
+                    parent = session.query(Post).get(post.parent_id)
                     parent.internal_time = datetime.utcnow()
         else:
             form = PostForm()
@@ -106,7 +106,7 @@ def edit_post(post_id):
                 post.body = form.post.data
 
         if request.method == 'POST':
-            db.session.commit()
+            session.commit()
             ca.logger.info(
                 '>{}< has edited post >{}<'
                 .format(cu.username, post.id))
@@ -127,23 +127,23 @@ def edit_post(post_id):
 @bp.route('/user/<username>')
 @login_required
 def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    if user == cu:
+    u = session.query(User).filter_by(username=username).first_or_404()
+    if u == cu:
         cu.add_notification(NotificationType.admin, 0)
-        db.session.commit()
+        session.commit()
     page = request.args.get('page', 1, type=int)
     if username == cu.username:
         ca.logger.info('>{}< entered own profile page'.format(username))
     else:
         ca.logger.info('>{}< stalks >{}<'
                        .format(cu.username, username))
-    posts = user.posts.order_by(Post.timestamp.desc()).paginate(
+    posts = u.posts.order_by(Post.timestamp.desc()).paginate(
         page, ca.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.user', username=user.username,
+    next_url = url_for('main.user', username=u.username,
                        page=posts.next_num) if posts.has_next else None
-    prev_url = url_for('main.user', username=user.username,
+    prev_url = url_for('main.user', username=u.username,
                        page=posts.prev_num) if posts.has_prev else None
-    return render_template('main/user.html', user=user, posts=posts.items,
+    return render_template('main/user.html', user=u, posts=posts.items,
                            next_url=next_url, prev_url=prev_url)
 
 
@@ -151,7 +151,7 @@ def user(username):
 @login_required
 def members():
     page = request.args.get('page', 1, type=int)
-    users = User.query.filter(
+    users = session.query(User).filter(
         User.username.isnot(None)).order_by(
             User.access_level.desc(), User.username) \
         .paginate(page, ca.config['POSTS_PER_PAGE'], False)
@@ -191,11 +191,11 @@ def edit_profile():
         if form.partner.data != -1:
             partner_id = form.partner.data
             cu.partner_id = partner_id
-            partner = User.query.get(partner_id)
+            partner = session.query(User).get(partner_id)
             partner.partner_id = cu.id
         else:
             remove_partner(cu)
-        db.session.commit()
+        session.commit()
         flash(_('Your changes have been saved.'))
         ca.logger.info('>{}< has changed profile data'.format(cu.username))
         return redirect(url_for('main.edit_profile'))
@@ -219,35 +219,35 @@ def edit_profile():
 @login_required
 def notifications():
     since = request.args.get('since', 0.0, type=float)
-    notifications = cu.notifications.filter(
+    notification_list = cu.notifications.filter(
         Notification.timestamp > since).order_by(Notification.timestamp.asc())
     return jsonify([{
         'name': n.name,
         'data': n.get_data(),
         'timestamp': n.timestamp
-    } for n in notifications])
+    } for n in notification_list])
 
 
 @bp.route('/user/<username>/popup')
 @login_required
 def user_popup(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    return render_template('main/user_popup.html', user=user)
+    u = session.query(User).filter_by(username=username).first_or_404()
+    return render_template('main/user_popup.html', user=u)
 
 
 @bp.route('/delete_post/<post_id>', methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
     if cu.is_admin():
-        post = Post.query.get(post_id)
+        post = session.query(Post).get(post_id)
         name = post.author.username
 
         for reply in post.get_replies():
-            db.session.delete(reply)
-        db.session.flush()
+            session.delete(reply)
+        session.flush()
 
-        db.session.delete(post)
-        db.session.commit()
+        session.delete(post)
+        session.commit()
         ca.logger.info('>{}< deleted post >{}< by >{}<'.format(
             cu.username, post_id, name
         ))

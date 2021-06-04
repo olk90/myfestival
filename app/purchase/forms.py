@@ -6,6 +6,7 @@ from wtforms import StringField, SubmitField, DecimalField, SelectField, \
 from wtforms.validators import DataRequired, ValidationError, NumberRange, \
     Length
 
+from app import session
 from app.models import ConsumptionItem, PackagingUnitType, UtilityItem
 from app.containers import ConsumptionItemState
 from app.purchase.messages import no_participants
@@ -25,12 +26,12 @@ class StockForm(FlaskForm):
     def validate_name(self, name):
         item = None
         if not self.is_edit:
-            item = ConsumptionItem.query.filter(
+            item = session.query(ConsumptionItem).filter(
                 ConsumptionItem.name == name.data,
                 ConsumptionItem.state == self.state
             ).first()
         else:
-            item = ConsumptionItem.query.filter(
+            item = session.query(ConsumptionItem).filter(
                 ConsumptionItem.name == name.data,
                 ConsumptionItem.state == self.state,
                 ConsumptionItem.id == self.item_id
@@ -39,7 +40,7 @@ class StockForm(FlaskForm):
         if item is not None:
             raise ValidationError(_('Item already on list.'))
 
-    def validate_unit(self, unit):
+    def validate_unit(self, unit):  # noqa
         if unit.data == -1:
             raise ValidationError(_('Unit must be selected.'))
 
@@ -47,13 +48,13 @@ class StockForm(FlaskForm):
         if not FlaskForm.validate(self):
             return False
         # keep one unit for each kind of item!
-        stock = ConsumptionItem.query.filter(
+        stock = session.query(ConsumptionItem).filter(
             ConsumptionItem.name == self.name.data,
             ConsumptionItem.state == ConsumptionItemState.stock,
             ConsumptionItem.pku_id != self.unit.data).first()
         invalid_state = self.state != ConsumptionItemState.stock
         if stock is not None and invalid_state:
-            pku = PackagingUnitType.query.get(stock.pku_id)
+            pku = session.query(PackagingUnitType).get(stock.pku_id)
             self.unit.errors.append(_('Expected unit: %(u)s', u=pku.name))
             return False
         return True
@@ -70,7 +71,7 @@ class SelectFestivalForm(FlaskForm):
                            coerce=int)
     create = SubmitField(_l('Create shopping list'))
 
-    def validate_festival(self, festival):
+    def validate_festival(self, festival):  # noqa
         if festival.data == -1:
             raise ValidationError(_('Festival must be selected.'))
         participants = load_participants_from_db(festival.data)
@@ -87,11 +88,10 @@ class PKUForm(FlaskForm):
     submit = SubmitField(_l('Submit'))
 
     def validate_name(self, name):
-        pku = None
         if not self.is_edit:
-            pku = PackagingUnitType.query.filter_by(name=name.data).first()
+            pku = session.query(PackagingUnitType).filter_by(name=name.data).first()
         else:
-            pku = PackagingUnitType.query.filter(
+            pku = session.query(PackagingUnitType).filter(
                 PackagingUnitType.name == name.data,
                 PackagingUnitType.id != self.pku_id
             ).first()
@@ -100,12 +100,11 @@ class PKUForm(FlaskForm):
             raise ValidationError(_('Please use a different name.'))
 
     def validate_abbreviation(self, abbreviation):
-        pku = None
         if not self.is_edit:
-            pku = PackagingUnitType.query.filter_by(
+            pku = session.query(PackagingUnitType).filter_by(
                 abbreviation=abbreviation.data).first()
         else:
-            pku = PackagingUnitType.query.filter(
+            pku = session.query(PackagingUnitType).filter(
                 PackagingUnitType.abbreviation == abbreviation.data,
                 PackagingUnitType.id != self.pku_id
             ).first()
@@ -127,11 +126,10 @@ class UtilityForm(FlaskForm):
     submit = SubmitField(_l('Submit'))
 
     def validate_name(self, name):
-        util = None
         if not self.is_edit:
-            util = UtilityItem.query.filter_by(name=name.data).first()
+            util = session.query(UtilityItem).filter_by(name=name.data).first()
         else:
-            util = UtilityItem.query.filter(
+            util = session.query(UtilityItem).filter(
                 UtilityItem.name == name.data,
                 UtilityItem.id != self.util_id
             ).first()
