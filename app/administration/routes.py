@@ -5,7 +5,7 @@ from flask_babel import _
 from flask_login import current_user, login_required
 
 import app.models as m
-from app import db, session
+from app import session
 from app.administration import bp
 from app.administration.forms import CreateRegistrationCodeForm, \
     ImportBackupForm
@@ -52,7 +52,7 @@ def generate_registration_codes():
                 user = session.query(m.User).filter_by(registration_code=code).first()
                 if user is None:
                     registration = m.Registration(code=code)
-                    db.session.add(registration)
+                    session.add(registration)
                     number_of_codes -= 1
             notify_owner()
             flash(_('Your changes have been saved.'))
@@ -71,7 +71,7 @@ def generate_registration_codes():
 def delete_registration_code(rc_id):
     if current_user.is_owner():
         rc = session.query(m.Registration).get(rc_id)
-        db.session.delete(rc)
+        session.delete(rc)
         notify_owner()
         ca.logger.info(
             '>{}< has deleted registration code >{}<'
@@ -139,7 +139,7 @@ def suspend(username):
             flash(_(suspension_failed))
             return redirect(url_for('main.index'))
         user.is_suspended = True
-        db.session.commit()
+        session.commit()
         ca.logger.info('suspended user >{}<'
                        .format(user.username))
         flash(_('%(username)s has been suspended!', username=username))
@@ -159,7 +159,7 @@ def reactivate(username):
             flash(_('%(username)s not found.', username=username))
             return redirect(url_for('main.index'))
         user.is_suspended = False
-        db.session.commit()
+        session.commit()
         ca.logger.info('reactivated user >{}<'
                        .format(user.username))
         flash(_('%(username)s has been reactivated!', username=username))
@@ -180,7 +180,7 @@ def reset_pw(username):
             return redirect(url_for('main.index'))
         user.password_hash = None
         user.reset_code = random_string(length=10)
-        db.session.commit()
+        session.commit()
         ca.logger.info('reset password user >{}<'
                        .format(user.username))
         flash(_('Password has been reset!', username=username))

@@ -4,13 +4,11 @@ import click
 from datetime import date
 from pathlib import Path
 
-from app import db
+from app import db, session
 from app.logic import create_user, create_festival, create_pku
 from app.containers import UserAccessLevel
 from app.models import User, PackagingUnitType
 from config import Config
-
-session = db.session
 
 
 def __setup_owner(username):
@@ -121,14 +119,14 @@ def register(app):
         meta = db.metadata
         for table in reversed(meta.sorted_tables):
             print('Clear table {}'.format(table))
-            db.session.execute(table.delete())
-        db.session.commit()
+            session.execute(table.delete())
+        session.commit()
 
     @postgres.command()
     def drop():
         """Drops current schema"""
         print('Drop all tables')
-        db.session.remove()
+        session.remove()
         db.engine.execute('DROP TABLE IF EXISTS alembic_version')
         db.drop_all()
 
@@ -136,7 +134,7 @@ def register(app):
     def initschema():
         """Drops current schema and executes flask db upgrade"""
         print('Drop all tables')
-        db.session.remove()
+        session.remove()
         db.engine.execute('DROP TABLE IF EXISTS alembic_version')
         db.drop_all()
         print('Delete old profile photos')

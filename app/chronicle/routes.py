@@ -8,7 +8,7 @@ from flask_babel import _
 from flask_login import login_required, current_user as cu
 from werkzeug.utils import secure_filename
 
-from app import db, session
+from app import session
 from app.chronicle import bp
 from app.chronicle.forms import ChronicleEntryForm
 from app.chronicle.logic import get_festival_selection, get_images
@@ -45,8 +45,8 @@ def add_entry(f_id):
                                festival_id=f_id,
                                chronicler_id=cu.id,
                                year=y)
-        db.session.add(entry)
-        db.session.commit()
+        session.add(entry)
+        session.commit()
         flash(_('Chronicle entry has been added.'))
         ca.logger.info('>{}< has added chronicle entry >{}<'
                        .format(cu.username, entry.id))
@@ -94,7 +94,7 @@ def edit_entry(entry_id):
             entry.body = form.body.data
             festival = session.query(Festival).get(f_id)
             entry.year = festival.get_year()
-            db.session.commit()
+            session.commit()
             flash(_('Your changes have been saved.'))
             ca.logger.info('>{}< has edited chronicle entry >{}<'
                            .format(cu.username, entry.id))
@@ -143,8 +143,8 @@ def delete_entry(entry_id):
         if os.path.exists(path):
             shutil.rmtree(path)
 
-        db.session.delete(entry)
-        db.session.commit()
+        session.delete(entry)
+        session.commit()
         ca.logger.info('>{}< deleted chronicle entry >{}< by >{}<'.format(
             cu.username, entry_id, name))
         flash(_('Chronicle entry has been deleted.'))

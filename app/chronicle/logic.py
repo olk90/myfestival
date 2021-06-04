@@ -2,7 +2,7 @@ import os
 from flask_login import current_user as cu
 from hashlib import sha256
 
-from app import db
+from app import session
 from app.models import Festival, participants as prts
 
 from config import Config
@@ -10,7 +10,7 @@ from config import Config
 
 def get_festival_selection():
     result = [(-1, '')]
-    festivals = db.session.query(Festival) \
+    festivals = session.query(Festival) \
         .join(prts, Festival.id == prts.c.festival_id) \
         .filter(prts.c.participant_id == cu.id).all()
     for f in festivals:

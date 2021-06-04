@@ -4,7 +4,7 @@ from flask_babel import _
 from flask_login import login_required, current_user
 from sqlalchemy import or_
 
-from app import db, session
+from app import session
 from app.containers import ConsumptionItemState
 from app.models import ConsumptionItem, PackagingUnitType, UtilityItem
 from app.purchase import bp
@@ -30,7 +30,7 @@ def stock_overview():
         return generate_shopping_list(f_id)
 
     shopping_list_empty = check_shopping_empty()
-    stock = db.session.query(ConsumptionItem, PackagingUnitType) \
+    stock = session.query(ConsumptionItem, PackagingUnitType) \
         .join(PackagingUnitType).filter(
         ConsumptionItem.state == ConsumptionItemState.stock).all()
     return render_template('purchase/stock_overview.html',
@@ -55,7 +55,7 @@ def wishlist():
 
     page = request.args.get('page', 1, type=int)
     shopping_list_empty = check_shopping_empty()
-    result = db.session.query(ConsumptionItem, PackagingUnitType) \
+    result = session.query(ConsumptionItem, PackagingUnitType) \
         .join(PackagingUnitType).filter(
         ConsumptionItem.state == ConsumptionItemState.wishlist) \
         .paginate(page, ca.config['ITEMS_PER_PAGE'], False)
@@ -73,7 +73,7 @@ def wishlist():
 @bp.route('/shopping_list')
 @login_required
 def shopping_list():
-    result = db.session.query(ConsumptionItem, PackagingUnitType) \
+    result = session.query(ConsumptionItem, PackagingUnitType) \
         .join(PackagingUnitType).filter(
         ConsumptionItem.state == ConsumptionItemState.purchase).all()
     ca.logger.info(
@@ -97,8 +97,8 @@ def finish_purchase():
                 i.state = ConsumptionItemState.stock
             else:
                 other.amount += i.amount
-                db.session.delete(i)
-        db.session.commit()
+                session.delete(i)
+        session.commit()
         ca.logger.info(
             '>{}< has finished purchase'.format(current_user.username))
         return redirect(url_for('purchase.stock_overview'))
@@ -115,7 +115,7 @@ def finish_purchase():
 def check_off(item_id):
     item = session.query(ConsumptionItem).get(item_id)
     item.state = ConsumptionItemState.cart
-    db.session.commit()
+    session.commit()
     ca.logger.info(
         '>{}< has added >{}< to cart'
         .format(current_user.username, item.name))
@@ -134,8 +134,8 @@ def add_stock():
                                pku_id=form.unit.data,
                                state=ConsumptionItemState.stock,
                                requestor=current_user)
-        db.session.add(item)
-        db.session.commit()
+        session.add(item)
+        session.commit()
         ca.logger.info(
             '>{}< has added >{}< to stock'
             .format(current_user.username, item.name))
@@ -156,8 +156,8 @@ def add_request():
                                amount=form.amount.data,
                                pku_id=form.unit.data,
                                requestor=current_user)
-        db.session.add(item)
-        db.session.commit()
+        session.add(item)
+        session.commit()
         flash(_('Item has been added.'))
         ca.logger.info(
             '>{}< has added >{}< to wishlist'
@@ -182,7 +182,7 @@ def edit_item(item_id):
             item.name = form.name.data
             item.amount = form.amount.data
             item.pku_id = form.unit.data
-            db.session.commit()
+            session.commit()
             ca.logger.info(
                 '>{}< has edited item >{}<'
                 .format(current_user.username, item.id))
@@ -208,8 +208,8 @@ def edit_item(item_id):
 @login_required
 def delete_item(item_id):
     item = session.query(ConsumptionItem).get(item_id)
-    db.session.delete(item)
-    db.session.commit()
+    session.delete(item)
+    session.commit()
     ca.logger.info(
         '>{}< has deleted item >{}<'
         .format(current_user.username, item.name))
@@ -246,8 +246,8 @@ def delete_pku(pku_id):
     if current_user.is_admin():
         pku = session.query(PackagingUnitType).get(pku_id)
         if pku.delete:
-            db.session.delete(pku)
-            db.session.commit()
+            session.delete(pku)
+            session.commit()
             ca.logger.info(
                 '>{}< has deleted pku >{}<'
                 .format(current_user.username, pku.name))
@@ -270,7 +270,7 @@ def edit_pku(pku_id):
         if form.validate_on_submit():
             pku.name = form.name.data
             pku.abbreviation = form.abbreviation.data
-            db.session.commit()
+            session.commit()
             ca.logger.info(
                 '>{}< has edited PKU >{}<'
                 .format(current_user.username, pku.id))
@@ -299,8 +299,8 @@ def add_pku():
             pku = PackagingUnitType(name=name,
                                     abbreviation=abbreviation,
                                     internal_name='')
-            db.session.add(pku)
-            db.session.commit()
+            session.add(pku)
+            session.commit()
             ca.logger.info(
                 '>{}< has added PKU >{}<'
                 .format(current_user.username, pku.id))
@@ -318,7 +318,7 @@ def add_pku():
 @bp.route('/utility_overview', methods=['GET', 'POST'])
 @login_required
 def utility_overview():
-    utils = db.session.query(UtilityItem).order_by(UtilityItem.name).all()
+    utils = session.query(UtilityItem).order_by(UtilityItem.name).all()
     ca.logger.info(
         '>{}< has loaded utility overview'
         .format(current_user.username))
@@ -335,8 +335,8 @@ def add_util():
         description = form.description.data
         item = UtilityItem(name=name, description=description,
                            owner=current_user)
-        db.session.add(item)
-        db.session.commit()
+        session.add(item)
+        session.commit()
         ca.logger.info(
             '>{}< has added utility >{}<'
             .format(current_user.username, item.name))
@@ -356,7 +356,7 @@ def edit_util(item_id):
         if form.validate_on_submit():
             util.name = form.name.data
             util.description = form.description.data
-            db.session.commit()
+            session.commit()
             ca.logger.info(
                 '>{}< has edited utility >{}<'
                 .format(current_user.username, util.id))
@@ -378,8 +378,8 @@ def edit_util(item_id):
 @login_required
 def delete_utility(item_id):
     item = session.query(UtilityItem).get(item_id)
-    db.session.delete(item)
-    db.session.commit()
+    session.delete(item)
+    session.commit()
     ca.logger.info(
         '>{}< has deleted utility >{}<'
         .format(current_user.username, item.name))

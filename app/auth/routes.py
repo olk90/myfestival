@@ -4,7 +4,7 @@ from flask_babel import _
 from flask_login import login_user, logout_user, current_user
 from werkzeug.urls import url_parse
 
-from app import db, session
+from app import session
 from app.logic import notify_owner
 from app.auth import bp
 from app.auth.forms import LoginForm, RegistrationForm, ChangePasswordForm
@@ -57,16 +57,16 @@ def register():
                 user.set_password(password)
                 flash(_('Password successfully reset.'))
                 ca.logger.info('>{}< has reset password'.format(user.username))
-                db.session.commit()
+                session.commit()
                 return redirect(url_for('auth.login'))
             else:
                 flash(_('Invalid registration code or name.'))
         else:
             user = User(username=username, registration_code=code)
             user.set_password(password)
-            db.session.add(user)
+            session.add(user)
             registration = session.query(Registration).filter_by(code=code).first()
-            db.session.delete(registration)
+            session.delete(registration)
             flash(_('Congratulations, you are now a registered user!'))
             ca.logger.info('>{}< signed up for duty'.format(user.username))
             notify_owner()
@@ -81,7 +81,7 @@ def change_password():
     if form.validate_on_submit():
         user = session.query(User).filter_by(username=current_user.username).first()
         user.set_password(form.new_password.data)
-        db.session.commit()
+        session.commit()
         flash(_('Password changed.'))
         ca.logger.debug('>{}< changed password'.format(user.username))
         return redirect(url_for('main.user', username=current_user.username))

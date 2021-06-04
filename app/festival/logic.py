@@ -1,6 +1,6 @@
 from flask_login import current_user
 
-from app import db, session
+from app import session
 from app.containers import FestivalUpdateInfo
 from app.models import Transfer, User, participants as prts, sharers as shrs
 
@@ -18,7 +18,7 @@ def remove_partner(user):
     partner = session.query(User).filter_by(partner_id=current_user.id).first()
     if partner:
         partner.partner_id = None
-    db.session.commit()
+    session.commit()
 
 
 def get_participants(festival_id):
@@ -94,9 +94,9 @@ def calculate_transfers(festival, participants):
                 transfer.amount = not_refunded
                 next_payer.dept = round(next_payer.dept - not_refunded, 2)
                 not_refunded = 0.0
-            db.session.add(transfer)
+            session.add(transfer)
     festival.is_closed = True
-    db.session.commit()
+    session.commit()
 
 
 def close_festival(festival):
@@ -109,6 +109,6 @@ def close_festival(festival):
 def reopen_festival(festival):
     transfers = session.query(Transfer).filter_by(festival_id=festival.id).all()
     for t in transfers:
-        db.session.delete(t)
+        session.delete(t)
     festival.is_closed = False
     festival.update_info = FestivalUpdateInfo.festival_reopened

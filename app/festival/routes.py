@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, \
 from flask_babel import _
 from flask_login import current_user, login_required
 
-from app import db, session
+from app import session
 from app.logic import notify_users
 from app.festival import bp
 from app.festival.forms import FestivalForm, InvoiceForm, EditInvoiceForm
@@ -57,7 +57,7 @@ def festival_overview():
     festivals = session.query(Festival).order_by(Festival.modified.desc()).paginate(
         page, ca.config['POSTS_PER_PAGE'], False)
     current_user.add_notification(NotificationType.festival_updated, 0)
-    db.session.commit()
+    session.commit()
     ca.logger.info('>{}< has loaded festival overview'
                    .format(current_user.username))
     next_url = url_for('festival.festival_overview', page=festivals.next_num) \
@@ -103,7 +103,7 @@ def create_festival():
                                 start_date=form.start_date.data,
                                 end_date=form.end_date.data,
                                 is_closed=False)
-            db.session.add(festival)
+            session.add(festival)
             notify_users()
             flash(_('Festival has been created.'))
             ca.logger.info('>{}< has entered festival page of >{}<'
@@ -202,7 +202,7 @@ def add_invoice(title):
         invoice = Invoice(creditor_id=current_user.id,
                           festival_id=festival.id, title=form.title.data,
                           amount=form.invoice.data)
-        db.session.add(invoice)
+        session.add(invoice)
         festival.update_info = FestivalUpdateInfo.new_invoice
 
         sharers = festival.participants
@@ -258,7 +258,7 @@ def edit_invoice(f_title, p_title):
 def delete_invoice(f_title, invoice_id):
     festival = session.query(Festival).filter_by(title=f_title).first()
     invoice = session.query(Invoice).get(invoice_id)
-    db.session.delete(invoice)
+    session.delete(invoice)
     festival.update_info = FestivalUpdateInfo.invoice_deleted
     notify_users()
     ca.logger.info(
