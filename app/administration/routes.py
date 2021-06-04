@@ -11,7 +11,7 @@ from app.administration.forms import CreateRegistrationCodeForm, \
     ImportBackupForm
 from app.administration.user_administration import disable_user
 from app.administration.backup_export import prepare_export, zip_and_download_images
-from app.administration.backup_import import load_backup
+from app.administration.backup_import import load_backup, load_images
 from app.administration.messages import (suspend_first, suspended,
                                          suspension_failed)
 from app.containers import UserAccessLevel
@@ -249,6 +249,7 @@ def import_backup():
                 flash(_('Invalid password'))
                 return redirect(url_for('administration.import_backup'))
             load_backup(request.files['backup'])
+            load_images(request.files['images'])
             flash(_('Import finished'))
         return render_template('add_form.html',
                                title=_('Import backup'),

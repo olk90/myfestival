@@ -11,7 +11,7 @@ from flask_moment import Moment
 from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import UploadSet, configure_uploads, IMAGES, \
-    patch_request_class
+    patch_request_class, ARCHIVES, DATA
 
 from flaskext.markdown import Markdown
 
@@ -30,6 +30,9 @@ moment = Moment()
 babel = Babel()
 
 photos = UploadSet('photos', IMAGES)
+
+backups = UploadSet('backups', DATA)
+archives = UploadSet('archives', ARCHIVES)
 
 
 def create_app(config_class=Config):
@@ -80,7 +83,7 @@ def create_app(config_class=Config):
         app.logger.setLevel(logging.INFO)
         app.logger.info('MyFestival startup')
 
-    configure_uploads(app, photos)
+    configure_uploads(app, {photos, backups, archives})
     patch_request_class(app, size=3 * 1024 * 1024)
 
     Markdown(app)

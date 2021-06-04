@@ -1,5 +1,6 @@
 import json
 import shutil
+from zipfile import ZipFile
 
 from flask import current_app as ca
 from flask import flash, redirect, url_for
@@ -59,7 +60,6 @@ def __handle_pkus():
 
 def __handle_chronicles():
     __handle_table(m.ChronicleEntry)
-    __delete_chronicle_images()
 
 
 def __handle_festivals():
@@ -70,14 +70,6 @@ def __handle_users():
     other_users = session.query(m.User).filter(
         m.User.access_level < UserAccessLevel.OWNER).all()
     __delete_from_database(other_users)
-
-
-def __delete_chronicle_images():
-    photos = Config.UPLOAD_PATH
-    try:
-        shutil.rmtree(photos)
-    except OSError as e:
-        print("Error: %s : %s" % (photos, e.strerror))
 
 
 def load_backup(backup):
@@ -109,6 +101,28 @@ def load_backup(backup):
 
     # now read the data from the file and write it to database
     __do_import(data)
+
+
+def load_images(images):
+    if images:
+        __delete_chronicle_images()
+        __import_archive(images)
+    else:
+        pass
+
+
+def __delete_chronicle_images():
+    photos = Config.UPLOAD_PATH
+    try:
+        shutil.rmtree(photos)
+    except OSError as e:
+        print("Error: %s : %s" % (photos, e.strerror))
+
+
+def __import_archive(archive):
+    photos = Config.UPLOAD_PATH
+    with ZipFile(archive, 'r') as zip_file:
+        zip_file.extractall(photos)
 
 
 def __reset_sequence(sequence, value):

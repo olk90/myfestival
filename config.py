@@ -26,6 +26,8 @@ class Config(object):
                               'static')
 
     UPLOADED_PHOTOS_DEST = os.path.join(STATIC_DIR, 'photos')
+    UPLOADED_BACKUPS_DEST = os.path.join(STATIC_DIR, 'backups')
+    UPLOADED_ARCHIVES_DEST = os.path.join(STATIC_DIR, 'archives')
 
     # chronicle >>
     MAX_CONTENT_LENGTH = 1024 * 1024
