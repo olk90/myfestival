@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-06 22:46+0100\n"
+"POT-Creation-Date: 2021-06-05 15:03+0200\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -74,27 +74,39 @@ msgstr "Admin"
 msgid "Owner"
 msgstr "Eigentümer"
 
-#: app/administration/backup_import.py:76
+#: app/administration/backup_import.py:82
 msgid "Invalid version number"
 msgstr "Ungültige Versionsnummer"
 
-#: app/administration/forms.py:9
+#: app/administration/forms.py:11
 msgid "Number of codes"
 msgstr "Anzahl der Codes"
 
-#: app/administration/forms.py:11
+#: app/administration/forms.py:13
 msgid "Generate at least one new code!"
 msgstr "Generiere mindestens einen neuen Code"
 
-#: app/administration/forms.py:12
+#: app/administration/forms.py:14
 msgid "Generate"
 msgstr "Generieren"
 
-#: app/administration/forms.py:16
+#: app/administration/forms.py:18
 msgid "Backup file"
 msgstr "Sicherungsdatei"
 
-#: app/administration/forms.py:17 app/auth/forms.py:14 app/auth/forms.py:23
+#: app/administration/forms.py:20
+msgid "Backup must be a JSON file!"
+msgstr "Backup muss eine JSON-Datei sein!"
+
+#: app/administration/forms.py:22
+msgid "Image archive"
+msgstr "Bilderarchiv"
+
+#: app/administration/forms.py:23
+msgid "File must be an archive!"
+msgstr "Datei muss ein Archiv sein!"
+
+#: app/administration/forms.py:25 app/auth/forms.py:14 app/auth/forms.py:23
 msgid "Password"
 msgstr "Passwort"
 
@@ -162,16 +174,16 @@ msgstr "Passwort wurde zurückgesetzt!"
 msgid "%(username)s has been deleted!"
 msgstr "%(username)s wurde gelöscht!"
 
-#: app/administration/routes.py:238
+#: app/administration/routes.py:249
 msgid "Invalid password"
 msgstr "Ungältiges Passwort"
 
-#: app/administration/routes.py:241
+#: app/administration/routes.py:253
 msgid "Import finished"
 msgstr "Import abgeschlossen"
 
-#: app/administration/routes.py:243
-#: app/templates/administration/admin_page.html:11
+#: app/administration/routes.py:255
+#: app/templates/administration/admin_page.html:12
 msgid "Import backup"
 msgstr "Sicherung importieren"
 
@@ -230,7 +242,7 @@ msgstr "Neue Passwörter sind nicht gleich"
 #: app/auth/forms.py:62 app/chronicle/forms.py:14 app/festival/forms.py:21
 #: app/festival/forms.py:51 app/festival/forms.py:60 app/main/forms.py:36
 #: app/main/forms.py:59 app/main/forms.py:66 app/main/forms.py:72
-#: app/purchase/forms.py:23 app/purchase/forms.py:87 app/purchase/forms.py:127
+#: app/purchase/forms.py:24 app/purchase/forms.py:88 app/purchase/forms.py:126
 msgid "Submit"
 msgstr "Absenden"
 
@@ -262,7 +274,7 @@ msgstr "Passwort geändert."
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: app/chronicle/forms.py:10 app/purchase/forms.py:69
+#: app/chronicle/forms.py:10 app/purchase/forms.py:70
 msgid "Festival"
 msgstr "Festival"
 
@@ -270,7 +282,7 @@ msgstr "Festival"
 msgid "Tell the story:"
 msgstr "Erzähl die Geschichte:"
 
-#: app/chronicle/forms.py:18 app/purchase/forms.py:75
+#: app/chronicle/forms.py:18 app/purchase/forms.py:76
 msgid "Festival must be selected."
 msgstr "Festival muss ausgewählt werden."
 
@@ -278,7 +290,7 @@ msgstr "Festival muss ausgewählt werden."
 msgid "Chronicle entry has been added."
 msgstr "Chronikeintrag hinzugefügt."
 
-#: app/chronicle/routes.py:149
+#: app/chronicle/routes.py:150
 msgid "Chronicle entry has been deleted."
 msgstr "Chronikeintrag gelöscht."
 
@@ -385,7 +397,7 @@ msgid "Water per day [l]"
 msgstr "Wasser pro Tag [l]"
 
 #: app/main/forms.py:23 app/main/forms.py:28 app/main/forms.py:32
-#: app/purchase/forms.py:20
+#: app/purchase/forms.py:21
 msgid "Invalid amount!"
 msgstr "Unzulässige Menge"
 
@@ -429,7 +441,7 @@ msgstr "Dein Konto wurde gesperrt."
 msgid "Your post is now live!"
 msgstr "Beitrag ist live!"
 
-#: app/main/routes.py:58 app/templates/base.html:28
+#: app/main/routes.py:58
 msgid "Home"
 msgstr "Start"
 
@@ -453,48 +465,48 @@ msgstr "Profil editieren"
 msgid "Post has been deleted."
 msgstr "Post wurde gelöscht."
 
-#: app/purchase/forms.py:17 app/purchase/forms.py:82 app/purchase/forms.py:123
+#: app/purchase/forms.py:18 app/purchase/forms.py:83 app/purchase/forms.py:122
 msgid "Name"
 msgstr "Name"
 
-#: app/purchase/forms.py:18
+#: app/purchase/forms.py:19
 msgid "Amount"
 msgstr "Menge"
 
-#: app/purchase/forms.py:21
+#: app/purchase/forms.py:22
 msgid "Unit"
 msgstr "Einheit"
 
-#: app/purchase/forms.py:40
+#: app/purchase/forms.py:41
 msgid "Item already on list."
 msgstr "Eintrag ist bereits auf der Liste."
 
-#: app/purchase/forms.py:44
+#: app/purchase/forms.py:45
 msgid "Unit must be selected."
 msgstr "Einheit muss ausgewählt werden."
 
-#: app/purchase/forms.py:57
+#: app/purchase/forms.py:58
 #, python-format
 msgid "Expected unit: %(u)s"
 msgstr "Erwartete Einheit: %(u)s"
 
-#: app/purchase/forms.py:71
+#: app/purchase/forms.py:72
 msgid "Create shopping list"
 msgstr "Einkaufsliste erstellen"
 
-#: app/purchase/forms.py:84
+#: app/purchase/forms.py:85
 msgid "Abbreviation"
 msgstr "Abkürzung"
 
-#: app/purchase/forms.py:100 app/purchase/forms.py:140
+#: app/purchase/forms.py:100 app/purchase/forms.py:138
 msgid "Please use a different name."
 msgstr "Bitte anderen Namen wählen."
 
-#: app/purchase/forms.py:114
+#: app/purchase/forms.py:113
 msgid "Please use a different abbreviation."
 msgstr "Bitte andere Abkürzung wählen."
 
-#: app/purchase/forms.py:125
+#: app/purchase/forms.py:124
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -562,55 +574,55 @@ msgstr "%(heading)s"
 msgid "Welcome to MyFestival"
 msgstr "Willkommen zu MyFestival"
 
-#: app/templates/base.html:29 app/templates/main/user_overview.html:5
+#: app/templates/base.html:28 app/templates/main/user_overview.html:5
 msgid "Members"
 msgstr "Mitglieder"
 
-#: app/templates/base.html:34
+#: app/templates/base.html:33
 msgid "Stock Management"
 msgstr "Bestandsverwaltung"
 
-#: app/templates/base.html:37
+#: app/templates/base.html:36
 msgid "Stock"
 msgstr "Bestand"
 
-#: app/templates/base.html:38 app/templates/purchase/wishlist.html:5
+#: app/templates/base.html:37 app/templates/purchase/wishlist.html:5
 msgid "Wishlist"
 msgstr "Wunschliste"
 
-#: app/templates/base.html:39
+#: app/templates/base.html:38
 msgid "Utilities"
 msgstr "Ausstattung"
 
-#: app/templates/base.html:44 app/templates/purchase/pku_overview.html:5
+#: app/templates/base.html:43 app/templates/purchase/pku_overview.html:5
 msgid "Packaging Units"
 msgstr "Bestandseinheiten"
 
-#: app/templates/base.html:54
+#: app/templates/base.html:53
 msgid "Festivals"
 msgstr "Festivals"
 
-#: app/templates/base.html:64 app/templates/festival/festival_overview.html:5
+#: app/templates/base.html:63 app/templates/festival/festival_overview.html:5
 msgid "Festival Overview"
 msgstr "Festivalübersicht"
 
-#: app/templates/base.html:67
+#: app/templates/base.html:66
 msgid "Chronicles"
 msgstr "Chroniken"
 
-#: app/templates/base.html:76
+#: app/templates/base.html:75
 msgid "Login"
 msgstr "Login"
 
-#: app/templates/administration/admin_page.html:7 app/templates/base.html:81
+#: app/templates/administration/admin_page.html:7 app/templates/base.html:80
 msgid "Administration"
 msgstr "Administration"
 
-#: app/templates/base.html:95
+#: app/templates/base.html:94
 msgid "Profile"
 msgstr "Profil"
 
-#: app/templates/base.html:104
+#: app/templates/base.html:103
 msgid "Logout"
 msgstr "Ausloggen"
 
@@ -618,7 +630,7 @@ msgstr "Ausloggen"
 msgid "Copy Markdown link"
 msgstr "Markdown-Link kopieren"
 
-#: app/templates/macros.html:49
+#: app/templates/chronicle/image_popover.html:3 app/templates/macros.html:49
 msgid "Delete image"
 msgstr "Bild löschen"
 
@@ -633,6 +645,10 @@ msgstr "Neue Registriercodes erstellen"
 #: app/templates/administration/admin_page.html:10
 msgid "Create backup"
 msgstr "Sicherung erstellen"
+
+#: app/templates/administration/admin_page.html:11
+msgid "Backup chronicle pictures"
+msgstr "Chronikbilder sichern"
 
 #: app/templates/auth/login.html:12
 msgid "New User?"
@@ -657,6 +673,7 @@ msgid "Written by %(username)s %(when)s"
 msgstr "Verfasst von %(username)s %(when)s"
 
 #: app/templates/chronicle/chronicle_entry.html:27
+#: app/templates/chronicle/image_popover.html:9
 #: app/templates/main/_post.html:35 app/templates/main/_reply.html:31
 msgid "Options"
 msgstr "Optionen"
@@ -664,6 +681,10 @@ msgstr "Optionen"
 #: app/templates/chronicle/chronicle_overview.html:5
 msgid "Tales of glorious Deeds"
 msgstr "Erzählungen glorreicher Taten"
+
+#: app/templates/chronicle/image_popover.html:2
+msgid "Copy Link"
+msgstr "Link kopieren"
 
 #: app/templates/chronicle/setup_entry.html:12
 msgid "Edit entry"
