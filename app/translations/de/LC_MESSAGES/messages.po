@@ -427,7 +427,7 @@ msgstr "Sag was:"
 
 #: app/main/forms.py:65
 msgid "Pin post"
-msgstr "Post anpinnen"
+msgstr "Nachricht anpinnen"
 
 #: app/main/forms.py:70
 msgid "Reply:"
