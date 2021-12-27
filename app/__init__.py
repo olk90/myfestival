@@ -15,7 +15,7 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES, \
 
 from flaskext.markdown import Markdown
 
-from config import Config
+from config import Config, is_heroku
 
 db = SQLAlchemy()
 session = db.session
@@ -69,7 +69,11 @@ def create_app(config_class=Config):
     app.register_blueprint(chronicle_bp, url_prefix='/chronicle')
 
     if not app.debug and not app.testing:
-        if not os.path.exists('logs'):
+        if is_heroku():
+            stream_handler = logging.StreamHandler()
+            stream_handler.setLevel(logging.INFO)
+            app.logger.addHandler(stream_handler)
+        elif not os.path.exists('logs'):
             os.mkdir('logs')
         file_handler = RotatingFileHandler('logs/myfestival.log',
                                            maxBytes=10 * 10 * 1024,

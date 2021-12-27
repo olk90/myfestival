@@ -5,15 +5,28 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
 
 
+def is_heroku() -> bool:
+    return os.environ.get("PLATFORM") == "HEROKU"
+
+
+def get_db_url() -> str:
+    db_url: str = os.environ.get("DATABASE_URL")
+    if is_heroku():
+        db_url.replace("postgres://", "postgresql://")
+    return db_url
+
+
 class Config(object):
     # in production the string must be hard to guess!
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
 
-    db_url = os.environ.get('DATABASE_URL')
+    db_url = get_db_url()
     sqlite = 'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_DATABASE_URI = db_url or sqlite
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    PLATFORM = os.environ.get("PLATFORM")
 
     POSTS_PER_PAGE = 25
 
