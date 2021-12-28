@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request, \
     current_app as ca
 from flask_babel import _
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 
 from app import session
@@ -76,6 +76,7 @@ def register():
 
 
 @bp.route('/change_password', methods=['GET', 'POST'])
+@login_required
 def change_password():
     form = ChangePasswordForm()
     if form.validate_on_submit():
