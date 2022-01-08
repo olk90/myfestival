@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 
 from wtforms import StringField, SubmitField, TextAreaField, DecimalField, \
     SelectMultipleField
-from wtforms.fields.html5 import DateField
+from wtforms.fields import DateField
 from wtforms.validators import DataRequired, ValidationError, Length,\
     NumberRange
 
