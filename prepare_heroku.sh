@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-# create app
-heroku apps:create myfestival-testing --region eu
+# create app, pass name as parameter!
+heroku apps:create $1 --region eu
 
 # add postgres
 heroku addons:add heroku-postgresql:hobby-dev

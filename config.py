@@ -12,7 +12,7 @@ def is_heroku() -> bool:
 def get_db_url() -> str:
     db_url: str = os.environ.get("DATABASE_URL")
     if is_heroku():
-        db_url.replace("postgres://", "postgresql://")
+        db_url.replace("postgres://", "postgresql://", 1)
     return db_url
 
 
