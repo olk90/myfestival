@@ -21,7 +21,7 @@ function deleteImage(fileName) {
 
     // POST
     fetch("/chronicle/delete_image", {
-        // Declare what type of data we"re sending
+        // Declare what type of data we're sending
         headers: {
             "Content-Type": "application/json"
         },

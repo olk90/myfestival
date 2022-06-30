@@ -103,7 +103,7 @@ def get_locale():
     return request.accept_languages.best_match(current_app.config["LANGUAGES"])
 
 
-# must be imported here, otherwise the app won"t launch
+# must be imported here, otherwise the app won't launch
 # must be imported to register related stuff with Flask
 from app import models  # noqa E402
 from app.main import routes  # noqa E402

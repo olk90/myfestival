@@ -15,10 +15,10 @@ from app.containers import (ConsumptionItemState, FestivalUpdateInfo,
                             NotificationType, UserAccessLevel)
 
 
-# PyCharm can"t resolve expressions such as User.query because
+# PyCharm can't resolve expressions such as User.query because
 # these methods are added dynamically during initialization, as
 # mentioned here: https://stackoverflow.com/a/39103583
-# So, as a workaround use the session"s query methods.
+# So, as a workaround use the session's query methods.
 session = db.session
 
 

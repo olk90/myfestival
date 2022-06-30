@@ -76,7 +76,7 @@ def load_backup(backup):
     ca.logger.info("data import triggered")
     content = backup.read()
     data = json.loads(content)
-    # abort when the version numbers don"t match
+    # abort when the version numbers don't match
     if data["version_number"] != get_version_number():
         ca.logger("import aborted due to version error")
         flash(_("Invalid version number"))
