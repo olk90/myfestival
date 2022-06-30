@@ -70,6 +70,7 @@ def create_app(config_class=Config):
 
     if not app.debug and not app.testing:
         if is_heroku():
+            print("Detected target platform Heroku, switch logging to stream handler")
             stream_handler = logging.StreamHandler()
             stream_handler.setLevel(logging.INFO)
             app.logger.addHandler(stream_handler)
