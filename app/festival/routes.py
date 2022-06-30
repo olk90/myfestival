@@ -227,7 +227,7 @@ def edit_invoice(f_title, p_title):
     form.sharers.choices = get_participants(festival.id)
     if form.validate_on_submit():
         invoice.title = form.title.data
-        invoice.invoice = form.invoice.data
+        invoice.amount = form.invoice.data
         sharer_ids = form.sharers.data
         invoice.set_sharers(sharer_ids)
         festival.update_info = FestivalUpdateInfo.invoice_updated
