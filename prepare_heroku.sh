@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # create app, pass name as parameter!
-heroku apps:create $1 --region eu
+heroku apps:create $1 --region $2
 
 # add postgres
 heroku addons:add heroku-postgresql:hobby-dev
