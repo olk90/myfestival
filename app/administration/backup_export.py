@@ -16,7 +16,7 @@ from config import Config
 
 
 def get_version_number():
-    db_url = ca.config['SQLALCHEMY_DATABASE_URI']
+    db_url = ca.config["SQLALCHEMY_DATABASE_URI"]
     engine = create_engine(db_url)
     connection = engine.connect()
 
@@ -29,19 +29,19 @@ def __build_user_dict(users):
     content = []
     for u in users:
         user = {
-            'id': u.id,
-            'username': u.username,
-            'registration_code': u.registration_code,
-            'password_hash': u.password_hash,
-            'about_me': u.about_me,
-            'last_seen': u.last_seen,
-            'access_level': u.access_level,
-            'is_suspended': u.is_suspended,
-            'partner': u.partner_id,
-            'beer_demand': u.beer_demand,
-            'mixed_demand': u.mixed_demand,
-            'water_demand': u.water_demand,
-            'reset_code': u.reset_code
+            "id": u.id,
+            "username": u.username,
+            "registration_code": u.registration_code,
+            "password_hash": u.password_hash,
+            "about_me": u.about_me,
+            "last_seen": u.last_seen,
+            "access_level": u.access_level,
+            "is_suspended": u.is_suspended,
+            "partner": u.partner_id,
+            "beer_demand": u.beer_demand,
+            "mixed_demand": u.mixed_demand,
+            "water_demand": u.water_demand,
+            "reset_code": u.reset_code
         }
         content.append(user)
     return content
@@ -51,13 +51,13 @@ def __build_post_dict(posts):
     content = []
     for p in posts:
         post = {
-            'id': p.id,
-            'body': p.body,
-            'timestamp': p.timestamp,
-            'author': p.user_id,
-            'is_pinned': p.is_pinned,
-            'parent': p.parent_id,
-            'internal_time': p.internal_time
+            "id": p.id,
+            "body": p.body,
+            "timestamp": p.timestamp,
+            "author": p.user_id,
+            "is_pinned": p.is_pinned,
+            "parent": p.parent_id,
+            "internal_time": p.internal_time
         }
         content.append(post)
     return content
@@ -69,16 +69,16 @@ def __build_festival_dict(festivals):
         participants = get_participants(f.id)
         p_ids = [p[0] for p in participants]
         festival = {
-            'id': f.id,
-            'title': f.title,
-            'info': f.info,
-            'creator': f.creator_id,
-            'is_closed': f.is_closed,
-            'update_info': f.update_info,
-            'modified': f.modified,
-            'end_date': f.end_date,
-            'start_date': f.start_date,
-            'participants': p_ids
+            "id": f.id,
+            "title": f.title,
+            "info": f.info,
+            "creator": f.creator_id,
+            "is_closed": f.is_closed,
+            "update_info": f.update_info,
+            "modified": f.modified,
+            "end_date": f.end_date,
+            "start_date": f.start_date,
+            "participants": p_ids
         }
         content.append(festival)
     return content
@@ -88,13 +88,13 @@ def __build_chronicle_dict(chronicles):
     content = []
     for c in chronicles:
         chronicle_entry = {
-            'id': c.id,
-            'body': c.body,
-            'chronicler': c.chronicler_id,
-            'timestamp': c.timestamp,
-            'internal_time': c.internal_time,
-            'year': c.year,
-            'festival': c.festival_id
+            "id": c.id,
+            "body": c.body,
+            "chronicler": c.chronicler_id,
+            "timestamp": c.timestamp,
+            "internal_time": c.internal_time,
+            "year": c.year,
+            "festival": c.festival_id
         }
         content.append(chronicle_entry)
     return content
@@ -106,12 +106,12 @@ def __build_invoice_dict(invoices):
         sharers = get_sharers(i.id)
         s_ids = [s[0] for s in sharers]
         invoice = {
-            'id': i.id,
-            'title': i.title,
-            'amount': i.amount,
-            'creditor': i.creditor_id,
-            'festival': i.festival_id,
-            'sharers': s_ids
+            "id": i.id,
+            "title": i.title,
+            "amount": i.amount,
+            "creditor": i.creditor_id,
+            "festival": i.festival_id,
+            "sharers": s_ids
         }
         content.append(invoice)
     return content
@@ -121,11 +121,11 @@ def __build_transfer_dict(transfers):
     content = []
     for t in transfers:
         transfer = {
-            'id': t.id,
-            'festival': t.festival_id,
-            'recipient': t.recipient_id,
-            'payer': t.payer_id,
-            'amount': t.amount
+            "id": t.id,
+            "festival": t.festival_id,
+            "recipient": t.recipient_id,
+            "payer": t.payer_id,
+            "amount": t.amount
         }
         content.append(transfer)
     return content
@@ -135,13 +135,13 @@ def __build_c_item_dict(c_items):
     content = []
     for c in c_items:
         c_item = {
-            'id': c.id,
-            'name': c.name,
-            'state': c.state,
-            'amount': c.amount,
-            'requestor': c.requestor_id,
-            'pku': c.pku_id,
-            'info': c.info
+            "id": c.id,
+            "name": c.name,
+            "state": c.state,
+            "amount": c.amount,
+            "requestor": c.requestor_id,
+            "pku": c.pku_id,
+            "info": c.info
         }
         content.append(c_item)
     return content
@@ -151,11 +151,11 @@ def __build_pku_dict(pkus):
     content = []
     for p in pkus:
         pku = {
-            'id': p.id,
-            'name': p.name,
-            'abbreviation': p.abbreviation,
-            'internal_name': p.internal_name,
-            'delete': p.delete
+            "id": p.id,
+            "name": p.name,
+            "abbreviation": p.abbreviation,
+            "internal_name": p.internal_name,
+            "delete": p.delete
         }
         content.append(pku)
     return content
@@ -165,17 +165,17 @@ def __build_u_item_dict(u_items):
     content = []
     for u in u_items:
         u_item = {
-            'id': u.id,
-            'name': u.name,
-            'owner': u.owner_id,
-            'description': u.description
+            "id": u.id,
+            "name": u.name,
+            "owner": u.owner_id,
+            "description": u.description
         }
         content.append(u_item)
     return content
 
 
 def prepare_export():
-    ca.logger.info('data export triggered')
+    ca.logger.info("data export triggered")
     users = session.query(m.User).all()
     user_output = __build_user_dict(users)
 
@@ -203,30 +203,30 @@ def prepare_export():
     u_items = session.query(m.UtilityItem).all()
     u_item_output = __build_u_item_dict(u_items)
 
-    ca.logger.info('writing dump to file')
-    return jsonify({'version_number': get_version_number(),
-                    'users': user_output,
-                    'posts': post_output,
-                    'festivals': festival_output,
-                    'chronicle': chronicle_output,
-                    'invoices': invoice_output,
-                    'transfers': transfer_output,
-                    'consumptionItems': c_item_output,
-                    'packagingUnits': pku_output,
-                    'utilityItems': u_item_output})
+    ca.logger.info("writing dump to file")
+    return jsonify({"version_number": get_version_number(),
+                    "users": user_output,
+                    "posts": post_output,
+                    "festivals": festival_output,
+                    "chronicle": chronicle_output,
+                    "invoices": invoice_output,
+                    "transfers": transfer_output,
+                    "consumptionItems": c_item_output,
+                    "packagingUnits": pku_output,
+                    "utilityItems": u_item_output})
 
 
 def zip_and_download_images():
-    ca.logger.info('zip chronicle images')
+    ca.logger.info("zip chronicle images")
     file_paths = __get_files(Config.UPLOAD_PATH)
-    filename = 'chronicles.zip'
+    filename = "chronicles.zip"
     os.chdir(Config.STATIC_DIR)
-    out_path = os.path.join('chronicles', filename)
-    zip_file = ZipFile(out_path, 'w')
+    out_path = os.path.join("chronicles", filename)
+    zip_file = ZipFile(out_path, "w")
     with zip_file:
         for file in file_paths:
-            split = file.split(sep='/')
-            relative_path = '/%s/%s/%s' % (split[-3], split[-2], split[-1])
+            split = file.split(sep="/")
+            relative_path = "/%s/%s/%s" % (split[-3], split[-2], split[-1])
             zip_file.write(file, arcname=relative_path)
 
     zip_file.close()
@@ -245,10 +245,10 @@ def __get_files(dirname):
 
 def __send_file(file_path, filename):
     join = os.path.join(file_path, filename)
-    with open(join, 'rb') as f:
+    with open(join, "rb") as f:
         data = f.readlines()
     os.remove(join)
     return Response(data, headers={
-        'Content-Type': 'application/zip',
-        'Content-Disposition': 'attachment; filename=%s;' % filename
+        "Content-Type": "application/zip",
+        "Content-Disposition": "attachment; filename=%s;" % filename
     })

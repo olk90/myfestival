@@ -2,31 +2,31 @@ Dropzone.options.chronicleUpload = {
     clickable: true,
     dictDefaultMessage: getDefaultMessage(),
     init: function () {
-        this.on('complete', function () {
+        this.on("complete", function () {
             location.reload()
         });
     }
 }
 
 function getDefaultMessage() {
-    let hint = document.getElementById('hint')
-    return hint.getAttribute('value')
+    let hint = document.getElementById("hint")
+    return hint.getAttribute("value")
 }
 
 function deleteImage(fileName) {
-    let festival = document.getElementById('festival')
-    let f_id = festival.getAttribute('value')
-    let user = document.getElementById('user')
-    let u_id = user.getAttribute('value')
+    let festival = document.getElementById("festival")
+    let f_id = festival.getAttribute("value")
+    let user = document.getElementById("user")
+    let u_id = user.getAttribute("value")
 
     // POST
-    fetch('/chronicle/delete_image', {
-        // Declare what type of data we're sending
+    fetch("/chronicle/delete_image", {
+        // Declare what type of data we"re sending
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
         },
         // Specify the method
-        method: 'POST',
+        method: "POST",
 
         body: JSON.stringify({
             "fileName": fileName,
@@ -39,8 +39,8 @@ function deleteImage(fileName) {
         })
         .then(function (text) {
             location.reload()
-            console.log('POST response: ')
-            // Should be 'OK' if everything was successful
+            console.log("POST response: ")
+            // Should be "OK" if everything was successful
             console.log(text)
         });
 }
@@ -51,10 +51,10 @@ function copyMarkdownPath(fileName) {
 }
 
 function getMarkdownLink(fileName) {
-    let festival = document.getElementById('festival')
-    let f_id = festival.getAttribute('value')
-    let user = document.getElementById('user')
-    let u_id = user.getAttribute('value')
+    let festival = document.getElementById("festival")
+    let f_id = festival.getAttribute("value")
+    let user = document.getElementById("user")
+    let u_id = user.getAttribute("value")
 
     // direct markdown link (no scaling possible, so go with img tag)
     // return `![${fileName}](/static/chronicles/${f_id}/${u_id}/${fileName})`

@@ -13,38 +13,38 @@ from test_config import BaseTestCase
 
 
 def setup_base_costallocation():
-    users = [User(username='user1', registration_code=random_string()),
-             User(username='user2', registration_code=random_string()),
-             User(username='user3', registration_code=random_string())]
+    users = [User(username="user1", registration_code=random_string()),
+             User(username="user2", registration_code=random_string()),
+             User(username="user3", registration_code=random_string())]
     for u in users:
         db.session.add(u)
     db.session.commit()
 
     # set partner_ids properly
-    u1 = session.query(User).filter_by(username='user1').first()
-    u2 = session.query(User).filter_by(username='user2').first()
-    u3 = session.query(User).filter_by(username='user3').first()
+    u1 = session.query(User).filter_by(username="user1").first()
+    u2 = session.query(User).filter_by(username="user2").first()
+    u3 = session.query(User).filter_by(username="user3").first()
     u1.partner_id = u2.id
     u2.partner_id = u1.id
 
     start = date(2019, 8, 13)
     end = date(2019, 8, 18)
-    festival = Festival(title='Festival1', creator=u1,
+    festival = Festival(title="Festival1", creator=u1,
                         start_date=start, end_date=end)
     db.session.add(festival)
     invoices = [
-        Invoice(title='Fuel', amount=60.0, creditor=u3, festival=festival),
-        Invoice(title='Food', amount=200.0, creditor=u2, festival=festival),
-        Invoice(title='Beer', amount=150.25, creditor=u1, festival=festival)]
+        Invoice(title="Fuel", amount=60.0, creditor=u3, festival=festival),
+        Invoice(title="Food", amount=200.0, creditor=u2, festival=festival),
+        Invoice(title="Beer", amount=150.25, creditor=u1, festival=festival)]
     for p in invoices:
         db.session.add(p)
     db.session.commit()
 
     notify_users(u1.id)
 
-    beer = session.query(Invoice).filter_by(title='Beer').first()
-    beer.set_sharers([u.id for u in users if u.username != 'user3'])
-    common_invoices = session.query(Invoice).filter(Invoice.title != 'Beer').all()
+    beer = session.query(Invoice).filter_by(title="Beer").first()
+    beer.set_sharers([u.id for u in users if u.username != "user3"])
+    common_invoices = session.query(Invoice).filter(Invoice.title != "Beer").all()
     for p in common_invoices:
         p.set_sharers([u.id for u in users])
 
@@ -55,58 +55,58 @@ def setup_base_costallocation():
 
 
 def setup_complex_costallocation():
-    users = [User(username='EW', registration_code=random_string()),
-             User(username='LB', registration_code=random_string()),
-             User(username='MJ', registration_code=random_string()),
-             User(username='MN', registration_code=random_string()),
-             User(username='PL', registration_code=random_string()),
-             User(username='RV', registration_code=random_string()),
-             User(username='CP', registration_code=random_string()),
-             User(username='TB', registration_code=random_string()),
-             User(username='TN', registration_code=random_string()),
-             User(username='OK', registration_code=random_string())]
+    users = [User(username="EW", registration_code=random_string()),
+             User(username="LB", registration_code=random_string()),
+             User(username="MJ", registration_code=random_string()),
+             User(username="MN", registration_code=random_string()),
+             User(username="PL", registration_code=random_string()),
+             User(username="RV", registration_code=random_string()),
+             User(username="CP", registration_code=random_string()),
+             User(username="TB", registration_code=random_string()),
+             User(username="TN", registration_code=random_string()),
+             User(username="OK", registration_code=random_string())]
     for u in users:
         db.session.add(u)
     db.session.commit()
 
     # set partner_ids properly
-    u1 = session.query(User).filter_by(username='TB').first()
-    u2 = session.query(User).filter_by(username='TN').first()
+    u1 = session.query(User).filter_by(username="TB").first()
+    u2 = session.query(User).filter_by(username="TN").first()
     u1.partner_id = u2.id
     u2.partner_id = u1.id
 
-    u3 = session.query(User).filter_by(username='MJ').first()
-    u4 = session.query(User).filter_by(username='MN').first()
+    u3 = session.query(User).filter_by(username="MJ").first()
+    u4 = session.query(User).filter_by(username="MN").first()
     u3.partner_id = u4.id
     u4.partner_id = u3.id
 
     start = date(2019, 8, 13)
     end = date(2019, 8, 18)
-    festival = Festival(title='Festival1', creator=u1,
+    festival = Festival(title="Festival1", creator=u1,
                         start_date=start, end_date=end)
     db.session.add(festival)
-    u5 = session.query(User).filter_by(username='EW').first()
-    u6 = session.query(User).filter_by(username='PL').first()
-    u7 = session.query(User).filter_by(username='RV').first()
+    u5 = session.query(User).filter_by(username="EW").first()
+    u6 = session.query(User).filter_by(username="PL").first()
+    u7 = session.query(User).filter_by(username="RV").first()
     invoices = [
-        Invoice(title='Tanken 1', amount=66.57, creditor=u5,
+        Invoice(title="Tanken 1", amount=66.57, creditor=u5,
                 festival=festival),
-        Invoice(title='Tanken 2', amount=67.03, creditor=u4,
+        Invoice(title="Tanken 2", amount=67.03, creditor=u4,
                 festival=festival),
-        Invoice(title='Bier', amount=153.5, creditor=u4, festival=festival),
-        Invoice(title='DM', amount=17.51, creditor=u4, festival=festival),
-        Invoice(title='Tanken 3', amount=50.0,
+        Invoice(title="Bier", amount=153.5, creditor=u4, festival=festival),
+        Invoice(title="DM", amount=17.51, creditor=u4, festival=festival),
+        Invoice(title="Tanken 3", amount=50.0,
                 creditor=u6, festival=festival),
-        Invoice(title='Kaufland', amount=215.0, creditor=u6,
+        Invoice(title="Kaufland", amount=215.0, creditor=u6,
                 festival=festival),
-        Invoice(title='Tanken 4', amount=80.0, creditor=u7, festival=festival)]
+        Invoice(title="Tanken 4", amount=80.0, creditor=u7, festival=festival)]
     for p in invoices:
         db.session.add(p)
     db.session.commit()
 
-    beer = session.query(Invoice).filter_by(title='Bier').first()
-    beer.set_sharers([u.id for u in users if u.username != 'TN'])
-    common_invoices = session.query(Invoice).filter(Invoice.title != 'Bier').all()
+    beer = session.query(Invoice).filter_by(title="Bier").first()
+    beer.set_sharers([u.id for u in users if u.username != "TN"])
+    common_invoices = session.query(Invoice).filter(Invoice.title != "Bier").all()
     for p in common_invoices:
         p.set_sharers([u.id for u in users])
 
@@ -178,7 +178,7 @@ class FestivalModelTestCase(BaseTestCase):
         invoices = list(map(lambda p: p.amount, session.query(Invoice).all()))
 
         overall_costs = sum(invoices)
-        # overall costs with creditors' shares
+        # overall costs with creditors" shares
         required_repayment_amount = overall_costs - (4 * 66.67)
         repayments = list(map(lambda t: t.amount, transfers))
         overall_transfer = sum(repayments)

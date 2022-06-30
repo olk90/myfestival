@@ -7,7 +7,7 @@ cli.register(app)
 
 @app.shell_context_processor
 def make_shell_context():
-    return {'db': db, 'User': User, 'Post': Post, 'Notification': Notification}
+    return {"db": db, "User": User, "Post": Post, "Notification": Notification}
 
 
 if __name__ == "__main__":

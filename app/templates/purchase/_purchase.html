@@ -1,7 +1,7 @@
 <tr>
     <td width="40px">
         {% if item.ConsumptionItem.requestor.username %}
-        <a href="{{ url_for('main.user', username=item.ConsumptionItem.requestor.username) }}">
+        <a href="{{ url_for("main.user", username=item.ConsumptionItem.requestor.username) }}">
             <img src="{{ item.ConsumptionItem.requestor.avatar(40) }}" width="40px" height="40px"/>
         </a>
         {% else %}
@@ -12,7 +12,7 @@
         {% set user_link %}
             <span class="user_popup">
                 {% if item.ConsumptionItem.requestor.username %}
-                <a href="{{ url_for('main.user', username=item.ConsumptionItem.requestor.username) }}">
+                <a href="{{ url_for("main.user", username=item.ConsumptionItem.requestor.username) }}">
                     {{ item.ConsumptionItem.requestor.get_username() }}
                 </a>
                 {% else %}
@@ -30,8 +30,8 @@
         {% endif %}
     </td>
     <td style="text-align: right;">
-        <a href="{{ url_for('purchase.check_off', item_id=item.ConsumptionItem.id) }}">
-            <span style='font-size:40px;'>&#9989;</span>
+        <a href="{{ url_for("purchase.check_off", item_id=item.ConsumptionItem.id) }}">
+            <span style="font-size:40px;">&#9989;</span>
         </a>
     </td>
 </tr>

@@ -15,17 +15,17 @@ from app.purchase.forms import StockForm, SelectFestivalForm, PKUForm, \
 from app.purchase.messages import shopping_list_not_empty
 
 
-@bp.route('/stock_overview', methods=['GET', 'POST'])
+@bp.route("/stock_overview", methods=["GET", "POST"])
 @login_required
 def stock_overview():
     form = SelectFestivalForm()
     form.festival.choices = get_festivals()
     ca.logger.info(
-        '>{}< has loaded stock overview'.format(current_user.username))
+        ">{}< has loaded stock overview".format(current_user.username))
     if form.validate_on_submit():
         f_id = form.festival.data
         ca.logger.info(
-            '>{}< has triggered shopping list creation for festival >{}<'
+            ">{}< has triggered shopping list creation for festival >{}<"
             .format(current_user.username, f_id))
         return generate_shopping_list(f_id)
 
@@ -33,55 +33,55 @@ def stock_overview():
     stock = session.query(ConsumptionItem, PackagingUnitType) \
         .join(PackagingUnitType).filter(
         ConsumptionItem.state == ConsumptionItemState.stock).all()
-    return render_template('purchase/stock_overview.html',
+    return render_template("purchase/stock_overview.html",
                            form=form,
                            shopping_list_empty=shopping_list_empty,
                            items=stock)
 
 
-@bp.route('/wishlist', methods=['GET', 'POST'])
+@bp.route("/wishlist", methods=["GET", "POST"])
 @login_required
 def wishlist():
     form = SelectFestivalForm()
     form.festival.choices = get_festivals()
     ca.logger.info(
-        '>{}< has loaded wishlist'.format(current_user.username))
+        ">{}< has loaded wishlist".format(current_user.username))
     if form.validate_on_submit():
         f_id = form.festival.data
         ca.logger.info(
-            '>{}< has triggered shopping list creation for festival >{}<'
+            ">{}< has triggered shopping list creation for festival >{}<"
             .format(current_user.username, f_id))
         return generate_shopping_list(f_id)
 
-    page = request.args.get('page', 1, type=int)
+    page = request.args.get("page", 1, type=int)
     shopping_list_empty = check_shopping_empty()
     result = session.query(ConsumptionItem, PackagingUnitType) \
         .join(PackagingUnitType).filter(
         ConsumptionItem.state == ConsumptionItemState.wishlist) \
-        .paginate(page, ca.config['ITEMS_PER_PAGE'], False)
-    next_url = url_for('purchase.wishlist',
+        .paginate(page, ca.config["ITEMS_PER_PAGE"], False)
+    next_url = url_for("purchase.wishlist",
                        page=result.next_num) if result.has_next else None
-    prev_url = url_for('purchase.wishlist',
+    prev_url = url_for("purchase.wishlist",
                        page=result.prev_num) if result.has_prev else None
-    return render_template('purchase/wishlist.html',
+    return render_template("purchase/wishlist.html",
                            form=form,
                            shopping_list_empty=shopping_list_empty,
                            items=result.items,
                            next_url=next_url, prev_url=prev_url)
 
 
-@bp.route('/shopping_list')
+@bp.route("/shopping_list")
 @login_required
 def shopping_list():
     result = session.query(ConsumptionItem, PackagingUnitType) \
         .join(PackagingUnitType).filter(
         ConsumptionItem.state == ConsumptionItemState.purchase).all()
     ca.logger.info(
-        '>{}< has loaded shopping list'.format(current_user.username))
-    return render_template('purchase/shopping_list.html', items=result)
+        ">{}< has loaded shopping list".format(current_user.username))
+    return render_template("purchase/shopping_list.html", items=result)
 
 
-@bp.route('/finish_purchase')
+@bp.route("/finish_purchase")
 @login_required
 def finish_purchase():
     list_items = session.query(ConsumptionItem).filter_by(
@@ -100,30 +100,30 @@ def finish_purchase():
                 session.delete(i)
         session.commit()
         ca.logger.info(
-            '>{}< has finished purchase'.format(current_user.username))
-        return redirect(url_for('purchase.stock_overview'))
+            ">{}< has finished purchase".format(current_user.username))
+        return redirect(url_for("purchase.stock_overview"))
     else:
         flash(shopping_list_not_empty)
         ca.logger.error(
-            '>{}< was unable to finish purchase: shopping list not empty'
+            ">{}< was unable to finish purchase: shopping list not empty"
             .format(current_user.username))
-        return redirect(url_for('purchase.shopping_list'))
+        return redirect(url_for("purchase.shopping_list"))
 
 
-@bp.route('/check_off/<item_id>', methods=['GET', 'POST'])
+@bp.route("/check_off/<item_id>", methods=["GET", "POST"])
 @login_required
 def check_off(item_id):
     item = session.query(ConsumptionItem).get(item_id)
     item.state = ConsumptionItemState.cart
     session.commit()
     ca.logger.info(
-        '>{}< has added >{}< to cart'
+        ">{}< has added >{}< to cart"
         .format(current_user.username, item.name))
-    flash(_('%(title)s added to cart', title=item.name))
-    return redirect(url_for('purchase.shopping_list'))
+    flash(_("%(title)s added to cart", title=item.name))
+    return redirect(url_for("purchase.shopping_list"))
 
 
-@bp.route('/add_stock', methods=['GET', 'POST'])
+@bp.route("/add_stock", methods=["GET", "POST"])
 @login_required
 def add_stock():
     form = StockForm(state=ConsumptionItemState.stock)
@@ -137,16 +137,16 @@ def add_stock():
         session.add(item)
         session.commit()
         ca.logger.info(
-            '>{}< has added >{}< to stock'
+            ">{}< has added >{}< to stock"
             .format(current_user.username, item.name))
-        flash(_('Item has been added.'))
-        return redirect(url_for('purchase.add_stock'))
-    return render_template('purchase/add_item_form.html',
-                           overview_id='stock_overview',
-                           form=form, heading=_('Add Item'))
+        flash(_("Item has been added."))
+        return redirect(url_for("purchase.add_stock"))
+    return render_template("purchase/add_item_form.html",
+                           overview_id="stock_overview",
+                           form=form, heading=_("Add Item"))
 
 
-@bp.route('/add_request', methods=['GET', 'POST'])
+@bp.route("/add_request", methods=["GET", "POST"])
 @login_required
 def add_request():
     form = StockForm(state=ConsumptionItemState.wishlist)
@@ -158,17 +158,17 @@ def add_request():
                                requestor=current_user)
         session.add(item)
         session.commit()
-        flash(_('Item has been added.'))
+        flash(_("Item has been added."))
         ca.logger.info(
-            '>{}< has added >{}< to wishlist'
+            ">{}< has added >{}< to wishlist"
             .format(current_user.username, item.name))
-        return redirect(url_for('purchase.add_request'))
-    return render_template('purchase/add_item_form.html',
-                           overview_id='wishlist',
-                           form=form, heading=_('Add Item'))
+        return redirect(url_for("purchase.add_request"))
+    return render_template("purchase/add_item_form.html",
+                           overview_id="wishlist",
+                           form=form, heading=_("Add Item"))
 
 
-@bp.route('/edit_item/<item_id>', methods=['GET', 'POST'])
+@bp.route("/edit_item/<item_id>", methods=["GET", "POST"])
 @login_required
 def edit_item(item_id):
     item = session.query(ConsumptionItem).get(item_id)
@@ -184,44 +184,44 @@ def edit_item(item_id):
             item.pku_id = form.unit.data
             session.commit()
             ca.logger.info(
-                '>{}< has edited item >{}<'
+                ">{}< has edited item >{}<"
                 .format(current_user.username, item.id))
-            flash(_('Your changes have been saved.'))
+            flash(_("Your changes have been saved."))
             return calculate_redirect(item)
-        elif request.method == 'GET':
+        elif request.method == "GET":
             form.name.data = item.name
             form.amount.data = item.amount
             form.unit.data = item.pku_id
 
-        return render_template('purchase/add_item_form.html',
+        return render_template("purchase/add_item_form.html",
                                overview_id=None,
-                               form=form, heading=_('Edit Item'))
+                               form=form, heading=_("Edit Item"))
     else:
         ca.logger.error(
-            '>{}< failed to edit item >{}<: purchase not closed'
+            ">{}< failed to edit item >{}<: purchase not closed"
             .format(current_user.username, item.id))
-        flash(_('Cannot edit items while purchase is not closed.'))
+        flash(_("Cannot edit items while purchase is not closed."))
         return calculate_redirect(item)
 
 
-@bp.route('/delete_item/<item_id>', methods=['GET', 'POST'])
+@bp.route("/delete_item/<item_id>", methods=["GET", "POST"])
 @login_required
 def delete_item(item_id):
     item = session.query(ConsumptionItem).get(item_id)
     session.delete(item)
     session.commit()
     ca.logger.info(
-        '>{}< has deleted item >{}<'
+        ">{}< has deleted item >{}<"
         .format(current_user.username, item.name))
-    flash(_('%(title)s deleted', title=item.name))
-    return redirect(url_for('purchase.stock_overview'))
+    flash(_("%(title)s deleted", title=item.name))
+    return redirect(url_for("purchase.stock_overview"))
 
 
-@bp.route('/pku_overview', methods=['GET', 'POST'])
+@bp.route("/pku_overview", methods=["GET", "POST"])
 @login_required
 def pku_overview():
     if current_user.is_admin():
-        ca.logger.info('>{}< has loaded PKU overview'
+        ca.logger.info(">{}< has loaded PKU overview"
                        .format(current_user.username))
 
         # display all non-erasable PKUs in a separate list
@@ -231,16 +231,16 @@ def pku_overview():
 
         pkus = session.query(PackagingUnitType).filter(PackagingUnitType.delete) \
             .order_by(PackagingUnitType.name).all()
-        return render_template('purchase/pku_overview.html',
+        return render_template("purchase/pku_overview.html",
                                nonerasables=nonersable_pkus,
                                units=pkus)
     else:
-        ca.logger.warn('Blocked PKU overview access for >{}<'
+        ca.logger.warn("Blocked PKU overview access for >{}<"
                        .format(current_user.username))
         abort(403)
 
 
-@bp.route('/delete_pku/<pku_id>', methods=['GET', 'POST'])
+@bp.route("/delete_pku/<pku_id>", methods=["GET", "POST"])
 @login_required
 def delete_pku(pku_id):
     if current_user.is_admin():
@@ -249,19 +249,19 @@ def delete_pku(pku_id):
             session.delete(pku)
             session.commit()
             ca.logger.info(
-                '>{}< has deleted pku >{}<'
+                ">{}< has deleted pku >{}<"
                 .format(current_user.username, pku.name))
-            flash(_('%(title)s deleted', title=pku.name))
+            flash(_("%(title)s deleted", title=pku.name))
         else:
-            flash(_('%(title)s cannot be deleted!', title=pku.name))
-        return redirect(url_for('purchase.pku_overview'))
+            flash(_("%(title)s cannot be deleted!", title=pku.name))
+        return redirect(url_for("purchase.pku_overview"))
     else:
-        ca.logger.warn('Blocked PKU deletion for >{}<'
+        ca.logger.warn("Blocked PKU deletion for >{}<"
                        .format(current_user.username))
         abort(403)
 
 
-@bp.route('/edit_pku/<pku_id>', methods=['GET', 'POST'])
+@bp.route("/edit_pku/<pku_id>", methods=["GET", "POST"])
 @login_required
 def edit_pku(pku_id):
     if current_user.is_admin():
@@ -272,23 +272,23 @@ def edit_pku(pku_id):
             pku.abbreviation = form.abbreviation.data
             session.commit()
             ca.logger.info(
-                '>{}< has edited PKU >{}<'
+                ">{}< has edited PKU >{}<"
                 .format(current_user.username, pku.id))
-            flash(_('Your changes have been saved.'))
-            return redirect(url_for('purchase.pku_overview'))
-        elif request.method == 'GET':
+            flash(_("Your changes have been saved."))
+            return redirect(url_for("purchase.pku_overview"))
+        elif request.method == "GET":
             form.name.data = pku.name
             form.abbreviation.data = pku.abbreviation
 
-        return render_template('add_form.html',
-                               form=form, heading=_('Edit packaging unit'))
+        return render_template("add_form.html",
+                               form=form, heading=_("Edit packaging unit"))
     else:
-        ca.logger.warn('Blocked PKU editing for >{}<'
+        ca.logger.warn("Blocked PKU editing for >{}<"
                        .format(current_user.username))
         abort(403)
 
 
-@bp.route('/add_pku', methods=['GET', 'POST'])
+@bp.route("/add_pku", methods=["GET", "POST"])
 @login_required
 def add_pku():
     if current_user.is_admin():
@@ -298,35 +298,35 @@ def add_pku():
             abbreviation = form.abbreviation.data
             pku = PackagingUnitType(name=name,
                                     abbreviation=abbreviation,
-                                    internal_name='')
+                                    internal_name="")
             session.add(pku)
             session.commit()
             ca.logger.info(
-                '>{}< has added PKU >{}<'
+                ">{}< has added PKU >{}<"
                 .format(current_user.username, pku.id))
-            flash(_('Packaging unit has been added.'))
-            return redirect(url_for('purchase.pku_overview'))
+            flash(_("Packaging unit has been added."))
+            return redirect(url_for("purchase.pku_overview"))
 
-        return render_template('add_form.html',
-                               form=form, heading=_('Edit packaging unit'))
+        return render_template("add_form.html",
+                               form=form, heading=_("Edit packaging unit"))
     else:
-        ca.logger.warn('Blocked adding PKU for >{}<'
+        ca.logger.warn("Blocked adding PKU for >{}<"
                        .format(current_user.username))
         abort(403)
 
 
-@bp.route('/utility_overview', methods=['GET', 'POST'])
+@bp.route("/utility_overview", methods=["GET", "POST"])
 @login_required
 def utility_overview():
     utils = session.query(UtilityItem).order_by(UtilityItem.name).all()
     ca.logger.info(
-        '>{}< has loaded utility overview'
+        ">{}< has loaded utility overview"
         .format(current_user.username))
-    return render_template('purchase/utility_overview.html',
+    return render_template("purchase/utility_overview.html",
                            items=utils)
 
 
-@bp.route('/add_util', methods=['GET', 'POST'])
+@bp.route("/add_util", methods=["GET", "POST"])
 @login_required
 def add_util():
     form = UtilityForm()
@@ -338,16 +338,16 @@ def add_util():
         session.add(item)
         session.commit()
         ca.logger.info(
-            '>{}< has added utility >{}<'
+            ">{}< has added utility >{}<"
             .format(current_user.username, item.name))
-        flash(_('Your changes have been saved.'))
-        return redirect(url_for('purchase.utility_overview'))
+        flash(_("Your changes have been saved."))
+        return redirect(url_for("purchase.utility_overview"))
 
-    return render_template('add_form.html',
-                           form=form, heading=_('Add utility item'))
+    return render_template("add_form.html",
+                           form=form, heading=_("Add utility item"))
 
 
-@bp.route('/edit_util/<item_id>', methods=['GET', 'POST'])
+@bp.route("/edit_util/<item_id>", methods=["GET", "POST"])
 @login_required
 def edit_util(item_id):
     util = session.query(UtilityItem).get(item_id)
@@ -358,30 +358,30 @@ def edit_util(item_id):
             util.description = form.description.data
             session.commit()
             ca.logger.info(
-                '>{}< has edited utility >{}<'
+                ">{}< has edited utility >{}<"
                 .format(current_user.username, util.id))
-            flash(_('Your changes have been saved.'))
-            return redirect(url_for('purchase.utility_overview'))
-        elif request.method == 'GET':
+            flash(_("Your changes have been saved."))
+            return redirect(url_for("purchase.utility_overview"))
+        elif request.method == "GET":
             form.name.data = util.name
             form.description.data = util.description
 
-        return render_template('add_form.html',
-                               form=form, heading=_('Edit packaging unit'))
+        return render_template("add_form.html",
+                               form=form, heading=_("Edit packaging unit"))
     else:
-        ca.logger.warn('Blocked editing utility >{}< for >{}<'
+        ca.logger.warn("Blocked editing utility >{}< for >{}<"
                        .format(util.name, current_user.username))
         abort(403)
 
 
-@bp.route('/delete_utility/<item_id>', methods=['GET', 'POST'])
+@bp.route("/delete_utility/<item_id>", methods=["GET", "POST"])
 @login_required
 def delete_utility(item_id):
     item = session.query(UtilityItem).get(item_id)
     session.delete(item)
     session.commit()
     ca.logger.info(
-        '>{}< has deleted utility >{}<'
+        ">{}< has deleted utility >{}<"
         .format(current_user.username, item.name))
-    flash(_('%(title)s deleted', title=item.name))
-    return redirect(url_for('purchase.utility_overview'))
+    flash(_("%(title)s deleted", title=item.name))
+    return redirect(url_for("purchase.utility_overview"))

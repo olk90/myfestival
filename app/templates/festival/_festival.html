@@ -2,7 +2,7 @@
     <tr>
         <td width="40px">
             {% if festival.creator.username %}
-            <a href="{{ url_for('main.user', username=festival.creator.username) }}">
+            <a href="{{ url_for("main.user", username=festival.creator.username) }}">
                 <img src="{{ festival.creator.avatar(40) }}" width="40px" height="40px"/>
             </a>
             {% else %}
@@ -13,7 +13,7 @@
             {% set user_link %}
                 <span class="user_popup">
                     {% if festival.creator.username %}
-                    <a href="{{ url_for('main.user', username=festival.creator.username) }}">
+                    <a href="{{ url_for("main.user", username=festival.creator.username) }}">
                         {{ festival.creator.get_username() }}
                     </a>
                     {% else %}
@@ -22,11 +22,11 @@
                 </span>
             {% endset %}
             {% set festival_link %}
-                <a href="{{ url_for('festival.festival_page', title=festival.title) }}">
+                <a href="{{ url_for("festival.festival_page", title=festival.title) }}">
                     {{ festival.title }}
                 </a>
             {% endset %}
-            {{ _('%(username)s created %(f)s',
+            {{ _("%(username)s created %(f)s",
                     username=user_link, f=festival_link) }}
             <br>
             {{ festival.start_date }} &ndash; {{ festival.end_date }}
@@ -36,12 +36,12 @@
             {% endif %}
         </td>
         <td style="text-align: right;">
-            <b>{{ _('Last update: ') }}</b> {{ _(festival.update_info) }}
+            <b>{{ _("Last update: ") }}</b> {{ _(festival.update_info) }}
         </td>
         {% if current_user.is_admin() %}
         <td style="text-align: right;" width="40px;">
-            <a href="{{ url_for('festival.edit_festival', festival_id=festival.id) }}">
-                <span style='font-size:40px;'>&#9998;</span>
+            <a href="{{ url_for("festival.edit_festival", festival_id=festival.id) }}">
+                <span style="font-size:40px;">&#9998;</span>
             </a>
         </td>
         {% endif %}

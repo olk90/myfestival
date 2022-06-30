@@ -1,7 +1,7 @@
 from flask import Blueprint
 
 
-bp = Blueprint('administration', __name__)
+bp = Blueprint("administration", __name__)
 
 
 from app.administration import forms, routes

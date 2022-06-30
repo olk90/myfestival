@@ -13,7 +13,7 @@ from app.models import User, Festival, PackagingUnitType
 def random_string(length=8):
     """Generate a random string of fixed length """
     letters = string.hexdigits
-    return ''.join(random.choice(letters) for i in range(length))
+    return "".join(random.choice(letters) for i in range(length))
 
 
 def notify_users(current_user_id=None,
@@ -43,7 +43,7 @@ def notify_owner(notificationType=NotificationType.no_registration_codes):
 
 
 def create_user(username,
-                password=os.environ.get('INITIAL_ADMIN_PW'),
+                password=os.environ.get("INITIAL_ADMIN_PW"),
                 access_level=UserAccessLevel.USER):
     code = random_string()
     beer_demand = random.randrange(3, 30)
@@ -56,7 +56,7 @@ def create_user(username,
                 water_demand=water_demand,
                 access_level=access_level)
     if password is None:
-        raise RuntimeError('no initial password defined')
+        raise RuntimeError("no initial password defined")
     user.set_password(password)
     session.add(user)
     session.commit()
@@ -74,33 +74,33 @@ def create_festival(title, start, end):
 
 def create_pku():
     session.add(PackagingUnitType(
-        name='Pieces',
-        internal_name='Pieces',
-        abbreviation='pcs'))
+        name="Pieces",
+        internal_name="Pieces",
+        abbreviation="pcs"))
     session.add(PackagingUnitType(
-        name='Liters',
-        internal_name='Liters',
-        abbreviation='l'))
+        name="Liters",
+        internal_name="Liters",
+        abbreviation="l"))
     session.add(PackagingUnitType(
-        name='Pallets',
-        internal_name='Pallets',
-        abbreviation='plt'))
+        name="Pallets",
+        internal_name="Pallets",
+        abbreviation="plt"))
     session.add(PackagingUnitType(
-        name='Kilogram',
-        internal_name='Kilogram',
-        abbreviation='kg'))
+        name="Kilogram",
+        internal_name="Kilogram",
+        abbreviation="kg"))
     session.add(PackagingUnitType(
-        name='Gram',
-        internal_name='Gram',
-        abbreviation='g'))
+        name="Gram",
+        internal_name="Gram",
+        abbreviation="g"))
     session.add(PackagingUnitType(
-        name='Cans',
-        internal_name='Cans',
+        name="Cans",
+        internal_name="Cans",
         delete=False,
-        abbreviation='cns'))
+        abbreviation="cns"))
     session.add(PackagingUnitType(
-        name='Sixpacks',
-        internal_name='Sixpacks',
+        name="Sixpacks",
+        internal_name="Sixpacks",
         delete=False,
-        abbreviation='sp'))
+        abbreviation="sp"))
     session.commit()

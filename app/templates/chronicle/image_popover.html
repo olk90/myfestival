@@ -1,22 +1,22 @@
 <div id="{{ hash }}_popover" class="hide">
-    <input type="button" class="btn btn-default" onclick="copyMarkdownPath('{{ filename }}')" value="{{ _('Copy Link')}}">
-    <input type="button" class="btn btn-danger" onclick="deleteImage('{{ filename }}')" value="{{ _('Delete image') }}">
+    <input type="button" class="btn btn-default" onclick="copyMarkdownPath("{{ filename }}")" value="{{ _("Copy Link")}}">
+    <input type="button" class="btn btn-danger" onclick="deleteImage("{{ filename }}")" value="{{ _("Delete image") }}">
 </div>
 
 <script type="text/javascript">
-    $('#{{ hash }}').popover({
+    $("#{{ hash }}").popover({
         html: true,
-        title: '{{ _("Options") }}<a class="close" href="#");">&times;</a>',
-        content: $('#{{ hash }}_popover').html(),
+        title: "{{ _("Options") }}<a class="close" href="#");">&times;</a>",
+        content: $("#{{ hash }}_popover").html(),
     });
 
-    $('#{{ hash }}').click(function (e) {
+    $("#{{ hash }}").click(function (e) {
         e.stopPropagation();
     });
 
     $(document).click(function (e) {
-        if (($('.popover').has(e.target).length === 0) || $(e.target).is('.close')) {
-            $('#{{ hash }}').popover('hide');
+        if (($(".popover").has(e.target).length === 0) || $(e.target).is(".close")) {
+            $("#{{ hash }}").popover("hide");
         }
     });
 </script>

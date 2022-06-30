@@ -8,7 +8,7 @@
                 {% set user_link %}
                 <span class="user_popup">
                     {% if entry.chronicler.username %}
-                    <a href="{{ url_for('main.user', username=entry.chronicler.username) }}">
+                    <a href="{{ url_for("main.user", username=entry.chronicler.username) }}">
                         {{ entry.chronicler.get_username() }}
                     </a>
                     {% else %}
@@ -16,7 +16,7 @@
                     {% endif %}
                 </span>
                 {% endset %}
-                <span>{{ _('Written by %(username)s %(when)s',
+                <span>{{ _("Written by %(username)s %(when)s",
                     username=user_link, when=moment(entry.timestamp).fromNow()) }}</span>
                 {% if current_user.id == entry.chronicler.id %}
                 {% endif %}
@@ -24,16 +24,16 @@
                 </p>
                 <span class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                        {{ _('Options') }} <span class="caret"></span>                    
+                        {{ _("Options") }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         {% if current_user.id == entry.chronicler.id %}
                         <li>
-                            <a href="{{ url_for('chronicle.edit_entry', entry_id=entry.id) }}"><span style='font-size:40px;'>&#9998;</span></a>
+                            <a href="{{ url_for("chronicle.edit_entry", entry_id=entry.id) }}"><span style="font-size:40px;">&#9998;</span></a>
                         </li>
                         {% endif %}
                         <li>
-                            <a href="{{ url_for('chronicle.delete_entry', entry_id=entry.id) }}"><span style='font-size:40px;'>&#10060;</span></a>
+                            <a href="{{ url_for("chronicle.delete_entry", entry_id=entry.id) }}"><span style="font-size:40px;">&#10060;</span></a>
                         </li>
                     </ul>
                 </span>

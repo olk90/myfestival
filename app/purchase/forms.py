@@ -15,16 +15,15 @@ from app.festival.logic import load_participants_from_db
 
 class StockForm(FlaskForm):
 
-    name = StringField(_l('Name'), validators=[DataRequired()])
-    amount = DecimalField(_l('Amount'), places=0, validators=[
+    name = StringField(_l("Name"), validators=[DataRequired()])
+    amount = DecimalField(_l("Amount"), places=0, validators=[
         DataRequired(),
-        NumberRange(min=1, message=_l('Invalid amount!'))])
-    unit = SelectField(_l('Unit'), choices=[(-1, '')],
+        NumberRange(min=1, message=_l("Invalid amount!"))])
+    unit = SelectField(_l("Unit"), choices=[(-1, "")],
                        validators=[DataRequired()], coerce=int)
-    submit = SubmitField(_l('Submit'))
+    submit = SubmitField(_l("Submit"))
 
     def validate_name(self, name):
-        item = None
         if not self.is_edit:
             item = session.query(ConsumptionItem).filter(
                 ConsumptionItem.name == name.data,
@@ -38,11 +37,11 @@ class StockForm(FlaskForm):
             ).first()
 
         if item is not None:
-            raise ValidationError(_('Item already on list.'))
+            raise ValidationError(_("Item already on list."))
 
     def validate_unit(self, unit):  # noqa
         if unit.data == -1:
-            raise ValidationError(_('Unit must be selected.'))
+            raise ValidationError(_("Unit must be selected."))
 
     def validate(self):
         if not FlaskForm.validate(self):
@@ -55,7 +54,7 @@ class StockForm(FlaskForm):
         invalid_state = self.state != ConsumptionItemState.stock
         if stock is not None and invalid_state:
             pku = session.query(PackagingUnitType).get(stock.pku_id)
-            self.unit.errors.append(_('Expected unit: %(u)s', u=pku.name))
+            self.unit.errors.append(_("Expected unit: %(u)s", u=pku.name))
             return False
         return True
 
@@ -67,25 +66,25 @@ class StockForm(FlaskForm):
 
 
 class SelectFestivalForm(FlaskForm):
-    festival = SelectField(_l('Festival'), validators=[DataRequired()],
+    festival = SelectField(_l("Festival"), validators=[DataRequired()],
                            coerce=int)
-    create = SubmitField(_l('Create shopping list'))
+    create = SubmitField(_l("Create shopping list"))
 
     def validate_festival(self, festival):  # noqa
         if festival.data == -1:
-            raise ValidationError(_('Festival must be selected.'))
+            raise ValidationError(_("Festival must be selected."))
         participants = load_participants_from_db(festival.data)
         if len(participants) == 0:
             raise ValidationError(no_participants)
 
 
 class PKUForm(FlaskForm):
-    name = StringField(_l('Name'),
+    name = StringField(_l("Name"),
                        validators=[DataRequired(), Length(min=1, max=30)])
-    abbreviation = StringField(_l('Abbreviation'),
+    abbreviation = StringField(_l("Abbreviation"),
                                validators=[DataRequired(),
                                            Length(min=1, max=5)])
-    submit = SubmitField(_l('Submit'))
+    submit = SubmitField(_l("Submit"))
 
     def validate_name(self, name):
         if not self.is_edit:
@@ -97,7 +96,7 @@ class PKUForm(FlaskForm):
             ).first()
 
         if pku is not None:
-            raise ValidationError(_('Please use a different name.'))
+            raise ValidationError(_("Please use a different name."))
 
     def validate_abbreviation(self, abbreviation):
         if not self.is_edit:
@@ -110,7 +109,7 @@ class PKUForm(FlaskForm):
             ).first()
 
         if pku is not None:
-            raise ValidationError(_('Please use a different abbreviation.'))
+            raise ValidationError(_("Please use a different abbreviation."))
 
     def __init__(self, pku_id=None, is_edit=False, *args, **kwargs):
         super(PKUForm, self).__init__(*args, **kwargs)
@@ -119,11 +118,11 @@ class PKUForm(FlaskForm):
 
 
 class UtilityForm(FlaskForm):
-    name = StringField(_l('Name'),
+    name = StringField(_l("Name"),
                        validators=[DataRequired(), Length(min=1, max=30)])
-    description = TextAreaField(_l('Description'),
+    description = TextAreaField(_l("Description"),
                                 validators=[Length(max=150)])
-    submit = SubmitField(_l('Submit'))
+    submit = SubmitField(_l("Submit"))
 
     def validate_name(self, name):
         if not self.is_edit:
@@ -135,7 +134,7 @@ class UtilityForm(FlaskForm):
             ).first()
 
         if util is not None:
-            raise ValidationError(_('Please use a different name.'))
+            raise ValidationError(_("Please use a different name."))
 
     def __init__(self, util_id=None, is_edit=False, *args, **kwargs):
         super(UtilityForm, self).__init__(*args, **kwargs)

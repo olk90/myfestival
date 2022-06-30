@@ -6,7 +6,7 @@ from app import create_app, db, cli
 
 class TestConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
+    SQLALCHEMY_DATABASE_URI = "sqlite://"
 
 
 class BaseTestCase(unittest.TestCase):

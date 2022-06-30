@@ -3,7 +3,7 @@
         <img src="{{ img.filepath }}" alt="{{ img.filename }}" id="{{ img.hash }}" width="128" height="128">
     </a>
     {% with filename=img.filename, hash=img.hash %}
-        {% include 'chronicle/image_popover.html' %}
+        {% include "chronicle/image_popover.html" %}
     {% endwith %}
 </span>
 

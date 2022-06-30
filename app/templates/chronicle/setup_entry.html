@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% import 'macros.html' as m %}
+{% import "macros.html" as m %}
 {% block head %}
     {{ super() }}
     {{ pagedown.include_pagedown() }}
@@ -9,9 +9,9 @@
 
 {% block app_content %}
     {% if form.is_edit %}
-        <h1>{{ _('Edit entry') }}</h1>
+        <h1>{{ _("Edit entry") }}</h1>
     {% else %}
-        <h1>{{ _('Add new entry') }}</h1>
+        <h1>{{ _("Add new entry") }}</h1>
     {% endif %}
     {{ m.chronicle_form(form, images, f_id, current_user.id) }}
 {% endblock %}

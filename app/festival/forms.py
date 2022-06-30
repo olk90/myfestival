@@ -13,12 +13,12 @@ from app.festival.messages import start_before_end
 
 
 class FestivalForm(FlaskForm):
-    title = StringField(_l('Title'), validators=[DataRequired()])
-    info = TextAreaField(_l('Info'),
+    title = StringField(_l("Title"), validators=[DataRequired()])
+    info = TextAreaField(_l("Info"),
                          validators=[Length(min=0, max=666)])
-    start_date = DateField(_l('From'), validators=[DataRequired()])
-    end_date = DateField(_l('To'), validators=[DataRequired()])
-    submit = SubmitField(_l('Submit'))
+    start_date = DateField(_l("From"), validators=[DataRequired()])
+    end_date = DateField(_l("To"), validators=[DataRequired()])
+    submit = SubmitField(_l("Submit"))
 
     def validate_title(self, title):
         if not self.is_edit:
@@ -30,7 +30,7 @@ class FestivalForm(FlaskForm):
             ).first()
 
         if festival is not None:
-            raise ValidationError(_('Please use a different title.'))
+            raise ValidationError(_("Please use a different title."))
 
     def validate_end_date(self, end_date):
         if end_date.data < self.start_date.data:
@@ -43,21 +43,21 @@ class FestivalForm(FlaskForm):
 
 
 class InvoiceForm(FlaskForm):
-    title = StringField(_l('Title'), validators=[DataRequired()])
-    invoice = DecimalField(_l('Invoice'), places=2, validators=[
+    title = StringField(_l("Title"), validators=[DataRequired()])
+    invoice = DecimalField(_l("Invoice"), places=2, validators=[
         DataRequired(),
-        NumberRange(min=0, message=_l('Invalid invoice amount!'))])
+        NumberRange(min=0, message=_l("Invalid invoice amount!"))])
 
-    submit = SubmitField(_l('Submit'))
+    submit = SubmitField(_l("Submit"))
 
 
 class EditInvoiceForm(FlaskForm):
-    title = StringField(_l('Title'), validators=[DataRequired()])
-    invoice = DecimalField(_l('Invoice'), places=2, validators=[
+    title = StringField(_l("Title"), validators=[DataRequired()])
+    invoice = DecimalField(_l("Invoice"), places=2, validators=[
         DataRequired(),
-        NumberRange(min=0, message=_l('Invalid invoice amount!'))])
-    sharers = SelectMultipleField('Sharers', coerce=int)
-    submit = SubmitField(_l('Submit'))
+        NumberRange(min=0, message=_l("Invalid invoice amount!"))])
+    sharers = SelectMultipleField("Sharers", coerce=int)
+    submit = SubmitField(_l("Submit"))
 
     def __init__(self, original_title, original_invoice, *args, **kwargs):
         super(EditInvoiceForm, self).__init__(*args, **kwargs)

@@ -12,16 +12,16 @@ from test_config import BaseTestCase
 
 
 def setup_testdata(stock_amount=5, request_amount=5):
-    create_user(username='Batman', access_level=UserAccessLevel.OWNER)
-    create_user(username='Wonderwoman',
+    create_user(username="Batman", access_level=UserAccessLevel.OWNER)
+    create_user(username="Wonderwoman",
                 access_level=UserAccessLevel.ADMIN)
-    create_user(username='Flash')
-    create_user(username='Aquaman')
-    create_festival('Summerbreeze',
+    create_user(username="Flash")
+    create_user(username="Aquaman")
+    create_festival("Summerbreeze",
                     start=date(2019, 8, 13),
                     end=date(2019, 8, 18))
     create_pku()
-    pcs = session.query(PackagingUnitType).filter_by(internal_name='Pieces').first()
+    pcs = session.query(PackagingUnitType).filter_by(internal_name="Pieces").first()
     in_stock = ConsumptionItem(name="Sausage",
                                state=ConsumptionItemState.stock,
                                pku_id=pcs.id,
@@ -65,13 +65,13 @@ class ConsumptionItemModelTest(BaseTestCase):
                 ConsumptionItem.state == ConsumptionItemState.cart)).all()
 
         self.assertEquals(4, len(shopping_list))
-        sausage = list(filter(lambda x: x.name == 'Sausage', shopping_list))
+        sausage = list(filter(lambda x: x.name == "Sausage", shopping_list))
         self.assertTrue(sausage is not None)
         self.assertEquals(1, sausage[0].amount)
 
     def test_complete_amount(self):
         setup_testdata()
-        pcs = session.query(PackagingUnitType).filter_by(internal_name='Pieces').first()
+        pcs = session.query(PackagingUnitType).filter_by(internal_name="Pieces").first()
         request = ConsumptionItem(name="Toast",
                                   pku_id=pcs.id,
                                   amount=4,
@@ -88,6 +88,6 @@ class ConsumptionItemModelTest(BaseTestCase):
                 ConsumptionItem.state == ConsumptionItemState.cart)).all()
 
         self.assertEquals(4, len(shopping_list))
-        toast = list(filter(lambda x: x.name == 'Toast', shopping_list))
+        toast = list(filter(lambda x: x.name == "Toast", shopping_list))
         self.assertTrue(toast is not None)
         self.assertEquals(4, toast[0].amount)

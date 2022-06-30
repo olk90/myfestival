@@ -1,21 +1,21 @@
 {% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block app_content %}
-    <h1>{{ _('Packaging Units') }}</h1>
+    <h1>{{ _("Packaging Units") }}</h1>
     <p>
-        <a href="{{ url_for('purchase.add_pku') }}">
-            {{ _('Add packaging unit') }}
+        <a href="{{ url_for("purchase.add_pku") }}">
+            {{ _("Add packaging unit") }}
         </a>
     </p>
     
-    <h3>{{ _('Non-erasable') }}</h3>
+    <h3>{{ _("Non-erasable") }}</h3>
     {% for pku in nonerasables %}
-        {% include 'purchase/_pku.html' %}
+        {% include "purchase/_pku.html" %}
     {% endfor %}
     
-    <h3>{{ _('Others') }}</h3>
+    <h3>{{ _("Others") }}</h3>
     {% for pku in units %}
-        {% include 'purchase/_pku.html' %}
+        {% include "purchase/_pku.html" %}
     {% endfor %}
 {% endblock %}

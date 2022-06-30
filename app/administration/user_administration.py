@@ -6,7 +6,7 @@ from app.festival.logic import remove_partner
 
 
 def disable_user(user):
-    ca.logger.info('Disable >{}<'.format(user))
+    ca.logger.info("Disable >{}<".format(user))
     # remove user from all festivals
     festivals = session.query(Festival).join(participants) \
         .filter(participants.c.participant_id == user.id).all()

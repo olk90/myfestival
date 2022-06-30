@@ -6,7 +6,7 @@ from app.models import Transfer, User, participants as prts, sharers as shrs
 
 
 def get_partner_selection():
-    result = [(-1, '')]
+    result = [(-1, "")]
     partners = session.query(User).filter(User.id != current_user.id)
     for p in partners:
         result.append((p.id, p.username))

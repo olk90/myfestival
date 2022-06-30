@@ -12,7 +12,7 @@ from app.festival.logic import load_participants_from_db
 
 
 def get_pku_selection():
-    result = [(-1, '')]
+    result = [(-1, "")]
     types = session.query(PackagingUnitType).all()
     for t in types:
         result.append((t.id, t.abbreviation))
@@ -20,7 +20,7 @@ def get_pku_selection():
 
 
 def get_festivals():
-    result = [(-1, '')]
+    result = [(-1, "")]
     festivals = session.query(Festival).filter(not_(Festival.is_closed)).all()
     for f in festivals:
         result.append((f.id, f.title))
@@ -29,10 +29,10 @@ def get_festivals():
 
 def calculate_redirect(item):
     if item.state == ConsumptionItemState.stock:
-        return redirect(url_for('purchase.stock_overview'))
+        return redirect(url_for("purchase.stock_overview"))
     if item.state == ConsumptionItemState.wishlist:
-        return redirect(url_for('purchase.wishlist'))
-    return redirect(url_for('main.index'))
+        return redirect(url_for("purchase.wishlist"))
+    return redirect(url_for("main.index"))
 
 
 def check_shopping_empty():
@@ -62,27 +62,27 @@ def calculate_drinks(festival_id, is_testing):
     mixed_small_pallets = get_pallets(mixed_amount, 18, days)
     water_pallets = get_pallets(water_amount, (6 * 1.5), days)
 
-    six = session.query(PackagingUnitType).filter_by(internal_name='Sixpacks').first()
-    cns = session.query(PackagingUnitType).filter_by(internal_name='Cans').first()
+    six = session.query(PackagingUnitType).filter_by(internal_name="Sixpacks").first()
+    cns = session.query(PackagingUnitType).filter_by(internal_name="Cans").first()
 
-    beer_info = '{}x24 or {}x18'.format(beer_large_pallets, beer_small_pallets)
-    mixed_info = '{}x24 or {}x18'.format(mixed_large_pallets,
+    beer_info = "{}x24 or {}x18".format(beer_large_pallets, beer_small_pallets)
+    mixed_info = "{}x24 or {}x18".format(mixed_large_pallets,
                                          mixed_small_pallets)
-    water_info = '6x1.5l'
+    water_info = "6x1.5l"
 
     user = current_user
     if is_testing:
         user = session.query(User).get(1)
 
-    beer = ConsumptionItem(name='Beer', pku_id=cns.id,
+    beer = ConsumptionItem(name="Beer", pku_id=cns.id,
                            amount=(beer_amount * days),
                            info=beer_info,
                            requestor=user)
-    mixed = ConsumptionItem(name='Mixed', pku_id=cns.id,
+    mixed = ConsumptionItem(name="Mixed", pku_id=cns.id,
                             amount=(mixed_amount * days),
                             info=mixed_info,
                             requestor=user)
-    water = ConsumptionItem(name='Water', pku_id=six.id,
+    water = ConsumptionItem(name="Water", pku_id=six.id,
                             amount=water_pallets,
                             info=water_info,
                             requestor=user)
@@ -111,5 +111,5 @@ def generate_shopping_list(festival_id, is_testing=False):
                 r.state = ConsumptionItemState.purchase
     session.commit()
     if not is_testing:
-        flash(_('List generated.'))
-        return redirect(url_for('purchase.shopping_list'))
+        flash(_("List generated."))
+        return redirect(url_for("purchase.shopping_list"))

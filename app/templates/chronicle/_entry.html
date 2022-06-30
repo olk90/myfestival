@@ -2,7 +2,7 @@
     <tr>
         <td width="40px">
             {% if entry.chronicler.username %}
-            <a href="{{ url_for('main.user', username=entry.chronicler.username) }}">
+            <a href="{{ url_for("main.user", username=entry.chronicler.username) }}">
                 <img src="{{ entry.chronicler.avatar(40) }}" width="40px" height="40px"/>
             </a>
             {% else %}
@@ -13,7 +13,7 @@
             {% set user_link %}
                 <span class="user_popup">
                     {% if entry.chronicler.username %}
-                    <a href="{{ url_for('main.user', username=entry.chronicler.username) }}">
+                    <a href="{{ url_for("main.user", username=entry.chronicler.username) }}">
                         {{ entry.chronicler.get_username() }}
                     </a>
                     {% else %}
@@ -22,15 +22,15 @@
                 </span>
             {% endset %}
             {% set entry_link %}
-                <a href="{{ url_for('chronicle.chronicle_entry', entry_id=entry.id) }}">
+                <a href="{{ url_for("chronicle.chronicle_entry", entry_id=entry.id) }}">
                     {% if entry.has_title() %}
                     {{ entry.get_title() }}
                     {% else %}
-                    {{ _('an entry') }}
+                    {{ _("an entry") }}
                     {% endif %}
                 </a>
             {% endset %}
-            {{ _('%(username)s wrote %(e)s',
+            {{ _("%(username)s wrote %(e)s",
                     username=user_link, e=entry_link) }}
         </td>
     </tr>

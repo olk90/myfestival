@@ -4,14 +4,14 @@
             <span>{{ pku.name }} [{{ pku.abbreviation }}]</span>
         </td>
         <td style="text-align: right;" width="40px;">
-            <a href="{{ url_for('purchase.edit_pku', pku_id=pku.id) }}">
-                <span style='font-size:40px;'>&#9998;</span>
+            <a href="{{ url_for("purchase.edit_pku", pku_id=pku.id) }}">
+                <span style="font-size:40px;">&#9998;</span>
             </a>
         </td>
         {% if pku.delete %}
         <td style="text-align: right;" width="40px;">
-            <a href="{{ url_for('purchase.delete_pku', pku_id=pku.id) }}">
-                <span style='font-size:40px;'>&#10060;</span>
+            <a href="{{ url_for("purchase.delete_pku", pku_id=pku.id) }}">
+                <span style="font-size:40px;">&#10060;</span>
             </a>
         </td>
         {% endif %}
