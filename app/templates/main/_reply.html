@@ -1,8 +1,8 @@
 {% import "macros.html" as m %}
 
 <tr>
-    <td width="40px"></td>
-    <td width="40px">
+    <td style="width: 40px"></td>
+    <td style="width: 40px">
         {% if reply.author.username %}
         <a href="{{ url_for("main.user", username=reply.author.username) }}">
             <img src="{{ reply.author.avatar(40) }}" width="40px" height="40px"/>

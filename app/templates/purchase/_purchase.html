@@ -1,5 +1,5 @@
 <tr>
-    <td width="40px">
+    <td style="width: 40px">
         {% if item.ConsumptionItem.requestor.username %}
         <a href="{{ url_for("main.user", username=item.ConsumptionItem.requestor.username) }}">
             <img src="{{ item.ConsumptionItem.requestor.avatar(40) }}" width="40px" height="40px"/>

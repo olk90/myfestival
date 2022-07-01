@@ -1,6 +1,6 @@
 <table class="table table-hover">
     <tr>
-        <td width="40px">
+        <td style="width: 40px">
             {% if transfer.payer.username %}
             <a href="{{ url_for("main.user", username=transfer.payer.username) }}">
                 <img src="{{ transfer.payer.avatar(40) }}" width="40px" height="40px"/>
@@ -27,7 +27,7 @@
         <td style="width: 80%;text-align:center">
             <span style="font-size:30px;">{{ "%.2f"|format(transfer.amount) }}</span>
         </td>
-        <td width="40px">
+        <td style="width: 40px">
             {% if transfer.recipient.username %}
             <a href="{{ url_for("main.user", username=transfer.recipient.username) }}">
                 <img src="{{ transfer.recipient.avatar(40) }}" width="40px" height="40px"/>

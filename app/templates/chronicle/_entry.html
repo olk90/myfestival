@@ -1,6 +1,6 @@
 <table class="table table-hover">
     <tr>
-        <td width="40px">
+        <td style="width: 40px">
             {% if entry.chronicler.username %}
             <a href="{{ url_for("main.user", username=entry.chronicler.username) }}">
                 <img src="{{ entry.chronicler.avatar(40) }}" width="40px" height="40px"/>

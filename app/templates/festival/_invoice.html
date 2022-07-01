@@ -1,6 +1,6 @@
 <table class="table table-hover">
     <tr>
-        <td width="40px">
+        <td style="width: 40px">
             {% if invoice.creditor.username %}
             <a href="{{ url_for("main.user", username=invoice.creditor.username) }}">
                 <img src="{{ invoice.creditor.avatar(40) }}" width="40px" height="40px"/>
@@ -39,12 +39,12 @@
             </div></p>
         </td>
         {% if current_user.is_admin() or current_user.username == invoice.creditor.username %}
-        <td style="text-align: right;" width="40px;">
+        <td style="text-align: right; width: 40px">
         <a href="{{ url_for("festival.edit_invoice", f_title=festival.title, p_title=invoice.title) }}">
             <span style="font-size:40px;">&#9998;</span>
         </a>
         </td>
-        <td style="text-align: right;" width="40px;">
+        <td style="text-align: right; width: 40px">
             <a href="{{ url_for("festival.delete_invoice", f_title=festival.title, invoice_id=invoice.id) }}">
                 <span style="font-size:40px;">&#10060;</span>
             </a>

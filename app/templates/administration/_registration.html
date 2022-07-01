@@ -1,13 +1,13 @@
 <table class="table table-hover">
     <tr>
-        <td width="40px">
+        <td style="width: 40px">
             <img src="{{ current_user.avatar(40, registration.code, True) }}" width="40px" height="40px"/>
         </td>
         <td>
             <span style="font-size:30px;">{{ registration.code }}</span>
         </td>
         {% if current_user.is_owner() %}
-        <td style="text-align: right;" width="40px;">
+        <td style="text-align: right; width: 40px">
             <a href="{{ url_for("administration.delete_registration_code", rc_id=registration.id) }}">
                 <span style="font-size:40px;">&#10060;</span>
             </a>

@@ -1,5 +1,5 @@
 <tr>
-    <td width="40px">
+    <td style="width: 40px">
         {% if item.ConsumptionItem.requestor.username %}
         <a href="{{ url_for("main.user", username=item.ConsumptionItem.requestor.username) }}">
             <img src="{{ item.ConsumptionItem.requestor.avatar(40) }}" width="40px" height="40px"/>
@@ -22,12 +22,12 @@
         {% endset %}
         <span>{{ item.ConsumptionItem.name }}: {{ item.ConsumptionItem.amount }} {{ item.PackagingUnitType.abbreviation }}</span>
     </td>
-    <td style="text-align: right;" width="40px;">
+    <td style="text-align: right; width: 40px">
         <a href="{{ url_for("purchase.edit_item", item_id=item.ConsumptionItem.id) }}">
             <span style="font-size:40px;">&#9998;</span>
         </a>
     </td>
-    <td style="text-align: right;" width="40px;">
+    <td style="text-align: right; width: 40px">
         <a href="{{ url_for("purchase.delete_item", item_id=item.ConsumptionItem.id) }}">
             <span style="font-size:40px;">&#10060;</span>
         </a>
