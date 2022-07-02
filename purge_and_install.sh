@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
-flask db upgrade
+flask postgres initschema
 flask install admin
 flask install masterdata
