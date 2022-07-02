@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-06-05 15:03+0200\n"
+"POT-Creation-Date: 2022-07-02 11:50+0200\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
 "Language-Team: de <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.7.0\n"
+"Generated-By: Babel 2.10.3\n"
 
 #: app/__init__.py:26
 msgid "Please log into access this page."
@@ -242,7 +242,7 @@ msgstr "Neue Passwörter sind nicht gleich"
 #: app/auth/forms.py:62 app/chronicle/forms.py:14 app/festival/forms.py:21
 #: app/festival/forms.py:51 app/festival/forms.py:60 app/main/forms.py:36
 #: app/main/forms.py:59 app/main/forms.py:66 app/main/forms.py:72
-#: app/purchase/forms.py:24 app/purchase/forms.py:88 app/purchase/forms.py:126
+#: app/purchase/forms.py:24 app/purchase/forms.py:87 app/purchase/forms.py:125
 msgid "Submit"
 msgstr "Absenden"
 
@@ -266,15 +266,15 @@ msgstr "Ungültiger Code oder Nutzername."
 msgid "Congratulations, you are now a registered user!"
 msgstr "Herzlichen Glühstrumpf, du hast dich registriert!"
 
-#: app/auth/routes.py:85
+#: app/auth/routes.py:86
 msgid "Password changed."
 msgstr "Passwort geändert."
 
-#: app/auth/routes.py:88 app/templates/main/edit_profile.html:6
+#: app/auth/routes.py:89 app/templates/main/edit_profile.html:6
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: app/chronicle/forms.py:10 app/purchase/forms.py:70
+#: app/chronicle/forms.py:10 app/purchase/forms.py:69
 msgid "Festival"
 msgstr "Festival"
 
@@ -282,7 +282,7 @@ msgstr "Festival"
 msgid "Tell the story:"
 msgstr "Erzähl die Geschichte:"
 
-#: app/chronicle/forms.py:18 app/purchase/forms.py:76
+#: app/chronicle/forms.py:18 app/purchase/forms.py:75
 msgid "Festival must be selected."
 msgstr "Festival muss ausgewählt werden."
 
@@ -418,7 +418,8 @@ msgid "File must be an image!"
 msgstr "Datei muss ein Bild sein!"
 
 #: app/main/forms.py:53
-msgid "Partner already taken :'("
+#, fuzzy
+msgid "Partner already taken :\"("
 msgstr "Partner schon vergeben :'("
 
 #: app/main/forms.py:57 app/main/forms.py:63
@@ -465,7 +466,7 @@ msgstr "Profil editieren"
 msgid "Post has been deleted."
 msgstr "Post wurde gelöscht."
 
-#: app/purchase/forms.py:18 app/purchase/forms.py:83 app/purchase/forms.py:122
+#: app/purchase/forms.py:18 app/purchase/forms.py:82 app/purchase/forms.py:121
 msgid "Name"
 msgstr "Name"
 
@@ -477,36 +478,36 @@ msgstr "Menge"
 msgid "Unit"
 msgstr "Einheit"
 
-#: app/purchase/forms.py:41
+#: app/purchase/forms.py:40
 msgid "Item already on list."
 msgstr "Eintrag ist bereits auf der Liste."
 
-#: app/purchase/forms.py:45
+#: app/purchase/forms.py:44
 msgid "Unit must be selected."
 msgstr "Einheit muss ausgewählt werden."
 
-#: app/purchase/forms.py:58
+#: app/purchase/forms.py:57
 #, python-format
 msgid "Expected unit: %(u)s"
 msgstr "Erwartete Einheit: %(u)s"
 
-#: app/purchase/forms.py:72
+#: app/purchase/forms.py:71
 msgid "Create shopping list"
 msgstr "Einkaufsliste erstellen"
 
-#: app/purchase/forms.py:85
+#: app/purchase/forms.py:84
 msgid "Abbreviation"
 msgstr "Abkürzung"
 
-#: app/purchase/forms.py:100 app/purchase/forms.py:138
+#: app/purchase/forms.py:99 app/purchase/forms.py:137
 msgid "Please use a different name."
 msgstr "Bitte anderen Namen wählen."
 
-#: app/purchase/forms.py:113
+#: app/purchase/forms.py:112
 msgid "Please use a different abbreviation."
 msgstr "Bitte andere Abkürzung wählen."
 
-#: app/purchase/forms.py:124
+#: app/purchase/forms.py:123
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -674,7 +675,7 @@ msgstr "Verfasst von %(username)s %(when)s"
 
 #: app/templates/chronicle/chronicle_entry.html:27
 #: app/templates/chronicle/image_popover.html:9
-#: app/templates/main/_post.html:35 app/templates/main/_reply.html:31
+#: app/templates/main/_post.html:39 app/templates/main/_reply.html:31
 msgid "Options"
 msgstr "Optionen"
 
@@ -716,7 +717,8 @@ msgid "An unexpected error has occurred"
 msgstr "Du hast einen Fehler gefunden"
 
 #: app/templates/errors/500.html:5
-msgid "The administrator has been notified, but doesn't give a shit!"
+#, fuzzy
+msgid "The administrator has been notified, but doesn\"t give a shit!"
 msgstr ""
 "Die Administration wurde \"informiert\", interessiert sich aber einen "
 "Scheiß!"
@@ -813,7 +815,7 @@ msgstr "[Angepinnt]"
 msgid "%(username)s said %(when)s"
 msgstr "%(username)s sagte %(when)s"
 
-#: app/templates/main/_post.html:53
+#: app/templates/main/_post.html:57
 msgid "Show replies"
 msgstr "Zeige Antworten"
 
