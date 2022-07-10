@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-02 11:50+0200\n"
+"POT-Creation-Date: 2022-07-10 18:09+0200\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -58,19 +58,19 @@ msgstr "Festival abgeschlossen"
 msgid "Festival reopened"
 msgstr "Festivalabschluss zurückgesetzt"
 
-#: app/models.py:163
+#: app/models.py:166
 msgid "Deleted User"
 msgstr "Gelöschter Nutzer"
 
-#: app/models.py:169
+#: app/models.py:172
 msgid "User"
 msgstr "Nutzer"
 
-#: app/models.py:170
+#: app/models.py:173
 msgid "Admin"
 msgstr "Admin"
 
-#: app/models.py:171
+#: app/models.py:174
 msgid "Owner"
 msgstr "Eigentümer"
 
@@ -106,7 +106,8 @@ msgstr "Bilderarchiv"
 msgid "File must be an archive!"
 msgstr "Datei muss ein Archiv sein!"
 
-#: app/administration/forms.py:25 app/auth/forms.py:14 app/auth/forms.py:23
+#: app/administration/forms.py:25 app/auth/forms.py:15 app/auth/forms.py:35
+#: app/auth/forms.py:82
 msgid "Password"
 msgstr "Passwort"
 
@@ -187,90 +188,121 @@ msgstr "Import abgeschlossen"
 msgid "Import backup"
 msgstr "Sicherung importieren"
 
-#: app/auth/forms.py:13 app/auth/forms.py:20 app/main/forms.py:16
+#: app/auth/forms.py:14 app/auth/forms.py:32 app/main/forms.py:16
 msgid "Username"
 msgstr "Nutzername"
 
-#: app/auth/forms.py:15
-msgid "Remember Me"
-msgstr "Erinner dich an mich"
+#: app/auth/forms.py:16
+msgid "2FA Token"
+msgstr "Zwei-Faktor-Token"
 
-#: app/auth/forms.py:16 app/auth/routes.py:30 app/templates/auth/login.html:5
+#: app/auth/forms.py:17
+msgid "Remember Me"
+msgstr "Erinnere dich an mich"
+
+#: app/auth/forms.py:18 app/auth/routes.py:34 app/templates/auth/login.html:5
 msgid "Sign In"
 msgstr "Anmelden"
 
-#: app/auth/forms.py:21
+#: app/auth/forms.py:28
+#, fuzzy
+msgid "Invalid token"
+msgstr "Unzulässige Menge"
+
+#: app/auth/forms.py:33
 msgid "Registration Code"
 msgstr "Registriercode"
 
-#: app/auth/forms.py:24
+#: app/auth/forms.py:36
 msgid "Repeat Password"
 msgstr "Passwort wiederholen"
 
-#: app/auth/forms.py:26
+#: app/auth/forms.py:38
 msgid "Passwords are not equal"
 msgstr "Passwörter stimmen nicht überein"
 
-#: app/auth/forms.py:27 app/auth/routes.py:74
+#: app/auth/forms.py:39 app/auth/routes.py:78
 msgid "Register"
 msgstr "Registrieren"
 
-#: app/auth/forms.py:33 app/main/forms.py:47
+#: app/auth/forms.py:45 app/main/forms.py:47
 msgid "Please use a different username."
 msgstr "Bitte anderen Nutzernamen wählen."
 
-#: app/auth/forms.py:42 app/auth/forms.py:49 app/auth/forms.py:51
+#: app/auth/forms.py:54 app/auth/forms.py:61 app/auth/forms.py:63
 msgid "Invalid registration code."
 msgstr "Unzulässiger Registriercode."
 
-#: app/auth/forms.py:55
+#: app/auth/forms.py:67
 msgid "Old Password"
 msgstr "Altes Passwort"
 
-#: app/auth/forms.py:57
+#: app/auth/forms.py:68
 msgid "New Password"
 msgstr "Neues Passwort"
 
-#: app/auth/forms.py:59
+#: app/auth/forms.py:69
 msgid "Repeat new Password"
 msgstr "Neues Passwort wiederholen"
 
-#: app/auth/forms.py:61
+#: app/auth/forms.py:71
 msgid "New passwords are not equal"
 msgstr "Neue Passwörter sind nicht gleich"
 
-#: app/auth/forms.py:62 app/chronicle/forms.py:14 app/festival/forms.py:21
-#: app/festival/forms.py:51 app/festival/forms.py:60 app/main/forms.py:36
-#: app/main/forms.py:59 app/main/forms.py:66 app/main/forms.py:72
-#: app/purchase/forms.py:24 app/purchase/forms.py:87 app/purchase/forms.py:125
+#: app/auth/forms.py:72 app/auth/forms.py:84 app/chronicle/forms.py:14
+#: app/festival/forms.py:21 app/festival/forms.py:51 app/festival/forms.py:60
+#: app/main/forms.py:36 app/main/forms.py:59 app/main/forms.py:66
+#: app/main/forms.py:72 app/purchase/forms.py:24 app/purchase/forms.py:87
+#: app/purchase/forms.py:125
 msgid "Submit"
 msgstr "Absenden"
 
-#: app/auth/forms.py:68
+#: app/auth/forms.py:78
 msgid "Old password is not correct."
 msgstr "Das alte Passwort ist nicht korrekt."
 
-#: app/auth/routes.py:22
+#: app/auth/forms.py:83
+msgid "Enable two factor authentication"
+msgstr "Zwei-Faktor-Authentifizierung aktivieren"
+
+#: app/auth/forms.py:90
+#, fuzzy
+msgid "Password is not correct."
+msgstr "Das alte Passwort ist nicht korrekt."
+
+#: app/auth/routes.py:26
 msgid "Invalid username or password"
 msgstr "Nutzername oder Passwort falsch"
 
-#: app/auth/routes.py:58
+#: app/auth/routes.py:62
 msgid "Password successfully reset."
 msgstr "Password erfolgreich zurückgesetzt."
 
-#: app/auth/routes.py:63
+#: app/auth/routes.py:67
 msgid "Invalid registration code or name."
 msgstr "Ungültiger Code oder Nutzername."
 
-#: app/auth/routes.py:70
+#: app/auth/routes.py:74
 msgid "Congratulations, you are now a registered user!"
 msgstr "Herzlichen Glühstrumpf, du hast dich registriert!"
 
-#: app/auth/routes.py:86
+#: app/auth/routes.py:101
+msgid "2FA enabled"
+msgstr "2FA aktiviert"
+
+#: app/auth/routes.py:104
+msgid "2FA disabled"
+msgstr "2FA deaktiviert"
+
+#: app/auth/routes.py:118
+msgid "Setup 2FA"
+msgstr "2FA konfigurieren"
+
+#: app/auth/routes.py:129
 msgid "Password changed."
 msgstr "Passwort geändert."
 
-#: app/auth/routes.py:89 app/templates/main/edit_profile.html:6
+#: app/auth/routes.py:132 app/templates/auth/security_settings.html:6
 msgid "Change password"
 msgstr "Passwort ändern"
 
@@ -659,6 +691,30 @@ msgstr "Neuer Nutzer?"
 msgid "Click to Register!"
 msgstr "Zur Registrierung"
 
+#: app/templates/auth/security_settings.html:5
+#: app/templates/main/edit_profile.html:6
+msgid "Security settings"
+msgstr "Sicherheitseinstellungen"
+
+#: app/templates/auth/security_settings.html:7
+#: app/templates/auth/two_factor_setup.html:5
+msgid "Two Factor Authentication"
+msgstr "Zwei-Faktor-Authentifizierung"
+
+#: app/templates/auth/two_factor_setup.html:6
+msgid ""
+"Almost done! Please scan the QR code with the authenticator app on your "
+"smartphone:"
+msgstr "Fast fertig! Bitte scanne den QR Code mit der Authenticator-App auf deinem Smartphone"
+
+#: app/templates/auth/two_factor_setup.html:8
+msgid "After scanning return to the"
+msgstr "Nach dem Scannen kehre zurück zur"
+
+#: app/templates/auth/two_factor_setup.html:8
+msgid "main page"
+msgstr "Hauptseite"
+
 #: app/templates/chronicle/_entry.html:29
 msgid "an entry"
 msgstr "einen Eintrag"
@@ -718,7 +774,7 @@ msgstr "Du hast einen Fehler gefunden"
 
 #: app/templates/errors/500.html:5
 #, fuzzy
-msgid "The administrator has been notified, but doesn\"t give a shit!"
+msgid "The administrator has been notified, but doesn't give a shit!"
 msgstr ""
 "Die Administration wurde \"informiert\", interessiert sich aber einen "
 "Scheiß!"
@@ -927,13 +983,4 @@ msgstr "Eintrag hinzufügen"
 #: app/templates/purchase/utility_overview.html:5
 msgid "Utility Items"
 msgstr "Gebrauchsgegenstände"
-
-#~ msgid "%(username)s wrote a chronicle entry for %(f)s"
-#~ msgstr "%(username)s hat einen Chronikeintrag über das %(f)s verfasst"
-
-#~ msgid "Add invoice"
-#~ msgstr "Rechnung hinzufügen"
-
-#~ msgid "Add entry"
-#~ msgstr "Eintrag hinzufügen"
 

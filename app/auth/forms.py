@@ -6,14 +6,26 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import EqualTo, DataRequired, ValidationError
 
 from app import session
+from app.auth.logic import validate_token
 from app.models import User, Registration
 
 
 class LoginForm(FlaskForm):
     username = StringField(_l("Username"), validators=[DataRequired()])
     password = PasswordField(_l("Password"), validators=[DataRequired()])
+    token = StringField(_("2FA Token"))
     remember_me = BooleanField(_l("Remember Me"))
     submit = SubmitField(_l("Sign In"))
+
+    def validate_token(self, token):  # noqa
+        username = self.username
+        user = session.query(User).filter_by(username=username.data).first()
+        if user is not None:
+            tfa_enabled = user.otp_secret is not None
+            if tfa_enabled:
+                token_valid = validate_token(user, token.data)
+                if not token_valid:
+                    raise ValidationError(_("Invalid token"))
 
 
 class RegistrationForm(FlaskForm):
@@ -52,10 +64,8 @@ class RegistrationForm(FlaskForm):
 
 
 class ChangePasswordForm(FlaskForm):
-    old_password = PasswordField(_l("Old Password"), validators=[
-        DataRequired()])
-    new_password = PasswordField(_l("New Password"), validators=[
-        DataRequired()])
+    old_password = PasswordField(_l("Old Password"), validators=[DataRequired()])
+    new_password = PasswordField(_l("New Password"), validators=[DataRequired()])
     new_password2 = PasswordField(_l("Repeat new Password"), validators=[
         DataRequired(), EqualTo("new_password",
                                 message=_l("New passwords are not equal"))])
@@ -66,3 +76,15 @@ class ChangePasswordForm(FlaskForm):
         is_valid = user.check_password(old_password.data)
         if not is_valid:
             raise ValidationError(_("Old password is not correct."))
+
+
+class TwoFactorForm(FlaskForm):
+    password = PasswordField(_l("Password"), validators=[DataRequired()])
+    enable_2fa = BooleanField(_l("Enable two factor authentication"))
+    submit = SubmitField(_l("Submit"))
+
+    def validate_password(self, password):  # noqa
+        user = session.query(User).filter_by(username=current_user.username).first()
+        is_valid = user.check_password(password.data)
+        if not is_valid:
+            raise ValidationError(_("Password is not correct."))

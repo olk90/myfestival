@@ -1,3 +1,6 @@
+from io import BytesIO
+
+import pyqrcode as pyqrcode
 from flask import render_template, redirect, url_for, flash, request, \
     current_app as ca
 from flask_babel import _
@@ -5,9 +8,10 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 
 from app import session
-from app.logic import notify_owner
 from app.auth import bp
-from app.auth.forms import LoginForm, RegistrationForm, ChangePasswordForm
+from app.auth.forms import LoginForm, RegistrationForm, ChangePasswordForm, TwoFactorForm
+from app.auth.logic import generate_key_for_user, delete_key_for_user, generate_uri
+from app.logic import notify_owner
 from app.models import User, Registration
 
 
@@ -75,6 +79,45 @@ def register():
                            form=form)
 
 
+@bp.route("/security_settings", methods=["GET"])
+@login_required
+def security_settings():
+    return render_template("auth/security_settings.html")
+
+
+@bp.route("/setup_2fa", methods=["GET", "POST"])
+@login_required
+def setup_2fa():
+    form = TwoFactorForm()
+    if request.method == "GET":
+        user = session.query(User).filter_by(username=current_user.username).first()
+        form.enable_2fa.data = user.otp_secret is not None
+    elif form.validate_on_submit():
+        user = session.query(User).filter_by(username=current_user.username).first()
+        tfa_data = form.enable_2fa.data
+        tfa_enabled = user.otp_secret is not None
+        if tfa_data != tfa_enabled:
+            if tfa_data:
+                flash(_("2FA enabled"))
+                generate_key_for_user(user)
+            else:
+                flash(_("2FA disabled"))
+                delete_key_for_user(user)
+        session.commit()
+        tfa_enabled = user.otp_secret is not None
+        if tfa_enabled:
+            return render_template("auth/two_factor_setup.html"), 200, {
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        else:
+            return redirect(url_for("main.user", username=current_user.username))
+    return render_template("auth/register.html",
+                           form=form,
+                           title=_("Setup 2FA"))
+
+
 @bp.route("/change_password", methods=["GET", "POST"])
 @login_required
 def change_password():
@@ -88,3 +131,20 @@ def change_password():
         return redirect(url_for("main.user", username=current_user.username))
     return render_template("auth/register.html", title=_("Change password"),
                            form=form)
+
+
+@bp.route("/qrcode")
+@login_required
+def qrcode():
+    # render qrcode for FreeTOTP
+    user = session.query(User).filter_by(username=current_user.username).first()
+    uri = generate_uri(user)
+    url = pyqrcode.create(uri)
+    stream = BytesIO()
+    url.svg(stream, scale=5)
+    return stream.getvalue(), 200, {
+        "Content-Type": "image/svg+xml",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
+    }

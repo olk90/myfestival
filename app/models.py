@@ -62,6 +62,9 @@ class User(UserMixin, db.Model):
     posts = db.relationship("Post", backref="author", lazy="dynamic")
     chronicle_entries = db.relationship(
         "ChronicleEntry", backref="chronicler", lazy="dynamic")
+
+    otp_secret = db.Column(db.String(32))
+
     about_me = db.Column(db.String(666))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
