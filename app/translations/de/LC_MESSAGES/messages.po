@@ -207,7 +207,7 @@ msgstr "Anmelden"
 #: app/auth/forms.py:28
 #, fuzzy
 msgid "Invalid token"
-msgstr "Unzulässige Menge"
+msgstr "Unzulässiges Token"
 
 #: app/auth/forms.py:33
 msgid "Registration Code"
