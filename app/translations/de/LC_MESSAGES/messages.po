@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-10 18:09+0200\n"
+"POT-Creation-Date: 2022-07-17 15:13+0200\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -78,38 +78,38 @@ msgstr "Eigentümer"
 msgid "Invalid version number"
 msgstr "Ungültige Versionsnummer"
 
-#: app/administration/forms.py:11
+#: app/administration/forms.py:12
 msgid "Number of codes"
 msgstr "Anzahl der Codes"
 
-#: app/administration/forms.py:13
+#: app/administration/forms.py:14
 msgid "Generate at least one new code!"
 msgstr "Generiere mindestens einen neuen Code"
 
-#: app/administration/forms.py:14
+#: app/administration/forms.py:15
 msgid "Generate"
 msgstr "Generieren"
 
-#: app/administration/forms.py:18
+#: app/administration/forms.py:19
 msgid "Backup file"
 msgstr "Sicherungsdatei"
 
-#: app/administration/forms.py:20
+#: app/administration/forms.py:21
 msgid "Backup must be a JSON file!"
 msgstr "Backup muss eine JSON-Datei sein!"
 
-#: app/administration/forms.py:22
-msgid "Image archive"
-msgstr "Bilderarchiv"
-
-#: app/administration/forms.py:23
-msgid "File must be an archive!"
-msgstr "Datei muss ein Archiv sein!"
-
-#: app/administration/forms.py:25 app/auth/forms.py:15 app/auth/forms.py:35
+#: app/administration/forms.py:23 app/auth/forms.py:15 app/auth/forms.py:35
 #: app/auth/forms.py:82
 msgid "Password"
 msgstr "Passwort"
+
+#: app/administration/forms.py:31
+msgid "Image archive"
+msgstr "Bilderarchiv"
+
+#: app/administration/forms.py:32
+msgid "File must be an archive!"
+msgstr "Datei muss ein Archiv sein!"
 
 #: app/administration/messages.py:5
 msgid "Suspension failed. The owner was informed of this traitorous act."
@@ -124,71 +124,71 @@ msgstr "Gesperrter Nutzer kann nicht zum Admin befördert werden."
 msgid "%(username)s must be suspended first."
 msgstr "%(username)s muss erst suspendiert werden."
 
-#: app/administration/routes.py:58 app/chronicle/routes.py:98
+#: app/administration/routes.py:61 app/chronicle/routes.py:104
 #: app/festival/routes.py:134 app/main/routes.py:113 app/main/routes.py:199
 #: app/purchase/routes.py:189 app/purchase/routes.py:277
 #: app/purchase/routes.py:343 app/purchase/routes.py:363
 msgid "Your changes have been saved."
 msgstr "Deine Änderungen wurden gespeichert."
 
-#: app/administration/routes.py:61
+#: app/administration/routes.py:64
 msgid "Generate Registration Codes"
 msgstr "Registriercodes erstellen"
 
-#: app/administration/routes.py:79
+#: app/administration/routes.py:82
 msgid "Code deleted"
 msgstr "Registriercode gelöscht"
 
-#: app/administration/routes.py:93 app/administration/routes.py:116
-#: app/administration/routes.py:136 app/administration/routes.py:159
-#: app/administration/routes.py:179 app/administration/routes.py:201
+#: app/administration/routes.py:96 app/administration/routes.py:119
+#: app/administration/routes.py:139 app/administration/routes.py:162
+#: app/administration/routes.py:182 app/administration/routes.py:204
 #, python-format
 msgid "%(username)s not found."
 msgstr "%(username)s nicht gefunden."
 
-#: app/administration/routes.py:102
+#: app/administration/routes.py:105
 #, python-format
 msgid "%(username)s has now admin rights!"
 msgstr "%(username)s hat nun Adminrechte!"
 
-#: app/administration/routes.py:122
+#: app/administration/routes.py:125
 #, python-format
 msgid "%(username)s is no longer admin!"
 msgstr "%(username)s ist kein Admin mehr"
 
-#: app/administration/routes.py:145
+#: app/administration/routes.py:148
 #, python-format
 msgid "%(username)s has been suspended!"
 msgstr "%(username)s wurde suspendiert!"
 
-#: app/administration/routes.py:165
+#: app/administration/routes.py:168
 #, python-format
 msgid "%(username)s has been reactivated!"
 msgstr "%(username)s  wurde reaktiviert!"
 
-#: app/administration/routes.py:186
+#: app/administration/routes.py:189
 msgid "Password has been reset!"
 msgstr "Passwort wurde zurückgesetzt!"
 
-#: app/administration/routes.py:210
+#: app/administration/routes.py:213
 #, python-format
 msgid "%(username)s has been deleted!"
 msgstr "%(username)s wurde gelöscht!"
 
-#: app/administration/routes.py:249
+#: app/administration/routes.py:253
 msgid "Invalid password"
 msgstr "Ungältiges Passwort"
 
-#: app/administration/routes.py:253
+#: app/administration/routes.py:257
 msgid "Import finished"
 msgstr "Import abgeschlossen"
 
-#: app/administration/routes.py:255
-#: app/templates/administration/admin_page.html:12
+#: app/administration/routes.py:259
+#: app/templates/administration/admin_page.html:14
 msgid "Import backup"
 msgstr "Sicherung importieren"
 
-#: app/auth/forms.py:14 app/auth/forms.py:32 app/main/forms.py:16
+#: app/auth/forms.py:14 app/auth/forms.py:32 app/main/forms.py:17
 msgid "Username"
 msgstr "Nutzername"
 
@@ -225,7 +225,7 @@ msgstr "Passwörter stimmen nicht überein"
 msgid "Register"
 msgstr "Registrieren"
 
-#: app/auth/forms.py:45 app/main/forms.py:47
+#: app/auth/forms.py:45 app/main/forms.py:50
 msgid "Please use a different username."
 msgstr "Bitte anderen Nutzernamen wählen."
 
@@ -251,8 +251,8 @@ msgstr "Neue Passwörter sind nicht gleich"
 
 #: app/auth/forms.py:72 app/auth/forms.py:84 app/chronicle/forms.py:14
 #: app/festival/forms.py:21 app/festival/forms.py:51 app/festival/forms.py:60
-#: app/main/forms.py:36 app/main/forms.py:59 app/main/forms.py:66
-#: app/main/forms.py:72 app/purchase/forms.py:24 app/purchase/forms.py:87
+#: app/main/forms.py:35 app/main/forms.py:62 app/main/forms.py:69
+#: app/main/forms.py:75 app/purchase/forms.py:24 app/purchase/forms.py:87
 #: app/purchase/forms.py:125
 msgid "Submit"
 msgstr "Absenden"
@@ -318,11 +318,11 @@ msgstr "Erzähl die Geschichte:"
 msgid "Festival must be selected."
 msgstr "Festival muss ausgewählt werden."
 
-#: app/chronicle/routes.py:50
+#: app/chronicle/routes.py:53
 msgid "Chronicle entry has been added."
 msgstr "Chronikeintrag hinzugefügt."
 
-#: app/chronicle/routes.py:150
+#: app/chronicle/routes.py:158
 msgid "Chronicle entry has been deleted."
 msgstr "Chronikeintrag gelöscht."
 
@@ -416,53 +416,53 @@ msgstr "Rechnung editieren"
 msgid "%(title)s deleted"
 msgstr "%(title)s gelöscht"
 
-#: app/main/forms.py:17
+#: app/main/forms.py:18
 msgid "About me"
 msgstr "Über mich"
 
-#: app/main/forms.py:19
+#: app/main/forms.py:20
 msgid "Partner"
 msgstr "Partner"
 
-#: app/main/forms.py:21
+#: app/main/forms.py:22
 msgid "Water per day [l]"
 msgstr "Wasser pro Tag [l]"
 
-#: app/main/forms.py:23 app/main/forms.py:28 app/main/forms.py:32
+#: app/main/forms.py:24 app/main/forms.py:29 app/main/forms.py:33
 #: app/purchase/forms.py:21
 msgid "Invalid amount!"
 msgstr "Unzulässige Menge"
 
-#: app/main/forms.py:26
+#: app/main/forms.py:27
 msgid "Beer per day [Cans]"
 msgstr "Bier pro Tag [Dosen]"
 
-#: app/main/forms.py:30
+#: app/main/forms.py:31
 msgid "Mixed beer per day [Cans]"
 msgstr "Radler pro Tag [Dosen]"
 
-#: app/main/forms.py:34
+#: app/main/forms.py:43
 msgid "Profile photo"
 msgstr "Profilbild"
 
-#: app/main/forms.py:35
+#: app/main/forms.py:44
 msgid "File must be an image!"
 msgstr "Datei muss ein Bild sein!"
 
-#: app/main/forms.py:53
+#: app/main/forms.py:56
 #, fuzzy
 msgid "Partner already taken :\"("
 msgstr "Partner schon vergeben :'("
 
-#: app/main/forms.py:57 app/main/forms.py:63
+#: app/main/forms.py:60 app/main/forms.py:66
 msgid "Say something:"
 msgstr "Sag was:"
 
-#: app/main/forms.py:65
+#: app/main/forms.py:68
 msgid "Pin post"
 msgstr "Nachricht anpinnen"
 
-#: app/main/forms.py:70
+#: app/main/forms.py:73
 msgid "Reply:"
 msgstr "Antworte:"
 
@@ -497,6 +497,10 @@ msgstr "Profil editieren"
 #: app/main/routes.py:254
 msgid "Post has been deleted."
 msgstr "Post wurde gelöscht."
+
+#: app/main/utils.py:13
+msgid "This feature is not available on this platform"
+msgstr "Diese Funktion ist auf dieser Plattform nicht verfügbar"
 
 #: app/purchase/forms.py:18 app/purchase/forms.py:82 app/purchase/forms.py:121
 msgid "Name"
@@ -631,31 +635,32 @@ msgstr "Ausstattung"
 msgid "Packaging Units"
 msgstr "Bestandseinheiten"
 
-#: app/templates/base.html:53
-msgid "Festivals"
-msgstr "Festivals"
-
-#: app/templates/base.html:63 app/templates/festival/festival_overview.html:5
+#: app/templates/base.html:51 app/templates/base.html:68
+#: app/templates/festival/festival_overview.html:5
 msgid "Festival Overview"
 msgstr "Festivalübersicht"
 
-#: app/templates/base.html:66
+#: app/templates/base.html:58
+msgid "Festivals"
+msgstr "Festivals"
+
+#: app/templates/base.html:71
 msgid "Chronicles"
 msgstr "Chroniken"
 
-#: app/templates/base.html:75
+#: app/templates/base.html:81
 msgid "Login"
 msgstr "Login"
 
-#: app/templates/administration/admin_page.html:7 app/templates/base.html:80
+#: app/templates/administration/admin_page.html:7 app/templates/base.html:86
 msgid "Administration"
 msgstr "Administration"
 
-#: app/templates/base.html:94
+#: app/templates/base.html:100
 msgid "Profile"
 msgstr "Profil"
 
-#: app/templates/base.html:103
+#: app/templates/base.html:109
 msgid "Logout"
 msgstr "Ausloggen"
 
@@ -679,7 +684,7 @@ msgstr "Neue Registriercodes erstellen"
 msgid "Create backup"
 msgstr "Sicherung erstellen"
 
-#: app/templates/administration/admin_page.html:11
+#: app/templates/administration/admin_page.html:12
 msgid "Backup chronicle pictures"
 msgstr "Chronikbilder sichern"
 
@@ -705,7 +710,9 @@ msgstr "Zwei-Faktor-Authentifizierung"
 msgid ""
 "Almost done! Please scan the QR code with the authenticator app on your "
 "smartphone:"
-msgstr "Fast fertig! Bitte scanne den QR Code mit der Authenticator-App auf deinem Smartphone"
+msgstr ""
+"Fast fertig! Bitte scanne den QR Code mit der Authenticator-App auf "
+"deinem Smartphone"
 
 #: app/templates/auth/two_factor_setup.html:8
 msgid "After scanning return to the"

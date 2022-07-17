@@ -10,6 +10,7 @@ from wtforms.validators import DataRequired, ValidationError, Length, \
 
 from app import photos, session
 from app.models import User
+from config import is_heroku
 
 
 class EditProfileForm(FlaskForm):
@@ -31,14 +32,16 @@ class EditProfileForm(FlaskForm):
                          validators=[
                              NumberRange(min=0, message=_l("Invalid amount!"))]
                          )
-    photo = FileField(_l("Profile photo"), validators=[
-        FileAllowed(photos, _l("File must be an image!"))])
     submit = SubmitField(_l("Submit"))
 
     def __init__(self, original_username, partner_id, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.original_username = original_username
         self.partner_id = partner_id
+
+        if not is_heroku():
+            self.photo = FileField(_l("Profile photo"), validators=[
+                FileAllowed(photos, _l("File must be an image!"))])
 
     def validate_username(self, username):
         if username.data != self.original_username:

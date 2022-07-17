@@ -5,6 +5,7 @@ from wtforms import IntegerField, SubmitField, PasswordField
 from wtforms.validators import NumberRange, DataRequired
 
 from app import archives, backups
+from config import is_heroku
 
 
 class CreateRegistrationCodeForm(FlaskForm):
@@ -19,10 +20,14 @@ class ImportBackupForm(FlaskForm):
         DataRequired(),
         FileAllowed(backups, _l("Backup must be a JSON file!"))
     ])
-    images = FileField(_l("Image archive"), validators=[
-        FileAllowed(archives, _l("File must be an archive!"))
-    ])
     password = PasswordField(_l("Password"), validators=[
         DataRequired()
     ])
     submit = SubmitField("Import")
+
+    def __init__(self, *args, **kwargs):
+        super(ImportBackupForm, self).__init__(*args, **kwargs)
+        if not is_heroku():
+            self.images = FileField(_l("Image archive"), validators=[
+                FileAllowed(archives, _l("File must be an archive!"))
+            ])

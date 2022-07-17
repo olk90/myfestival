@@ -12,11 +12,13 @@ from app import session
 from app.chronicle import bp
 from app.chronicle.forms import ChronicleEntryForm
 from app.chronicle.logic import get_festival_selection, get_images
+from app.main.utils import not_heroku
 from app.models import ChronicleEntry, Festival
 
 
 @bp.route("/chronicle_overview")
 @login_required
+@not_heroku
 def chronicle_overview():
     page = request.args.get("page", 1, type=int)
     entries = session.query(ChronicleEntry).order_by(ChronicleEntry.timestamp.desc()) \
@@ -34,6 +36,7 @@ def chronicle_overview():
 
 @bp.route("/add_entry/<f_id>", methods=["GET", "POST"])
 @login_required
+@not_heroku
 def add_entry(f_id):
     form = ChronicleEntryForm(f_id)
     form.festival.choices = get_festival_selection()
@@ -62,6 +65,8 @@ def add_entry(f_id):
 
 
 @bp.route("/upload_images/<f_id>", methods=["POST"])
+@login_required
+@not_heroku
 def upload_images(f_id):
     uploaded_file = request.files["file"]
     filename = secure_filename(uploaded_file.filename)
@@ -83,6 +88,7 @@ def upload_images(f_id):
 
 @bp.route("/edit_entry/<entry_id>", methods=["GET", "POST"])
 @login_required
+@not_heroku
 def edit_entry(entry_id):
     entry = session.query(ChronicleEntry).get(entry_id)
     if cu == entry.chronicler:
@@ -122,6 +128,7 @@ def edit_entry(entry_id):
 
 @bp.route("/chronicle_entry/<entry_id>")
 @login_required
+@not_heroku
 def chronicle_entry(entry_id):
     entry = session.query(ChronicleEntry).filter_by(id=entry_id).first_or_404()
     ca.logger.info(">{}< has entered chronicle page >{}<"
@@ -131,6 +138,7 @@ def chronicle_entry(entry_id):
 
 @bp.route("/delete_entry/<entry_id>", methods=["GET", "POST"])
 @login_required
+@not_heroku
 def delete_entry(entry_id):
     entry = session.query(ChronicleEntry).get(entry_id)
     if cu.is_admin() or cu == entry.chronicler:
@@ -157,6 +165,7 @@ def delete_entry(entry_id):
 
 @bp.route("/delete_image", methods=["GET", "POST"])
 @login_required
+@not_heroku
 def delete_image():
     # POST request
     data = request.get_json()

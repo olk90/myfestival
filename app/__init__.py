@@ -39,6 +39,7 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.view_functions["static"] = login_required(app.send_static_file)
     app.config.from_object(config_class)
+    app.jinja_env.globals.update(is_heroku=is_heroku)
 
     db.init_app(app)
     migrate.init_app(app, db)

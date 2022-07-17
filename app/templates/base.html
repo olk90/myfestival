@@ -46,6 +46,11 @@
                                 </ul>
                             </div>
                         </li>
+                        {% if is_heroku() %}
+                        <li>
+                            <a href="{{ url_for("festival.festival_overview") }}">{{ _("Festival Overview") }}</a>
+                        </li>
+                        {% else %}
                         <li style="padding: 15px;">
                             <div class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -67,6 +72,7 @@
                                     </li>
                                 </ul>
                             </div>
+                        {% endif %}
                         </li>
                     {% endif %}
                 </ul>

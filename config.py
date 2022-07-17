@@ -7,14 +7,14 @@ load_dotenv(os.path.join(basedir, ".env"))
 
 def is_heroku() -> bool:
     platform = os.environ.get("PLATFORM")
-    heroku_ = platform == "HEROKU"
+    heroku_ = platform != "HEROKU"
     return heroku_
 
 
 def get_db_url() -> str:
     db_url: str = os.environ.get("DATABASE_URL")
     if is_heroku():
-        print("Detected target platfrom Heroku, replace >postgres://< with >postgresql://<")
+        print("Detected target platform Heroku, replace >postgres://< with >postgresql://<")
         db_url = db_url.replace("postgres://", "postgresql://", 1)
     return db_url
 

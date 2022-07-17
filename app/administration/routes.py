@@ -16,6 +16,8 @@ from app.administration.messages import (suspend_first, suspended,
                                          suspension_failed)
 from app.containers import UserAccessLevel
 from app.logic import notify_owner, notify_user, random_string
+from app.main.utils import not_heroku
+from config import is_heroku
 
 
 @bp.route("/admin_page")
@@ -30,6 +32,7 @@ def admin_page():
         prev_url = url_for("administration.admin_page",
                            page=regs.prev_num) if regs.has_prev else None
         return render_template("administration/admin_page.html",
+                               not_heroku=not is_heroku(),
                                registrations=regs.items,
                                next_url=next_url, prev_url=prev_url)
     else:
@@ -230,6 +233,7 @@ def create_backup():
 
 @bp.route("/backup_images")
 @login_required
+@not_heroku
 def backup_images():
     if current_user.is_owner():
         return zip_and_download_images()
