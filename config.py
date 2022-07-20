@@ -7,7 +7,7 @@ load_dotenv(os.path.join(basedir, ".env"))
 
 def is_heroku() -> bool:
     platform = os.environ.get("PLATFORM")
-    heroku_ = platform != "HEROKU"
+    heroku_ = platform == "HEROKU"
     return heroku_
 
 
