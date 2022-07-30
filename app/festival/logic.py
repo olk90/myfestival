@@ -1,3 +1,5 @@
+import math
+
 from flask_login import current_user
 
 from app import session
@@ -75,24 +77,24 @@ def calculate_shares(festival):
 
 def calculate_transfers(festival, participants):
 
-    receivers = list(filter(lambda r: (r.dept < 0), participants))
+    receivers = list(filter(lambda x: (x.dept < 0), participants))
 
     for r in receivers:
         not_refunded = -r.dept
         while not_refunded > 0:
-            # payers = list(filter(lambda r: (r.dept > 0),
-            #                      festival.participants))
-            payers = list(filter(lambda r: (r.dept > 0), participants))
+            payers = list(filter(lambda x: (x.dept > 0), participants))
             next_payer = get_next_payer(r, payers)
             transfer = Transfer(recipient_id=r.id, payer_id=next_payer.id,
                                 festival_id=festival.id)
             if next_payer.dept <= not_refunded:
                 transfer.amount = next_payer.dept
-                not_refunded = round(not_refunded - next_payer.dept, 2)
+                value = not_refunded - next_payer.dept
+                not_refunded = math.ceil((value * 100) / 100)
                 next_payer.dept = 0.0
             else:
                 transfer.amount = not_refunded
-                next_payer.dept = round(next_payer.dept - not_refunded, 2)
+                value = next_payer.dept - not_refunded
+                next_payer.dept = math.ceil((value * 100) / 100)
                 not_refunded = 0.0
             session.add(transfer)
     festival.is_closed = True
