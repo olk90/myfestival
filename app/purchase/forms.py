@@ -23,6 +23,12 @@ class StockForm(FlaskForm):
                        validators=[DataRequired()], coerce=int)
     submit = SubmitField(_l("Submit"))
 
+    def __init__(self, state, item_id=None, is_edit=False, *args, **kwargs):
+        super(StockForm, self).__init__(*args, **kwargs)
+        self.item_id = item_id
+        self.is_edit = is_edit
+        self.state = state
+
     def validate_name(self, name):
         if not self.is_edit:
             item = session.query(ConsumptionItem).filter(
@@ -36,7 +42,7 @@ class StockForm(FlaskForm):
                 ConsumptionItem.id == self.item_id
             ).first()
 
-        if item is not None:
+        if not self.is_edit and item is not None:
             raise ValidationError(_("Item already on list."))
 
     def validate_unit(self, unit):  # noqa
@@ -57,12 +63,6 @@ class StockForm(FlaskForm):
             self.unit.errors.append(_("Expected unit: %(u)s", u=pku.name))
             return False
         return True
-
-    def __init__(self, state, item_id=None, is_edit=False, *args, **kwargs):
-        super(StockForm, self).__init__(*args, **kwargs)
-        self.item_id = item_id
-        self.is_edit = is_edit
-        self.state = state
 
 
 class SelectFestivalForm(FlaskForm):
