@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-30 11:54+0200\n"
+"POT-Creation-Date: 2022-07-30 17:17+0200\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -126,8 +126,8 @@ msgstr "%(username)s muss erst suspendiert werden."
 
 #: app/administration/routes.py:61 app/chronicle/routes.py:104
 #: app/festival/routes.py:134 app/main/routes.py:113 app/main/routes.py:199
-#: app/purchase/routes.py:189 app/purchase/routes.py:277
-#: app/purchase/routes.py:343 app/purchase/routes.py:363
+#: app/purchase/routes.py:190 app/purchase/routes.py:278
+#: app/purchase/routes.py:344 app/purchase/routes.py:364
 msgid "Your changes have been saved."
 msgstr "Deine Änderungen wurden gespeichert."
 
@@ -410,8 +410,8 @@ msgstr "Rechnung wurde aktualisiert."
 msgid "Edit Invoice"
 msgstr "Rechnung editieren"
 
-#: app/festival/routes.py:267 app/purchase/routes.py:216
-#: app/purchase/routes.py:254 app/purchase/routes.py:386
+#: app/festival/routes.py:267 app/purchase/routes.py:217
+#: app/purchase/routes.py:255 app/purchase/routes.py:387
 #, python-format
 msgid "%(title)s deleted"
 msgstr "%(title)s gelöscht"
@@ -547,7 +547,7 @@ msgstr "Bitte andere Abkürzung wählen."
 msgid "Description"
 msgstr "Beschreibung"
 
-#: app/purchase/logic.py:114
+#: app/purchase/logic.py:108
 msgid "List generated."
 msgstr "Liste erstellt."
 
@@ -561,44 +561,44 @@ msgstr ""
 "Einkauf kann nicht abgeschlossen werden, es sind noch immer Einträge auf "
 "der Einkaufsliste"
 
-#: app/purchase/routes.py:122
+#: app/purchase/routes.py:123
 #, python-format
 msgid "%(title)s added to cart"
 msgstr "%(title)s liegt jetzt im Einkaufswagen"
 
-#: app/purchase/routes.py:142 app/purchase/routes.py:161
+#: app/purchase/routes.py:143 app/purchase/routes.py:162
 msgid "Item has been added."
 msgstr "Eintrag wurde hinzugefügt"
 
-#: app/purchase/routes.py:146 app/purchase/routes.py:168
+#: app/purchase/routes.py:147 app/purchase/routes.py:169
 msgid "Add Item"
 msgstr "Eintrag hinzufügen"
 
-#: app/purchase/routes.py:198
+#: app/purchase/routes.py:199
 msgid "Edit Item"
 msgstr "Eintrag editieren"
 
-#: app/purchase/routes.py:203
+#: app/purchase/routes.py:204
 msgid "Cannot edit items while purchase is not closed."
 msgstr ""
 "Eintrag kann nicht verändert werden, solange der Einkauf nicht "
 "abgeschlossen wurde."
 
-#: app/purchase/routes.py:256
+#: app/purchase/routes.py:257
 #, python-format
 msgid "%(title)s cannot be deleted!"
 msgstr "%(title)s kann nicht gelöscht werden!"
 
-#: app/purchase/routes.py:284 app/purchase/routes.py:311
-#: app/purchase/routes.py:370
+#: app/purchase/routes.py:285 app/purchase/routes.py:312
+#: app/purchase/routes.py:371
 msgid "Edit packaging unit"
 msgstr "Bestandseinheit editieren"
 
-#: app/purchase/routes.py:307
+#: app/purchase/routes.py:308
 msgid "Packaging unit has been added."
 msgstr "Bestandseinheit wurde hinzugefügt"
 
-#: app/purchase/routes.py:347
+#: app/purchase/routes.py:348
 msgid "Add utility item"
 msgstr "Eintrag hinzufügen"
 

@@ -94,22 +94,26 @@ def generate_shopping_list(festival_id, is_testing=False):
     calculate_drinks(festival_id, is_testing)
     requested_items = session.query(ConsumptionItem).filter_by(
         state=ConsumptionItemState.wishlist).all()
-    available_items = session.query(ConsumptionItem).filter_by(
-        state=ConsumptionItemState.stock).all()
     for r in requested_items:
-        available = list(filter(
-            lambda a: (a.name == r.name), available_items))
-        if len(available) == 0:
-            r.state = ConsumptionItemState.purchase
+        available: ConsumptionItem = session.query(ConsumptionItem).filter(
+            ConsumptionItem.state == ConsumptionItemState.stock,
+            ConsumptionItem.name == r.name
+        ).first()
+        if available:
+            adjust_amount(available, r)
         else:
-            p_amount = r.amount - available[0].amount
-            if p_amount <= 0:
-                # demand can be satisfied from stock
-                session.delete(r)
-            else:
-                r.amount = p_amount
-                r.state = ConsumptionItemState.purchase
+            r.state = ConsumptionItemState.purchase
     session.commit()
     if not is_testing:
         flash(_("List generated."))
         return redirect(url_for("purchase.shopping_list"))
+
+
+def adjust_amount(available: ConsumptionItem, requested: ConsumptionItem):
+    p_amount = requested.amount - available.amount
+    if p_amount <= 0:
+        # demand can be satisfied from stock
+        session.delete(requested)
+    else:
+        requested.amount = p_amount
+        requested.state = ConsumptionItemState.purchase

@@ -87,17 +87,18 @@ def finish_purchase():
     list_items = session.query(ConsumptionItem).filter_by(
         state=ConsumptionItemState.purchase).all()
     if not list_items:
-        new_items = session.query(ConsumptionItem).filter_by(
+        new_items: list = session.query(ConsumptionItem).filter_by(
             state=ConsumptionItemState.cart).all()
-        available_items = session.query(ConsumptionItem).filter_by(
-            state=ConsumptionItemState.stock).all()
         for i in new_items:
-            other = list(filter(lambda a: (a.name == i.name), available_items))
-            if len(other) == 0:
-                i.state = ConsumptionItemState.stock
-            else:
+            other: ConsumptionItem = session.query(ConsumptionItem).filter(
+                ConsumptionItem.state == ConsumptionItemState.stock,
+                ConsumptionItem.name == i.name
+            ).first()
+            if other:
                 other.amount += i.amount
                 session.delete(i)
+            else:
+                i.state = ConsumptionItemState.stock
         session.commit()
         ca.logger.info(
             ">{}< has finished purchase".format(current_user.username))
@@ -227,7 +228,7 @@ def pku_overview():
         # display all non-erasable PKUs in a separate list
         nonersable_pkus = session.query(PackagingUnitType) \
             .filter(PackagingUnitType.delete == False) \
-                .order_by(PackagingUnitType.name).all()  # noqa  E225
+            .order_by(PackagingUnitType.name).all()  # noqa  E225
 
         pkus = session.query(PackagingUnitType).filter(PackagingUnitType.delete) \
             .order_by(PackagingUnitType.name).all()
