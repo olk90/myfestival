@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-17 15:13+0200\n"
+"POT-Creation-Date: 2022-07-30 11:54+0200\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -514,15 +514,15 @@ msgstr "Menge"
 msgid "Unit"
 msgstr "Einheit"
 
-#: app/purchase/forms.py:40
+#: app/purchase/forms.py:46
 msgid "Item already on list."
 msgstr "Eintrag ist bereits auf der Liste."
 
-#: app/purchase/forms.py:44
+#: app/purchase/forms.py:50
 msgid "Unit must be selected."
 msgstr "Einheit muss ausgewählt werden."
 
-#: app/purchase/forms.py:57
+#: app/purchase/forms.py:63
 #, python-format
 msgid "Expected unit: %(u)s"
 msgstr "Erwartete Einheit: %(u)s"
