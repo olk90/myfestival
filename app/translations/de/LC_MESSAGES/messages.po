@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-30 18:20+0200\n"
+"POT-Creation-Date: 2022-08-07 14:58+0200\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -126,8 +126,8 @@ msgstr "%(username)s muss erst suspendiert werden."
 
 #: app/administration/routes.py:61 app/chronicle/routes.py:104
 #: app/festival/routes.py:134 app/main/routes.py:113 app/main/routes.py:199
-#: app/purchase/routes.py:190 app/purchase/routes.py:278
-#: app/purchase/routes.py:344 app/purchase/routes.py:364
+#: app/purchase/routes.py:193 app/purchase/routes.py:282
+#: app/purchase/routes.py:348 app/purchase/routes.py:368
 msgid "Your changes have been saved."
 msgstr "Deine Änderungen wurden gespeichert."
 
@@ -252,8 +252,8 @@ msgstr "Neue Passwörter sind nicht gleich"
 #: app/auth/forms.py:72 app/auth/forms.py:84 app/chronicle/forms.py:14
 #: app/festival/forms.py:21 app/festival/forms.py:51 app/festival/forms.py:60
 #: app/main/forms.py:35 app/main/forms.py:62 app/main/forms.py:69
-#: app/main/forms.py:75 app/purchase/forms.py:24 app/purchase/forms.py:87
-#: app/purchase/forms.py:125
+#: app/main/forms.py:75 app/purchase/forms.py:29 app/purchase/forms.py:92
+#: app/purchase/forms.py:130
 msgid "Submit"
 msgstr "Absenden"
 
@@ -306,7 +306,7 @@ msgstr "Passwort geändert."
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: app/chronicle/forms.py:10 app/purchase/forms.py:69
+#: app/chronicle/forms.py:10 app/purchase/forms.py:74
 msgid "Festival"
 msgstr "Festival"
 
@@ -314,7 +314,7 @@ msgstr "Festival"
 msgid "Tell the story:"
 msgstr "Erzähl die Geschichte:"
 
-#: app/chronicle/forms.py:18 app/purchase/forms.py:75
+#: app/chronicle/forms.py:18 app/purchase/forms.py:80
 msgid "Festival must be selected."
 msgstr "Festival muss ausgewählt werden."
 
@@ -330,7 +330,7 @@ msgstr "Chronikeintrag gelöscht."
 msgid "Title"
 msgstr "Titel"
 
-#: app/festival/forms.py:17
+#: app/festival/forms.py:17 app/purchase/forms.py:21
 msgid "Info"
 msgstr "Info"
 
@@ -410,8 +410,8 @@ msgstr "Rechnung wurde aktualisiert."
 msgid "Edit Invoice"
 msgstr "Rechnung editieren"
 
-#: app/festival/routes.py:267 app/purchase/routes.py:217
-#: app/purchase/routes.py:255 app/purchase/routes.py:387
+#: app/festival/routes.py:267 app/purchase/routes.py:221
+#: app/purchase/routes.py:259 app/purchase/routes.py:391
 #, python-format
 msgid "%(title)s deleted"
 msgstr "%(title)s gelöscht"
@@ -429,7 +429,7 @@ msgid "Water per day [l]"
 msgstr "Wasser pro Tag [l]"
 
 #: app/main/forms.py:24 app/main/forms.py:29 app/main/forms.py:33
-#: app/purchase/forms.py:21
+#: app/purchase/forms.py:26
 msgid "Invalid amount!"
 msgstr "Unzulässige Menge"
 
@@ -502,48 +502,48 @@ msgstr "Post wurde gelöscht."
 msgid "This feature is not available on this platform"
 msgstr "Diese Funktion ist auf dieser Plattform nicht verfügbar"
 
-#: app/purchase/forms.py:18 app/purchase/forms.py:82 app/purchase/forms.py:121
+#: app/purchase/forms.py:17 app/purchase/forms.py:87 app/purchase/forms.py:126
 msgid "Name"
 msgstr "Name"
 
-#: app/purchase/forms.py:19
+#: app/purchase/forms.py:24
 msgid "Amount"
 msgstr "Menge"
 
-#: app/purchase/forms.py:22
+#: app/purchase/forms.py:27
 msgid "Unit"
 msgstr "Einheit"
 
-#: app/purchase/forms.py:46
+#: app/purchase/forms.py:51
 msgid "Item already on list."
 msgstr "Eintrag ist bereits auf der Liste."
 
-#: app/purchase/forms.py:50
+#: app/purchase/forms.py:55
 msgid "Unit must be selected."
 msgstr "Einheit muss ausgewählt werden."
 
-#: app/purchase/forms.py:63
+#: app/purchase/forms.py:68
 #, python-format
 msgid "Expected unit: %(u)s"
 msgstr "Erwartete Einheit: %(u)s"
 
-#: app/purchase/forms.py:71
+#: app/purchase/forms.py:76
 msgid "Create shopping list"
 msgstr "Einkaufsliste erstellen"
 
-#: app/purchase/forms.py:84
+#: app/purchase/forms.py:89
 msgid "Abbreviation"
 msgstr "Abkürzung"
 
-#: app/purchase/forms.py:99 app/purchase/forms.py:137
+#: app/purchase/forms.py:104 app/purchase/forms.py:142
 msgid "Please use a different name."
 msgstr "Bitte anderen Namen wählen."
 
-#: app/purchase/forms.py:112
+#: app/purchase/forms.py:117
 msgid "Please use a different abbreviation."
 msgstr "Bitte andere Abkürzung wählen."
 
-#: app/purchase/forms.py:123
+#: app/purchase/forms.py:128
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -566,39 +566,39 @@ msgstr ""
 msgid "%(title)s added to cart"
 msgstr "%(title)s liegt jetzt im Einkaufswagen"
 
-#: app/purchase/routes.py:143 app/purchase/routes.py:162
+#: app/purchase/routes.py:144 app/purchase/routes.py:164
 msgid "Item has been added."
 msgstr "Eintrag wurde hinzugefügt"
 
-#: app/purchase/routes.py:147 app/purchase/routes.py:169
+#: app/purchase/routes.py:148 app/purchase/routes.py:171
 msgid "Add Item"
 msgstr "Eintrag hinzufügen"
 
-#: app/purchase/routes.py:199
+#: app/purchase/routes.py:203
 msgid "Edit Item"
 msgstr "Eintrag editieren"
 
-#: app/purchase/routes.py:204
+#: app/purchase/routes.py:208
 msgid "Cannot edit items while purchase is not closed."
 msgstr ""
 "Eintrag kann nicht verändert werden, solange der Einkauf nicht "
 "abgeschlossen wurde."
 
-#: app/purchase/routes.py:257
+#: app/purchase/routes.py:261
 #, python-format
 msgid "%(title)s cannot be deleted!"
 msgstr "%(title)s kann nicht gelöscht werden!"
 
-#: app/purchase/routes.py:285 app/purchase/routes.py:312
-#: app/purchase/routes.py:371
+#: app/purchase/routes.py:289 app/purchase/routes.py:316
+#: app/purchase/routes.py:375
 msgid "Edit packaging unit"
 msgstr "Bestandseinheit editieren"
 
-#: app/purchase/routes.py:308
+#: app/purchase/routes.py:312
 msgid "Packaging unit has been added."
 msgstr "Bestandseinheit wurde hinzugefügt"
 
-#: app/purchase/routes.py:348
+#: app/purchase/routes.py:352
 msgid "Add utility item"
 msgstr "Eintrag hinzufügen"
 
@@ -661,6 +661,10 @@ msgid "Profile"
 msgstr "Profil"
 
 #: app/templates/base.html:109
+msgid "Wiki"
+msgstr "Wiki"
+
+#: app/templates/base.html:110
 msgid "Logout"
 msgstr "Ausloggen"
 
