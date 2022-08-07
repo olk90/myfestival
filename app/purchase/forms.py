@@ -14,8 +14,13 @@ from app.festival.logic import load_participants_from_db
 
 
 class StockForm(FlaskForm):
-
-    name = StringField(_l("Name"), validators=[DataRequired()])
+    name = StringField(_l("Name"), validators=[
+        DataRequired(),
+        Length(min=1, max=30)
+    ])
+    info = TextAreaField(_l("Info"), validators=[
+        Length(max=140)
+    ])
     amount = DecimalField(_l("Amount"), places=0, validators=[
         DataRequired(),
         NumberRange(min=1, message=_l("Invalid amount!"))])

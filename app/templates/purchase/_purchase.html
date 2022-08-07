@@ -20,13 +20,12 @@
                 {% endif %}
             </span>
         {% endset %}
-        <span>
+        <span style="font-size:20px;">
             {{ item.ConsumptionItem.name }}: {{ item.ConsumptionItem.amount }} {{ item.PackagingUnitType.abbreviation }}
         </span>
         {% if item.ConsumptionItem.info %}
-        <span>
-            ({{ item.ConsumptionItem.info }})
-        </span>
+            <br>
+            <span>{{ item.ConsumptionItem.info }}</span>
         {% endif %}
     </td>
     <td style="text-align: right;">

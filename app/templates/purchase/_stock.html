@@ -20,7 +20,11 @@
                 {% endif %}
             </span>
         {% endset %}
-        <span>{{ item.ConsumptionItem.name }}: {{ item.ConsumptionItem.amount }} {{ item.PackagingUnitType.abbreviation }}</span>
+        <span style="font-size:20px;">{{ item.ConsumptionItem.name }}: {{ item.ConsumptionItem.amount }} {{ item.PackagingUnitType.abbreviation }}</span>
+        {% if item.ConsumptionItem.info %}
+            <br>
+            <span>{{ item.ConsumptionItem.info }}</span>
+        {% endif %}
     </td>
     <td style="text-align: right; width: 40px">
         <a href="{{ url_for("purchase.edit_item", item_id=item.ConsumptionItem.id) }}">

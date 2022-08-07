@@ -131,6 +131,7 @@ def add_stock():
     form.unit.choices = get_pku_selection()
     if form.validate_on_submit():
         item = ConsumptionItem(name=form.name.data,
+                               info=form.info.data,
                                amount=form.amount.data,
                                pku_id=form.unit.data,
                                state=ConsumptionItemState.stock,
@@ -154,6 +155,7 @@ def add_request():
     form.unit.choices = get_pku_selection()
     if form.validate_on_submit():
         item = ConsumptionItem(name=form.name.data,
+                               info=form.info.data,
                                amount=form.amount.data,
                                pku_id=form.unit.data,
                                requestor=current_user)
@@ -181,6 +183,7 @@ def edit_item(item_id):
         form.unit.choices = get_pku_selection()
         if form.validate_on_submit():
             item.name = form.name.data
+            item.info = form.info.data,
             item.amount = form.amount.data
             item.pku_id = form.unit.data
             session.commit()
@@ -191,6 +194,7 @@ def edit_item(item_id):
             return calculate_redirect(item)
         elif request.method == "GET":
             form.name.data = item.name
+            form.info = item.info
             form.amount.data = item.amount
             form.unit.data = item.pku_id
 
