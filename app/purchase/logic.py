@@ -1,14 +1,18 @@
+import os
 from math import ceil
 
+from docx import Document
 from flask import redirect, url_for, flash
-from flask_login import current_user
 from flask_babel import _
+from flask_login import current_user
 from sqlalchemy import or_, not_
 
 from app import session
 from app.containers import ConsumptionItemState
-from app.models import PackagingUnitType, ConsumptionItem, Festival, User
 from app.festival.logic import load_participants_from_db
+from app.main.utils import send_file
+from app.models import PackagingUnitType, ConsumptionItem, Festival, User
+from config import Config
 
 
 def get_pku_selection():
@@ -74,15 +78,15 @@ def calculate_drinks(festival_id, is_testing):
     if is_testing:
         user = session.query(User).get(1)
 
-    beer = ConsumptionItem(name="Beer", pku_id=cns.id,
+    beer = ConsumptionItem(name=_("Beer"), pku_id=cns.id,
                            amount=(beer_amount * days),
                            info=beer_info,
                            requestor=user)
-    mixed = ConsumptionItem(name="Mixed", pku_id=cns.id,
+    mixed = ConsumptionItem(name=_("Mixed"), pku_id=cns.id,
                             amount=(mixed_amount * days),
                             info=mixed_info,
                             requestor=user)
-    water = ConsumptionItem(name="Water", pku_id=six.id,
+    water = ConsumptionItem(name=_("Water"), pku_id=six.id,
                             amount=water_pallets,
                             info=water_info,
                             requestor=user)
@@ -95,6 +99,7 @@ def generate_shopping_list(festival_id, is_testing=False):
     requested_items = session.query(ConsumptionItem).filter_by(
         state=ConsumptionItemState.wishlist).all()
     for r in requested_items:
+        r.festival_id = festival_id
         available: ConsumptionItem = session.query(ConsumptionItem).filter(
             ConsumptionItem.state == ConsumptionItemState.stock,
             ConsumptionItem.name == r.name
@@ -106,7 +111,7 @@ def generate_shopping_list(festival_id, is_testing=False):
     session.commit()
     if not is_testing:
         flash(_("List generated."))
-        return redirect(url_for("purchase.shopping_list"))
+        return redirect(url_for("purchase.shopping_list", festival_id=festival_id))
 
 
 def adjust_amount(available: ConsumptionItem, requested: ConsumptionItem):
@@ -117,3 +122,44 @@ def adjust_amount(available: ConsumptionItem, requested: ConsumptionItem):
     else:
         requested.amount = p_amount
         requested.state = ConsumptionItemState.purchase
+
+
+def export_and_download_docx():
+    lines = session.query(ConsumptionItem, PackagingUnitType) \
+        .join(PackagingUnitType).filter(
+        ConsumptionItem.state == ConsumptionItemState.purchase).all()
+    length = len(lines)
+    if length == 0:
+        return
+
+    festival_id: int = lines[0].ConsumptionItem.festival_id
+    festival = session.query(Festival).filter_by(id=festival_id).first()
+
+    document = Document()
+    document.add_heading(festival.title)
+    rows = length + 1
+    columns = 3
+    table = document.add_table(rows=rows, cols=columns)
+    table.style = "LightShading-Accent1"
+    table_headers = [_("Article"), _("Amount"), _("Info")]
+    for r in range(rows):
+        for c in range(columns):
+            cell = table.cell(r, c)
+            if r == 0:
+                cell.text = table_headers[c]
+            else:
+                ci: ConsumptionItem = lines[r - 1].ConsumptionItem
+                if c == 0:
+                    cell.text = ci.name
+                elif c == 1:
+                    pku: PackagingUnitType = lines[r - 1].PackagingUnitType
+                    cell.text = "{} {}".format(ci.amount, pku.abbreviation)
+                else:
+                    if ci.info:
+                        cell.text = ci.info
+
+    filename = "{}.docx".format(festival.title)
+    file_path = os.path.join(Config.SHOPPING_LIST_PATH, filename)
+    document.save(file_path)
+
+    return send_file(file_path, filename, "text/docx")

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-07 14:58+0200\n"
+"POT-Creation-Date: 2022-08-13 18:30+0200\n"
 "PO-Revision-Date: 2019-11-22 21:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -58,19 +58,19 @@ msgstr "Festival abgeschlossen"
 msgid "Festival reopened"
 msgstr "Festivalabschluss zurückgesetzt"
 
-#: app/models.py:166
+#: app/models.py:163
 msgid "Deleted User"
 msgstr "Gelöschter Nutzer"
 
-#: app/models.py:172
+#: app/models.py:169
 msgid "User"
 msgstr "Nutzer"
 
-#: app/models.py:173
+#: app/models.py:170
 msgid "Admin"
 msgstr "Admin"
 
-#: app/models.py:174
+#: app/models.py:171
 msgid "Owner"
 msgstr "Eigentümer"
 
@@ -126,8 +126,8 @@ msgstr "%(username)s muss erst suspendiert werden."
 
 #: app/administration/routes.py:61 app/chronicle/routes.py:104
 #: app/festival/routes.py:134 app/main/routes.py:113 app/main/routes.py:199
-#: app/purchase/routes.py:193 app/purchase/routes.py:282
-#: app/purchase/routes.py:348 app/purchase/routes.py:368
+#: app/purchase/routes.py:199 app/purchase/routes.py:288
+#: app/purchase/routes.py:354 app/purchase/routes.py:374
 msgid "Your changes have been saved."
 msgstr "Deine Änderungen wurden gespeichert."
 
@@ -205,7 +205,6 @@ msgid "Sign In"
 msgstr "Anmelden"
 
 #: app/auth/forms.py:28
-#, fuzzy
 msgid "Invalid token"
 msgstr "Unzulässiges Token"
 
@@ -266,9 +265,8 @@ msgid "Enable two factor authentication"
 msgstr "Zwei-Faktor-Authentifizierung aktivieren"
 
 #: app/auth/forms.py:90
-#, fuzzy
 msgid "Password is not correct."
-msgstr "Das alte Passwort ist nicht korrekt."
+msgstr "Das Passwort ist nicht korrekt."
 
 #: app/auth/routes.py:26
 msgid "Invalid username or password"
@@ -330,7 +328,7 @@ msgstr "Chronikeintrag gelöscht."
 msgid "Title"
 msgstr "Titel"
 
-#: app/festival/forms.py:17 app/purchase/forms.py:21
+#: app/festival/forms.py:17 app/purchase/forms.py:21 app/purchase/logic.py:144
 msgid "Info"
 msgstr "Info"
 
@@ -410,8 +408,8 @@ msgstr "Rechnung wurde aktualisiert."
 msgid "Edit Invoice"
 msgstr "Rechnung editieren"
 
-#: app/festival/routes.py:267 app/purchase/routes.py:221
-#: app/purchase/routes.py:259 app/purchase/routes.py:391
+#: app/festival/routes.py:267 app/purchase/routes.py:227
+#: app/purchase/routes.py:265 app/purchase/routes.py:397
 #, python-format
 msgid "%(title)s deleted"
 msgstr "%(title)s gelöscht"
@@ -450,7 +448,6 @@ msgid "File must be an image!"
 msgstr "Datei muss ein Bild sein!"
 
 #: app/main/forms.py:56
-#, fuzzy
 msgid "Partner already taken :\"("
 msgstr "Partner schon vergeben :'("
 
@@ -498,7 +495,7 @@ msgstr "Profil editieren"
 msgid "Post has been deleted."
 msgstr "Post wurde gelöscht."
 
-#: app/main/utils.py:13
+#: app/main/utils.py:14
 msgid "This feature is not available on this platform"
 msgstr "Diese Funktion ist auf dieser Plattform nicht verfügbar"
 
@@ -506,7 +503,7 @@ msgstr "Diese Funktion ist auf dieser Plattform nicht verfügbar"
 msgid "Name"
 msgstr "Name"
 
-#: app/purchase/forms.py:24
+#: app/purchase/forms.py:24 app/purchase/logic.py:144
 msgid "Amount"
 msgstr "Menge"
 
@@ -547,9 +544,25 @@ msgstr "Bitte andere Abkürzung wählen."
 msgid "Description"
 msgstr "Beschreibung"
 
-#: app/purchase/logic.py:108
+#: app/purchase/logic.py:81
+msgid "Beer"
+msgstr "Bier"
+
+#: app/purchase/logic.py:85
+msgid "Mixed"
+msgstr "Radler"
+
+#: app/purchase/logic.py:89
+msgid "Water"
+msgstr "Wasser"
+
+#: app/purchase/logic.py:113
 msgid "List generated."
 msgstr "Liste erstellt."
+
+#: app/purchase/logic.py:144
+msgid "Article"
+msgstr "Artikel"
 
 #: app/purchase/messages.py:4
 msgid "Festival has no participants. Call the banners!"
@@ -561,44 +574,44 @@ msgstr ""
 "Einkauf kann nicht abgeschlossen werden, es sind noch immer Einträge auf "
 "der Einkaufsliste"
 
-#: app/purchase/routes.py:123
+#: app/purchase/routes.py:129
 #, python-format
 msgid "%(title)s added to cart"
 msgstr "%(title)s liegt jetzt im Einkaufswagen"
 
-#: app/purchase/routes.py:144 app/purchase/routes.py:164
+#: app/purchase/routes.py:150 app/purchase/routes.py:170
 msgid "Item has been added."
 msgstr "Eintrag wurde hinzugefügt"
 
-#: app/purchase/routes.py:148 app/purchase/routes.py:171
+#: app/purchase/routes.py:154 app/purchase/routes.py:177
 msgid "Add Item"
 msgstr "Eintrag hinzufügen"
 
-#: app/purchase/routes.py:203
+#: app/purchase/routes.py:209
 msgid "Edit Item"
 msgstr "Eintrag editieren"
 
-#: app/purchase/routes.py:208
+#: app/purchase/routes.py:214
 msgid "Cannot edit items while purchase is not closed."
 msgstr ""
 "Eintrag kann nicht verändert werden, solange der Einkauf nicht "
 "abgeschlossen wurde."
 
-#: app/purchase/routes.py:261
+#: app/purchase/routes.py:267
 #, python-format
 msgid "%(title)s cannot be deleted!"
 msgstr "%(title)s kann nicht gelöscht werden!"
 
-#: app/purchase/routes.py:289 app/purchase/routes.py:316
-#: app/purchase/routes.py:375
+#: app/purchase/routes.py:295 app/purchase/routes.py:322
+#: app/purchase/routes.py:381
 msgid "Edit packaging unit"
 msgstr "Bestandseinheit editieren"
 
-#: app/purchase/routes.py:312
+#: app/purchase/routes.py:318
 msgid "Packaging unit has been added."
 msgstr "Bestandseinheit wurde hinzugefügt"
 
-#: app/purchase/routes.py:352
+#: app/purchase/routes.py:358
 msgid "Add utility item"
 msgstr "Eintrag hinzufügen"
 
@@ -784,7 +797,6 @@ msgid "An unexpected error has occurred"
 msgstr "Du hast einen Fehler gefunden"
 
 #: app/templates/errors/500.html:5
-#, fuzzy
 msgid "The administrator has been notified, but doesn't give a shit!"
 msgstr ""
 "Die Administration wurde \"informiert\", interessiert sich aber einen "
@@ -966,10 +978,14 @@ msgid "Shopping List"
 msgstr "Einkaufsliste"
 
 #: app/templates/purchase/shopping_list.html:6
+msgid "Export as document"
+msgstr "Dokument exportieren"
+
+#: app/templates/purchase/shopping_list.html:7
 msgid "Finish purchase"
 msgstr "Einkauf abschließen"
 
-#: app/templates/purchase/shopping_list.html:7
+#: app/templates/purchase/shopping_list.html:8
 #: app/templates/purchase/stock_overview.html:17
 #: app/templates/purchase/utility_overview.html:7
 #: app/templates/purchase/wishlist.html:16

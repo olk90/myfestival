@@ -44,3 +44,4 @@ ws.code-workspace
 profile_photos
 photos
 app/static/chronicles
+/app/static/shopping_lists/*.docx

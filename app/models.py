@@ -14,7 +14,6 @@ from app import db, login
 from app.containers import (ConsumptionItemState, FestivalUpdateInfo,
                             NotificationType, UserAccessLevel)
 
-
 # PyCharm can't resolve expressions such as User.query because
 # these methods are added dynamically during initialization, as
 # mentioned here: https://stackoverflow.com/a/39103583
@@ -35,14 +34,12 @@ participants = db.Table("participants",
                                   db.ForeignKey("festival.id"))
                         )
 
-
 sharers = db.Table("sharers",
                    db.Column("sharer_id", db.Integer,
                              db.ForeignKey("user.id")),
                    db.Column("invoice_id", db.Integer,
                              db.ForeignKey("invoice.id"))
                    )
-
 
 chroniclers = db.Table("chroniclers",
                        db.Column("chronicler_id", db.Integer,
@@ -311,12 +308,13 @@ class Registration(db.Model):
 class ConsumptionItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), index=True)
-    info = db.Column(db.String(140))
+    info = db.Column(db.String(600))
     state = db.Column(db.String(10), index=True, nullable=False,
                       default=ConsumptionItemState.wishlist)
     pku_id = db.Column(db.Integer, db.ForeignKey("packaging_unit_type.id"))
     amount = db.Column(db.Integer, nullable=False, default=1)
     requestor_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    festival_id = db.Column(db.Integer, db.ForeignKey("festival.id"))
 
     def __repr__(self):
         return "<ConsumptionItem {}>".format(self.id)

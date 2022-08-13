@@ -9,7 +9,7 @@ from app.containers import ConsumptionItemState
 from app.models import ConsumptionItem, PackagingUnitType, UtilityItem
 from app.purchase import bp
 from app.purchase.logic import get_pku_selection, get_festivals, \
-    calculate_redirect, check_shopping_empty, generate_shopping_list
+    calculate_redirect, check_shopping_empty, generate_shopping_list, export_and_download_docx
 from app.purchase.forms import StockForm, SelectFestivalForm, PKUForm, \
     UtilityForm
 from app.purchase.messages import shopping_list_not_empty
@@ -79,6 +79,12 @@ def shopping_list():
     ca.logger.info(
         ">{}< has loaded shopping list".format(current_user.username))
     return render_template("purchase/shopping_list.html", items=result)
+
+
+@bp.route("/export_docx")
+@login_required
+def export_docx():
+    return export_and_download_docx()
 
 
 @bp.route("/finish_purchase")

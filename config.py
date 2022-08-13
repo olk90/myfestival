@@ -53,3 +53,9 @@ class Config(object):
     UPLOAD_PATH = os.path.join(STATIC_DIR, "chronicles")
 
     # << chronicle
+
+    # export shoppinglist >>
+
+    SHOPPING_LIST_PATH = os.path.join(STATIC_DIR, "shopping_lists")
+
+    # << export shoppinglist

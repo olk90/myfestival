@@ -3,6 +3,7 @@
 
 {% block app_content %}
     <h1>{{ _("Shopping List") }}</h1>
+    <p><a href="{{ url_for("purchase.export_docx", festival_id=festival_id) }}">{{ _("Export as document") }}</a></p>
     <p><a href="{{ url_for("purchase.finish_purchase") }}">{{ _("Finish purchase") }}</a></p>
     <p><input type="text" id="shoppingFilter" onkeyup="shoppingTableFilter()" placeholder="{{ _("Search for items") }}"></p>
     <table id="shoppingTable" class="table table-hover">

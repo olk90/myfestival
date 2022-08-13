@@ -1,17 +1,15 @@
 import os
-
-from alembic.runtime.migration import MigrationContext
-
-from flask import current_app as ca
-from flask import jsonify, Response
-
-from sqlalchemy import create_engine
-
 from zipfile import ZipFile
 
-from app import session
+from alembic.runtime.migration import MigrationContext
+from flask import current_app as ca
+from flask import jsonify
+from sqlalchemy import create_engine
+
 import app.models as m
+from app import session
 from app.festival.logic import get_participants, get_sharers
+from app.main.utils import send_file
 from config import Config
 
 
@@ -230,7 +228,7 @@ def zip_and_download_images():
             zip_file.write(file, arcname=relative_path)
 
     zip_file.close()
-    return __send_file(Config.UPLOAD_PATH, filename)
+    return send_file(Config.UPLOAD_PATH, filename, "application/zip")
 
 
 def __get_files(dirname):
@@ -241,14 +239,3 @@ def __get_files(dirname):
             file_path = os.path.join(root, filename)
             file_paths.append(file_path)
     return file_paths
-
-
-def __send_file(file_path, filename):
-    join = os.path.join(file_path, filename)
-    with open(join, "rb") as f:
-        data = f.readlines()
-    os.remove(join)
-    return Response(data, headers={
-        "Content-Type": "application/zip",
-        "Content-Disposition": "attachment; filename=%s;" % filename
-    })
