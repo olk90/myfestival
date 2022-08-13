@@ -77,7 +77,9 @@ def load_backup(backup):
     content = backup.read()
     data = json.loads(content)
     # abort when the version numbers don't match
-    if data["version_number"] != get_version_number():
+    incoming_version = data["version_number"]
+    local_version = get_version_number()
+    if incoming_version != local_version:
         ca.logger("import aborted due to version error")
         flash(_("Invalid version number"))
         return redirect(url_for("administration.import_backup"))

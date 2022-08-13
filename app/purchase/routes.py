@@ -200,7 +200,7 @@ def edit_item(item_id):
             return calculate_redirect(item)
         elif request.method == "GET":
             form.name.data = item.name
-            form.info = item.info
+            form.info.data = item.info
             form.amount.data = item.amount
             form.unit.data = item.pku_id
 
@@ -218,13 +218,16 @@ def edit_item(item_id):
 @bp.route("/delete_item/<item_id>", methods=["GET", "POST"])
 @login_required
 def delete_item(item_id):
-    item = session.query(ConsumptionItem).get(item_id)
-    session.delete(item)
+    ci: ConsumptionItem = session.query(ConsumptionItem).get(item_id)
+    state = ci.state
+    session.delete(ci)
     session.commit()
     ca.logger.info(
         ">{}< has deleted item >{}<"
-        .format(current_user.username, item.name))
-    flash(_("%(title)s deleted", title=item.name))
+        .format(current_user.username, ci.name))
+    flash(_("%(title)s deleted", title=ci.name))
+    if state == ConsumptionItemState.wishlist:
+        return redirect(url_for("purchase.wishlist"))
     return redirect(url_for("purchase.stock_overview"))
 
 
