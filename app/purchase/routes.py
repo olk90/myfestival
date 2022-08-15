@@ -31,8 +31,10 @@ def stock_overview():
 
     shopping_list_empty = check_shopping_empty()
     stock = session.query(ConsumptionItem, PackagingUnitType) \
-        .join(PackagingUnitType).filter(
-        ConsumptionItem.state == ConsumptionItemState.stock).all()
+        .join(PackagingUnitType) \
+        .filter(ConsumptionItem.state == ConsumptionItemState.stock) \
+        .order_by(ConsumptionItem.name) \
+        .all()
     return render_template("purchase/stock_overview.html",
                            form=form,
                            shopping_list_empty=shopping_list_empty,
@@ -56,8 +58,9 @@ def wishlist():
     page = request.args.get("page", 1, type=int)
     shopping_list_empty = check_shopping_empty()
     result = session.query(ConsumptionItem, PackagingUnitType) \
-        .join(PackagingUnitType).filter(
-        ConsumptionItem.state == ConsumptionItemState.wishlist) \
+        .join(PackagingUnitType)\
+        .filter(ConsumptionItem.state == ConsumptionItemState.wishlist) \
+        .order_by(ConsumptionItem.name) \
         .paginate(page, ca.config["ITEMS_PER_PAGE"], False)
     next_url = url_for("purchase.wishlist",
                        page=result.next_num) if result.has_next else None
@@ -74,8 +77,10 @@ def wishlist():
 @login_required
 def shopping_list():
     result = session.query(ConsumptionItem, PackagingUnitType) \
-        .join(PackagingUnitType).filter(
-        ConsumptionItem.state == ConsumptionItemState.purchase).all()
+        .join(PackagingUnitType) \
+        .filter(ConsumptionItem.state == ConsumptionItemState.purchase) \
+        .order_by(ConsumptionItem.name) \
+        .all()
     ca.logger.info(
         ">{}< has loaded shopping list".format(current_user.username))
     return render_template("purchase/shopping_list.html", items=result)
