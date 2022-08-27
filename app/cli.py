@@ -1,12 +1,15 @@
 import os
 import shutil
-import click
 from datetime import date
 from pathlib import Path
 
+import click
+from sqlalchemy.engine.reflection import Inspector
+from sqlalchemy.schema import DropConstraint, DropTable, MetaData, Table
+
 from app import db, session
-from app.logic import create_user, create_festival, create_pku
 from app.containers import UserAccessLevel
+from app.logic import create_user, create_festival, create_pku
 from app.models import User, PackagingUnitType
 from config import Config
 
@@ -137,7 +140,8 @@ def register(app):
         print("Drop all tables")
         session.remove()
         db.engine.execute("DROP TABLE IF EXISTS alembic_version")
-        db.drop_all()
+        drop_all()
+
         print("Delete old profile photos")
         avatars = Config.UPLOADED_PHOTOS_DEST
         try:
@@ -151,3 +155,41 @@ def register(app):
         except OSError as e:
             print("Error: %s : %s" % (photos, e.strerror))
         os.system("flask db upgrade")
+
+    # workaround found in https://github.com/pallets-eco/flask-sqlalchemy/issues/722#issuecomment-705672929
+    def drop_all():
+        """(On a live db) drops all foreign key constraints before dropping all tables.
+        Workaround for SQLAlchemy not doing DROP ## CASCADE for drop_all()
+        (https://github.com/pallets/flask-sqlalchemy/issues/722)
+        """
+
+        con = db.engine.connect()
+        trans = con.begin()
+        inspector = Inspector.from_engine(db.engine)
+
+        # We need to re-create a minimal metadata with only the required things to
+        # successfully emit drop constraints and tables commands for postgres (based
+        # on the actual schema of the running instance)
+        meta = MetaData()
+        tables = []
+        all_fkeys = []
+
+        for table_name in inspector.get_table_names():
+            fkeys = []
+
+            for fkey in inspector.get_foreign_keys(table_name):
+                if not fkey["name"]:
+                    continue
+
+                fkeys.append(db.ForeignKeyConstraint((), (), name=fkey["name"]))
+
+            tables.append(Table(table_name, meta, *fkeys))
+            all_fkeys.extend(fkeys)
+
+        for fkey in all_fkeys:
+            con.execute(DropConstraint(fkey))
+
+        for table in tables:
+            con.execute(DropTable(table))
+
+        trans.commit()
