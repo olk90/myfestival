@@ -133,7 +133,7 @@ def remove_admin(username):
 @bp.route("/suspend/<username>")
 @login_required
 def suspend(username):
-    if current_user.is_admin():
+    if current_user.is_admin() or current_user.username == username:
         user = session.query(m.User).filter_by(username=username).first()
         if user is None:
             flash(_("%(username)s not found.", username=username))
